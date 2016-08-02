@@ -221,9 +221,9 @@ void Loading::loadDocuments()
         m_sizeAll = fileDocuments.getNumberLines();
         m_sizeCurrent = i;
         mutex.unlock();
-
+/*
         QString id = fileDocuments.getData(i, 0);
-        QString nom =  fileDocuments.getData(i, 2);
+        QString nom =  fileDocuments.getData(i, 2);*/
 /*
         m_data->addGoalMember(id, nom);
 */
@@ -253,7 +253,7 @@ QString Loading::messageLoading()
 }
 
 void Loading::run()
-{
+{/*
     emit currentActionChanged();
     m_messageLoadingGlobal = "Recherche des fichiers...";
     emit currentMessageChanged();
@@ -306,7 +306,7 @@ void Loading::run()
     emit currentMessageChanged();
     emit currentActionChanged();
     loadDocuments();
-
+*/
     m_finish = true;
     emit finishChanged();
 }

@@ -13,7 +13,7 @@ Window {
     width: 700
     height: 400
 
-    flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint
+    flags: Qt.Window | Qt.FramelessWindowHint
     color: "gray"
 
     Loader {

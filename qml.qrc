@@ -9,5 +9,6 @@
         <file>progress.gif</file>
         <file>loadingUI.qml</file>
         <file>softUI.qml</file>
+        <file>SubMenu.qml</file>
     </qresource>
 </RCC>

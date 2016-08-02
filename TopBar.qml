@@ -5,22 +5,16 @@ import QtQuick.Controls.Styles 1.4
 import Qt.labs.controls 1.0
 
 Rectangle {
-    property alias mouseArea: mouseArea
+    //property alias mouseArea: mouseArea
     width: parent.width
     height: 40
-
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-    }
-
     Button {
-        y: 12
+        y:16
         x: 5
 
         label: Text {
             text: "Accueil"
-            color: accueil.containsMouse ? "#25273C" : "white"
+            color: accueil.containsMouse ? "#2B3643" : "#F3F3F3"
             font.pointSize: 10
             anchors.centerIn: parent
         }
@@ -28,28 +22,26 @@ Rectangle {
             implicitWidth: 100
             implicitHeight: 15
             opacity: enabled ? 1 : 0.3
-            color: accueil.containsMouse ? "white" : "#25273C"
+            color: accueil.containsMouse ? "#F3F3F3" : "#2B3643"
+            radius: accueil.containsMouse ? 5 : 0
         }
         MouseArea
         {
             id: accueil
             anchors.fill: parent
             hoverEnabled: true
-            //propagateComposedEvents: true
-            //onClicked: menu.open()
         }
     }
 
     Button {
         id: control
-        text: "Communautés"
-        onClicked: menu.open()
-        y: 12
-        x: 105
+        y:16
+        x: 115
 
         label: Text {
             text: "Communautés"
-            color: dqsd.containsMouse ? "#25273C" : "white"
+            //color: dqsd.containsMouse ? "#2B3643" : "#F3F3F3"
+            color:"#2B3643"
             font.pointSize: 10
             anchors.centerIn: parent
         }
@@ -57,43 +49,28 @@ Rectangle {
             implicitWidth: 100
             implicitHeight: 15
             opacity: enabled ? 1 : 0.3
-            //border.color: control.pressed ? "#26282a" : "#353637"
-            color: dqsd.containsMouse ? "white" : "#25273C"
+            //color: dqsd.containsMouse ? "#F3F3F3" : "#2B3643"
+            //radius: dqsd.containsMouse ? 5 : 0
+            color:"#F3F3F3"
+            radius:5
+
         }
         MouseArea
         {
             id: dqsd
             anchors.fill: parent
             hoverEnabled: true
-            //propagateComposedEvents: true
-            onClicked: menu.open()
-        }
-
-        Menu {
-            id: menu
-            y: 28
-            x:-45
-            MenuItem {
-                text: "Rechercher un goal"
-            }
-            MenuItem {
-                text: "Goals vides"
-            }
-            MenuItem {
-                text: "Goals supprimés"
-                onTriggered: Qt.quit()
-            }
-
+            propagateComposedEvents: true
         }
     }
 
     Button {
-        y: 12
-        x: 205
+        y:16
+        x: 225
 
         label: Text {
             text: "Utilisateurs"
-            color: "white"
+            color: "#F3F3F3"
             font.pointSize: 10
             anchors.centerIn: parent
         }
@@ -102,18 +79,18 @@ Rectangle {
             implicitHeight: 15
             opacity: enabled ? 1 : 0.3
             //border.color: control.pressed ? "#26282a" : "#353637"
-            color: "#25273C"
+            color: "#2B3643"
         }
     }
 
 
     Button {
-        y: 12
-        x: 305
+        y:16
+        x: 335
 
         label: Text {
             text: "Domaines"
-            color: "white"
+            color: "#F3F3F3"
             font.pointSize: 10
             anchors.centerIn: parent
         }
@@ -122,18 +99,18 @@ Rectangle {
             implicitHeight: 15
             opacity: enabled ? 1 : 0.3
             //border.color: control.pressed ? "#26282a" : "#353637"
-            color: "#25273C"
+            color: "#2B3643"
         }
     }
 
 
     Button {
-        y: 12
-        x: 405
+        y:16
+        x: 445
 
         label: Text {
             text: "Documents"
-            color: "white"
+            color: "#F3F3F3"
             font.pointSize: 10
             anchors.centerIn: parent
         }
@@ -142,13 +119,13 @@ Rectangle {
             implicitHeight: 15
             opacity: enabled ? 1 : 0.3
             //border.color: control.pressed ? "#26282a" : "#353637"
-            color: "#25273C"
+            color: "#2B3643"
         }
     }
 
     Image
     {
-        x: parent.width - 65
+        x: parent.width - 25
         y: 10
         source:"param.png"
         width: 20
@@ -162,7 +139,7 @@ Rectangle {
             }
         }
     }
-
+/*
     Image
     {
         width: 20
@@ -177,6 +154,6 @@ Rectangle {
                 Qt.quit()
             }
         }
-    }
-    color: "#25273C"
+    }*/
+    color: "#2B3643"
 }

@@ -6,7 +6,7 @@ import QtQuick.Controls.Styles 1.4
 
 Rectangle {
     property variant clickPos: "1,1"
-    color:"#25273C"
+    color:"#395B80"
     property string msgLoad: loading.messageLoading
     onMsgLoadChanged: {
         currentMessage.text = loading.messageLoading
@@ -92,7 +92,7 @@ Rectangle {
         source:"progress.gif"
         x: 260
         y: 190
-        visible: b.pressed ? 1: 0
+        //visible: b.pressed ? 1: 0
     }
     Text
     {
