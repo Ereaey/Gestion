@@ -11,7 +11,10 @@ SOURCES += main.cpp \
     data.cpp \
     treatment.cpp \
     showresult.cpp \
-    exportresult.cpp
+    exportresult.cpp \
+    datainterface.cpp \
+    treemodel.cpp \
+    treeitem.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,4 +32,7 @@ HEADERS += \
     data.h \
     treatment.h \
     showresult.h \
-    exportresult.h
+    exportresult.h \
+    datainterface.h \
+    treemodel.h \
+    treeitem.h

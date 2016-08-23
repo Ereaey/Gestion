@@ -6,7 +6,7 @@ import QtQuick.Controls.Styles 1.4
 
 Rectangle {
     property variant clickPos: "1,1"
-    color:"#395B80"
+    color:"#25273C"
     property string msgLoad: loading.messageLoading
     onMsgLoadChanged: {
         currentMessage.text = loading.messageLoading
@@ -18,7 +18,10 @@ Rectangle {
     property string finish: loading.finish
     onFinishChanged: {
         if (loading.finish == true)
+        {
+            dataT.generateTree()
             pageLoader.source = "softUI.qml"
+        }
     }
     Timer
     {

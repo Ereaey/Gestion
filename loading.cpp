@@ -40,7 +40,7 @@ void Loading::loadFiles()
     t.append("ssl_goal_pressi*.csv");
     t.append("ssl_membre_pressi*.csv");
     t.append("Audits_des_documents_*.csv");
-    t.append("Commu*.csv");
+    t.append("Liste_de_communautés_*.csv");
     QString file;
     foreach(const QFileInfo& FileInfo, m_listDrives)
     {
@@ -60,7 +60,7 @@ void Loading::loadFiles()
               if (m_pathDomaines.lastModified() < QFileInfo(file).lastModified())
                   m_pathDomaines = QFileInfo(file);
 
-            if (file.contains("Commu"))
+            if (file.contains("Liste_de_communautés_"))
               if (m_pathCommu.lastModified() < QFileInfo(file).lastModified())
                   m_pathCommu = QFileInfo(file);
 
@@ -192,18 +192,23 @@ void Loading::loadDomaines()
     FileCSV fileDomaines(m_pathDomaines.absoluteFilePath());
     setMessageLoading("Chargement des domaines.. 0 / " + QString::number(fileDomaines.getNumberLines()));
     emit currentActionChanged();
-    for (int i = 0; i < fileDomaines.getNumberLines(); i++)
+    for (int i = 1; i < fileDomaines.getNumberLines(); i++)
     {
         mutex.lock();
         m_sizeAll = fileDomaines.getNumberLines();
         m_sizeCurrent = i;
         mutex.unlock();
 
-        QString id = fileDomaines.getData(i, 0);
-        QString nom =  fileDomaines.getData(i, 2);
-/*
-        m_data->addGoalMember(id, nom);
-*/
+        QString idDomaine = fileDomaines.getData(i, "A");
+        QString idDomaineParent =  fileDomaines.getData(i, "D");
+        QString nomCommu =  fileDomaines.getData(i, "AN");
+        QString nomDomaine =  fileDomaines.getData(i, "B");
+        QString responsable =  fileDomaines.getData(i, "L");
+        QStringList GoalsModifs =  fileDomaines.getData(i, "Z").split(",");
+        QStringList GoalsLecteur =  fileDomaines.getData(i, "AD").split(",");
+
+        m_data->addDomaine(nomCommu, nomDomaine, idDomaine, idDomaineParent, GoalsModifs, GoalsLecteur, responsable);
+
         setMessageLoading("Chargement des domaines.. " + QString::number(i) + " / " + QString::number(fileDomaines.getNumberLines()));
     }
 }
@@ -253,7 +258,7 @@ QString Loading::messageLoading()
 }
 
 void Loading::run()
-{/*
+{
     emit currentActionChanged();
     m_messageLoadingGlobal = "Recherche des fichiers...";
     emit currentMessageChanged();
@@ -306,7 +311,6 @@ void Loading::run()
     emit currentMessageChanged();
     emit currentActionChanged();
     loadDocuments();
-*/
     m_finish = true;
     emit finishChanged();
 }

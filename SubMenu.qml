@@ -4,42 +4,61 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
 import Qt.labs.controls 1.0
 
-Rectangle {
+Rectangle
+{
+    y:81
+    height:26
     width: parent.width
-    height: 30
-    y:40
     x:0
-    color: "#F3F3F3"
+    color: "#516277"
     Button {
-        //y:3
-        x: 5
+        y: 3
+        x: parent.width - 160
 
         label: Text {
-            //color: ""
-            text: "Rechercher un goal"
+            text: "Changer de communauté"
             font.family: "Trebuchet MS"
-            font.italic: true
-            color: accueil2.containsMouse ? "#395B80" : "#505050"
-            font.bold: accueil2.containsMouse ? true : false
-            font.pointSize: 10
-
-            anchors.centerIn: parent
-            //font.underline: accueil2.containsMouse ? true : false
+            color: accueil23.containsMouse ? "white" : "white"
+            font.pointSize: 9
+            x:8
+            y:2
+            clip:true
         }
         background: Rectangle {
-            //implicitWidth: 100
-            //implicitHeight: parent.height
+            width: 155
+            height: 20
             opacity: enabled ? 1 : 0.3
-            color:"#F3F3F3"
-            //color: accueil2.containsMouse ? "#395B80" : "#F3F3F3"
-            //radius: accueil2.containsMouse ? 5 : 0
+            color: accueil23.containsMouse ? "#3E4B5C" : "#364150"
+            radius: 5
         }
         MouseArea
         {
-            id: accueil2
+            id: accueil23
             anchors.fill: parent
             hoverEnabled: true
+
+            onClicked: {
+                commus.visible = !commus.visible
+            }
         }
     }
 
+    Text
+    {
+        text: "Support Assurance Qualité opérationnelle Sites industriels Valenciennes, Sevelnord et Douvrin-FM > G_H_DEUR (1500 résultats)"
+        font.pointSize: 10
+        font.family: "Arial"
+        font.bold: true
+        color:"white"
+        y: 5
+        x: 10
+    }
+    Rectangle
+    {
+        y:0
+        height:1
+        color:"#D2D2D2"
+        width:parent.width
+    }
 }
+

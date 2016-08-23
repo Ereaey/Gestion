@@ -10,5 +10,11 @@
         <file>loadingUI.qml</file>
         <file>softUI.qml</file>
         <file>SubMenu.qml</file>
+        <file>CommuMenu.qml</file>
+        <file>LayerNote.qml</file>
+        <file>LayerGoalSearch.qml</file>
+        <file>ItemView.qml</file>
+        <file>TreeItemsList.qml</file>
+        <file>Empty.qml</file>
     </qresource>
 </RCC>
