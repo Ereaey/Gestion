@@ -86,7 +86,7 @@ Rectangle
             anchors.fill: parent
             anchors.leftMargin: 5;
             anchors.topMargin: 5
-            text: "Domaine séléctionné"
+            text: "Autocomplétion goal"
             font.family: "Arial"
             font.bold: true
             horizontalAlignment: Text.AlignLeft
@@ -136,9 +136,11 @@ Rectangle
 
         Flickable
         {
+            y:5
             anchors.fill: parent
             contentHeight: 15000
             ListView{
+                y:5
                 maximumFlickVelocity: 100
                 x:8
                 //anchors.fill: parent
@@ -189,7 +191,7 @@ Rectangle
                 x:10
                 Column {
                     Text {
-                        text: '<b>Id:</b> ' + idd
+                        text: '<b>Id:</b> ' + iddomaine
                         font.family: "Arial"
                         font.pointSize: 10
                         color: "white"
@@ -210,22 +212,7 @@ Rectangle
             contentHeight: 10000
             ListView {
                 anchors.fill: parent
-                model:
-                    ListModel {
-                        ListElement {
-                            nom: "azezaeaze"
-                            idd: "555 3264"
-                        }
-                        ListElement {
-                            nom: "azezaeaze"
-                            idd: "555 8426"
-                        }
-                        ListElement {
-                            nom: "azezaeaze"
-                            idd: "555 0473"
-                        }
-                        id:testmodel
-                    }
+                model: listDomaine
                 delegate: contactDelegate
                 //highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
                 //focus: true

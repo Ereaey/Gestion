@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     exportresult.cpp \
     datainterface.cpp \
     treemodel.cpp \
-    treeitem.cpp
+    treeitem.cpp \
+    datadomaine.cpp
 
 RESOURCES += qml.qrc
 
@@ -35,4 +36,5 @@ HEADERS += \
     exportresult.h \
     datainterface.h \
     treemodel.h \
-    treeitem.h
+    treeitem.h \
+    datadomaine.h

@@ -5,15 +5,16 @@ import QtQuick.Controls.Styles 1.4
 import Qt.labs.controls 1.0
 
 Row{
+    y:3
     id: itemView
-    Text{
+    Image
+    {
         width: 15
-        height: 11
-        text:
+        height: 15
+        x:3
+        source:
         {
-            x:3
-            color:"white"
-            modelData.hasChild? modelData.isOpen ? "-" : "+" : ""
+            modelData.hasChild? modelData.isOpen ? "down-arrow.png" : "right-arrow.png" : ""
         }
         MouseArea{
             anchors.fill: parent
@@ -24,13 +25,19 @@ Row{
         }
     }
     Column{
+        x:3
         Row
         {
+        Rectangle
+        {
+            height:15
+            width: 5
+            color: "transparent"
+        }
         Text{
             text: modelData.content
-            font.pointSize: 11
-            font.family: "Arial"
-            //font.bold: true
+            font.pointSize: 10
+            font.family: "Helvetica"
             color: modelData.isSelect ? "green" : "white"
             MouseArea{
                 anchors.fill: parent
@@ -75,7 +82,11 @@ Row{
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
             }
-
+            onClicked:
+            {
+                console.log(modelData.content)
+                listDomaine.append(new DataDomaine("Item 1", "red"));
+            }
         }
         }
         Loader{

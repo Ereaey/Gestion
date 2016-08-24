@@ -16,5 +16,7 @@
         <file>ItemView.qml</file>
         <file>TreeItemsList.qml</file>
         <file>Empty.qml</file>
+        <file>down-arrow.png</file>
+        <file>right-arrow.png</file>
     </qresource>
 </RCC>
