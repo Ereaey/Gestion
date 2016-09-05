@@ -85,7 +85,7 @@ Row{
             onClicked:
             {
                 console.log(modelData.content)
-                listDomaine.append(new DataDomaine("Item 1", "red"));
+                listDomaine.addDomaine(modelData.content, "000000");
             }
         }
         }

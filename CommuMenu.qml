@@ -10,7 +10,7 @@ Rectangle
     id:commus
     height:parent.height
     color:"#364150"
-    width:580
+    width:300
 
     Text
     {
@@ -29,6 +29,7 @@ Rectangle
             //x: 5
 
             label: Text {
+
                 //color: ""
                 text: "Support Assurance Qualité opérationnelle Sites industriels Valenciennes, Sevelnord et Douvrin-FM"
                 font.family: "Trebuchet MS"
@@ -41,12 +42,13 @@ Rectangle
                 //anchors.centerIn: parent
                 //font.underline: accueil2.containsMouse ? true : false
                 //width:400
-                clip:true
+                //clip:true
+                wrapMode:Text.WordWrap
             }
 
             background: Rectangle {
                 width: 580
-                height: 30
+                height: 100
                 opacity: enabled ? 1 : 0.3
                 //color:"#F3F3F3"
                 color: accueil2.containsMouse ? "#3E4B5C" : "#364150"

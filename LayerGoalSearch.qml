@@ -11,6 +11,11 @@ Rectangle
     width: parent.width
     height: parent.height
 
+    property string msg: listDomaine.domaines
+    onMsgChanged: {
+         testD.model = listDomaine.domaines
+    }
+
     Rectangle
     {
         y:10
@@ -136,20 +141,20 @@ Rectangle
 
         Flickable
         {
-            y:5
             anchors.fill: parent
             contentHeight: 15000
-            ListView{
+
+            ListView
+            {
                 y:5
                 maximumFlickVelocity: 100
                 x:8
-                //anchors.fill: parent
+                height: parent.height
+                width: parent.width
                 id:testTree
                 model: tree.tree
                 focus: true
                 delegate: ItemView{}
-                //highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-                onCurrentIndexChanged: console.log(currentIndex)
             }
             ScrollBar.vertical: ScrollBar {}
             clip: true
@@ -190,14 +195,83 @@ Rectangle
                 height: 40
                 x:10
                 Column {
+                    Row
+                    {
                     Text {
-                        text: '<b>Id:</b> ' + iddomaine
+                        text: '<b>Id:</b> ' + model.modelData.iddomaine
                         font.family: "Arial"
                         font.pointSize: 10
                         color: "white"
                     }
+                    Rectangle
+                    {
+                        color:"transparent"
+                        width:10
+                        height:15
+                    }
+                    Button
+                    {
+                        id:control
+                        text: "Retirer"
+                        height:15
+                        background: Rectangle {
+                            implicitWidth: 100
+                            implicitHeight: 15
+                            radius:3
+                            opacity: enabled ? 1 : 0.3
+                            color: control.pressed ? (control.highlighted ? "#585a5c" : "#e4e4e4") : (control.highlighted ? "#353637" : "#f6f6f6")
+                            border.color: control.pressed ? "#26282a" : "#353637"
+                        }
+                        label: Text {
+                            x: control.leftPadding
+                            y: control.topPadding
+                            width: control.availableWidth
+                            height: control.availableHeight
+                            text: control.text
+                            font: control.font
+                            opacity: enabled || highlighted ? 1 : 0.3
+                            color: control.highlighted ? "#ffffff" : (control.pressed ? "#26282a" : "#353637")
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            elide: Text.ElideRight
+                        }
+                    }
+                    Rectangle
+                    {
+                        color:"transparent"
+                        width:10
+                        height:15
+                    }
+                    Button
+                    {
+                        id:control2
+                        text: "Copier"
+                        height:15
+                        background: Rectangle {
+                            implicitWidth: 100
+                            implicitHeight: 15
+                            radius:3
+                            opacity: enabled ? 1 : 0.3
+                            color: control2.pressed ? (control2.highlighted ? "#585a5c" : "#e4e4e4") : (control2.highlighted ? "#353637" : "#f6f6f6")
+                            border.color: control2.pressed ? "#26282a" : "#353637"
+                        }
+                        label: Text {
+                            x: control2.leftPadding
+                            y: control2.topPadding
+                            width: control2.availableWidth
+                            height: control2.availableHeight
+                            text: control2.text
+                            font: control2.font
+                            opacity: enabled || highlighted ? 1 : 0.3
+                            color: control2.highlighted ? "#ffffff" : (control2.pressed ? "#26282a" : "#353637")
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            elide: Text.ElideRight
+                        }
+                    }
+                    }
                     Text {
-                        text: '<b>Nom:</b> ' + nom
+                        text: '<b>Nom:</b> ' + model.modelData.nom
                         font.family: "Arial"
                         font.pointSize: 10
                         color: "white"
@@ -211,8 +285,13 @@ Rectangle
             anchors.fill: parent
             contentHeight: 10000
             ListView {
-                anchors.fill: parent
-                model: listDomaine
+                id:listD
+                y:5
+                maximumFlickVelocity: 100
+                x:8
+                height: parent.height
+                width: parent.width
+                model: listDomaine.domaines
                 delegate: contactDelegate
                 //highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
                 //focus: true
@@ -224,7 +303,7 @@ Rectangle
 
     Component.onCompleted:
     {
-        dataT.drawTree("a")
+        dataT.drawTree("")
     }
 
 }

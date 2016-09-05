@@ -131,6 +131,8 @@ void Data::drawTree(QString goal)
         domainesV[key]->t->setIsOpen(false);
         domainesV[key]->t->setIsSelect(false);
     }
+    if (goal.isEmpty())
+        return;
     for(int i = 0; i < c_actu->domainesGoal[goal].size(); i++)
     {
         c_actu->domainesGoal[goal][i]->t->setIsSelect(true);

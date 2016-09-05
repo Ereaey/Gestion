@@ -10,17 +10,7 @@
 #include "treeitem.h"
 #include <QList>
 #include <QVariant>
-#include "datadomaine.h"
-
-/*
-QList<QVariant> g;
-g << "qsdsd" << "qsdsd";
-TreeItem *root = new TreeItem(g);
-
-TreeModel *tree = new TreeModel("");
-tree->rootItem->appendChild(root);
-    engine.rootContext()->setContextProperty("treetest", tree);
-*/
+#include "datadomaines.h"
 
 int main(int argc, char *argv[])
 {
@@ -32,9 +22,8 @@ int main(int argc, char *argv[])
     Treatment *t = new Treatment(d);
     ExportResult *e = new ExportResult(t);
     ShowResult *s = new ShowResult(t);
-
-    QList<QObject*> dataList;
-    dataList.append(new DataDomaine("Item 1", "red"));
+    DataDomaines *ds = new DataDomaines();
+    //ds->addDomaine("test", "111");
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("loading", l);
@@ -42,7 +31,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("export", e);
     engine.rootContext()->setContextProperty("tree", m);
     engine.rootContext()->setContextProperty("dataT", d);
-    engine.rootContext()->setContextProperty("listDomaine", QVariant::fromValue(dataList));
+    engine.rootContext()->setContextProperty("listDomaine", ds);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
