@@ -111,7 +111,7 @@ void Data::generateTree()
 {
     for (int key = 0; key < domainesV.size(); key++)
     {
-        TreeItem *t = new TreeItem(domainesV[key]->nom);
+        TreeItem *t = new TreeItem(domainesV[key]->nom, domainesV[key]->id);
         domainesV[key]->t = t;
         //t->setIsOpen(true);
         if (domainesV[key]->id_parent != 0)

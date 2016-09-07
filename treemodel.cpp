@@ -4,10 +4,10 @@
 const int number = 100;
 
 TreeItem *createTreeItem(){
-    auto res = new TreeItem(QString::number(qrand() % number));
+    /*auto res = new TreeItem(QString::number(qrand() % number));
     while(qrand() % 2)
         res->addChildItem(createTreeItem());
-    return res;
+    return res;*/
 }
 
 Model::Model(QObject *parent) :
@@ -15,7 +15,7 @@ Model::Model(QObject *parent) :
     m_tree(QList<TreeItem*>())
 {
 
-    m_tree.append(createTreeItem());
+    //m_tree.append(createTreeItem());
     /*m_tree.append(createTreeItem());
     m_tree.append(createTreeItem());
     m_tree.append(createTreeItem());

@@ -44,6 +44,7 @@ Row{
                 onClicked:
                 {
                     console.log(modelData.content)
+                    listDomaine.addDomaine(modelData.content, modelData.id);
                 }
             }
         }
@@ -53,7 +54,7 @@ Row{
             width: 5
             color: "transparent"
         }
-
+/*
         Button
         {
             x:2
@@ -87,7 +88,7 @@ Row{
                 console.log(modelData.content)
                 listDomaine.addDomaine(modelData.content, "000000");
             }
-        }
+        }*/
         }
         Loader{
             source: modelData.isOpen ? "TreeItemsList.qml" : "Empty.qml"

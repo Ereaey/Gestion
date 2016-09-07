@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QVariant>
 #include "datadomaine.h"
+#include <QClipboard>
+#include <QApplication>
 
 class DataDomaines : public QObject
 {
@@ -14,6 +16,8 @@ class DataDomaines : public QObject
         explicit DataDomaines(QObject *parent = 0);
         QVariant domaines() const{return QVariant::fromValue(m_domaines);}
         Q_INVOKABLE void addDomaine(QString name, QString id);
+        Q_INVOKABLE void deleteDomaine(QString id);
+        Q_INVOKABLE void copy(QString id);
 
     signals:
         void refreshDomaine();
@@ -22,7 +26,6 @@ class DataDomaines : public QObject
 
     private:
         QList<QObject*> m_domaines;
-
 };
 
 #endif // DATADOMAINES_H

@@ -180,6 +180,35 @@ Rectangle
             font.pointSize: 11
             color: "white"
         }
+        Button
+        {
+            x: parent.width - 110
+            y:5
+            id:control3
+            text: "Exporter"
+            height:15
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 15
+                radius:3
+                opacity: enabled ? 1 : 0.3
+                color: control3.pressed ? (control3.highlighted ? "#585a5c" : "#e4e4e4") : (control3.highlighted ? "#353637" : "#f6f6f6")
+                border.color: control3.pressed ? "#26282a" : "#353637"
+            }
+            label: Text {
+                x: control3.leftPadding
+                y: control3.topPadding
+                width: control3.availableWidth
+                height: control3.availableHeight
+                text: control3.text
+                font: control3.font
+                opacity: enabled || highlighted ? 1 : 0.3
+                color: control3.highlighted ? "#ffffff" : (control3.pressed ? "#26282a" : "#353637")
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+        }
     }
     Rectangle
     {
@@ -235,6 +264,10 @@ Rectangle
                             verticalAlignment: Text.AlignVCenter
                             elide: Text.ElideRight
                         }
+                        onClicked:
+                        {
+                            listDomaine.deleteDomaine(model.modelData.iddomaine);
+                        }
                     }
                     Rectangle
                     {
@@ -267,6 +300,10 @@ Rectangle
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             elide: Text.ElideRight
+                        }
+                        onClicked:
+                        {
+                            listDomaine.copy(model.modelData.iddomaine);
                         }
                     }
                     }
