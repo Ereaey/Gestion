@@ -12,19 +12,111 @@ Rectangle
     color:"#364150"
     width:300
 
-    Text
-    {
-        text: "Séléctionner une communauté"
-        font.family: "Trebuchet MS"
-        font.bold: true
-        font.pointSize: 12
-        x: 4
-        y: 10
-        color: "white"
+    property string loadResult: treatment.finish
+    onLoadResultChanged: {
+        if (treatment.finish == true)
+        {
+            listD.model = treatment.commu;
+            console.log("Modif");
+        }
     }
+
+    Component {
+        id: contactDelegate
+        Item {
+            width: 180;
+            height: 70
+            x:10
+            Column {
+                Row
+                {
+                Text {
+                    text: '<b>Resultat:</b> ' + model.modelData.result
+                    font.family: "Arial"
+                    font.pointSize: 10
+                    color: "white"
+                }
+                Rectangle
+                {
+                    color:"transparent"
+                    width:10
+                    height:15
+                }
+                Button
+                {
+                    id:control
+                    text: "Selectionner"
+                    height:15
+                    background: Rectangle {
+                        implicitWidth: 100
+                        implicitHeight: 15
+                        radius:3
+                        opacity: enabled ? 1 : 0.3
+                        color: control.pressed ? (control.highlighted ? "#585a5c" : "#e4e4e4") : (control.highlighted ? "#353637" : "#f6f6f6")
+                        border.color: control.pressed ? "#26282a" : "#353637"
+                    }
+                    label: Text {
+                        x: control.leftPadding
+                        y: control.topPadding
+                        width: control.availableWidth
+                        height: control.availableHeight
+                        text: control.text
+                        font: control.font
+                        opacity: enabled || highlighted ? 1 : 0.3
+                        color: control.highlighted ? "#ffffff" : (control.pressed ? "#26282a" : "#353637")
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        elide: Text.ElideRight
+                    }
+                    onClicked:
+                    {
+                        treatment.setCommu(model.modelData.nom)
+                    }
+                }
+                }
+                Text {
+                    text: '<b>Nom:</b> ' + model.modelData.nom
+                    font.family: "Arial"
+                    font.pointSize: 10
+                    color: "white"
+                    wrapMode: Text.WrapAnywhere
+                    width: 280
+                }
+            }
+        }
+    }
+
+
+    Flickable
+    {
+        anchors.fill: parent
+        contentHeight: 1000
+        ListView {
+            id:listD
+            y:15
+            maximumFlickVelocity: 100
+            x:8
+            height: parent.height - 40
+            width: parent.width
+            model: treatment.commu
+            delegate: contactDelegate
+            //highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+            //focus: true
+        }
+
+        ScrollBar.vertical: ScrollBar {}
+        clip: true
+    }
+    Component.onCompleted:
+    {
+        listD.model = treatment.commu;
+        console.log("dqsd")
+    }
+    /*
     Column
     {
         y:35
+
         Button {
             //x: 5
 
@@ -61,5 +153,5 @@ Rectangle
                 hoverEnabled: true
             }
         }
-    }
+    }*/
 }

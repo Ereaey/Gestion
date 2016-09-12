@@ -6,7 +6,9 @@
 #include "datadomaine.h"
 #include <QClipboard>
 #include <QApplication>
-
+#include <QFileDialog>
+#include <QFile>
+#include <QTextStream>
 class DataDomaines : public QObject
 {
     Q_OBJECT
@@ -18,6 +20,8 @@ class DataDomaines : public QObject
         Q_INVOKABLE void addDomaine(QString name, QString id);
         Q_INVOKABLE void deleteDomaine(QString id);
         Q_INVOKABLE void copy(QString id);
+        Q_INVOKABLE void exportList(QString path);
+        Q_INVOKABLE void clear();
 
     signals:
         void refreshDomaine();

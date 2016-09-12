@@ -16,7 +16,8 @@ SOURCES += main.cpp \
     treemodel.cpp \
     treeitem.cpp \
     datadomaine.cpp \
-    datadomaines.cpp
+    datadomaines.cpp \
+    datacommu.cpp
 
 RESOURCES += qml.qrc
 
@@ -39,4 +40,5 @@ HEADERS += \
     treemodel.h \
     treeitem.h \
     datadomaine.h \
-    datadomaines.h
+    datadomaines.h \
+    datacommu.h

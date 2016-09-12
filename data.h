@@ -129,9 +129,13 @@ class Data : public QObject
         void addCommunaute(QString name, QStringList goals);
         void addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent,
                         QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable);
+
+        QMap<QString, Communaute*> getCommus(){ return communautes;}
+        void setCurrentCommu(QString name);
     public slots:
         void generateTree();
-        void drawTree(QString goal);
+        void drawTree(QString goal, bool modif, bool lecteur);
+
     private:
         void recursiveOpen(int id);
         QMap<QString, User*> userId;

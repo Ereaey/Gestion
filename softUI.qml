@@ -8,8 +8,6 @@ import QtQuick.Layouts 1.3
 import "."
 
 Rectangle {
-    //parent.width: 1000
-    //parent.height: 1000
     Component.onCompleted:
     {
         windowMain.flags =  Qt.Window
@@ -44,15 +42,6 @@ Rectangle {
             Layout.fillHeight: true
             id:principalLoader
         }
-/*
-        LayerGoalSearch
-        {
-            id:goalSearch
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            visible:false
-        }
-*/
         CommuMenu
         {
             Layout.fillHeight: true

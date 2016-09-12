@@ -124,7 +124,7 @@ void Data::generateTree()
     }
 }
 
-void Data::drawTree(QString goal)
+void Data::drawTree(QString goal, bool modif, bool lecteur)
 {
     for (int key = 0; key < domainesV.size(); key++)
     {
@@ -133,11 +133,32 @@ void Data::drawTree(QString goal)
     }
     if (goal.isEmpty())
         return;
-    for(int i = 0; i < c_actu->domainesGoal[goal].size(); i++)
+    if (modif == true && lecteur == true)
     {
-        c_actu->domainesGoal[goal][i]->t->setIsSelect(true);
-        if (c_actu->domainesGoal[goal][i]->id_parent != 0)
-            recursiveOpen(c_actu->domainesGoal[goal][i]->id_parent);
+        for(int i = 0; i < c_actu->domainesGoal[goal].size(); i++)
+        {
+            c_actu->domainesGoal[goal][i]->t->setIsSelect(true);
+            if (c_actu->domainesGoal[goal][i]->id_parent != 0)
+                recursiveOpen(c_actu->domainesGoal[goal][i]->id_parent);
+        }
+    }
+    else if (modif == true && lecteur == false)
+    {
+        for(int i = 0; i < c_actu->domainesGoalModificateurs[goal].size(); i++)
+        {
+            c_actu->domainesGoalModificateurs[goal][i]->t->setIsSelect(true);
+            if (c_actu->domainesGoalModificateurs[goal][i]->id_parent != 0)
+                recursiveOpen(c_actu->domainesGoalModificateurs[goal][i]->id_parent);
+        }
+    }
+    else
+    {
+        for(int i = 0; i < c_actu->domainesGoalLecteurs[goal].size(); i++)
+        {
+            c_actu->domainesGoalLecteurs[goal][i]->t->setIsSelect(true);
+            if (c_actu->domainesGoalLecteurs[goal][i]->id_parent != 0)
+                recursiveOpen(c_actu->domainesGoalLecteurs[goal][i]->id_parent);
+        }
     }
 }
 
@@ -146,4 +167,10 @@ void Data::recursiveOpen(int id)
     domaines[id]->t->setIsOpen(true);
     if (domaines[id]->id_parent != 0)
         recursiveOpen(domaines[id]->id_parent);
+}
+
+void Data::setCurrentCommu(QString name)
+{
+    c_actu = communautes[name];
+    treeMo->setRoot(c_actu->root->t);
 }

@@ -45,7 +45,7 @@ Rectangle
 
     Text
     {
-        text: "Support Assurance Qualité opérationnelle Sites industriels Valenciennes, Sevelnord et Douvrin-FM > G_H_DEUR (1500 résultats)"
+        text: "Commu en cours > recherche en cours"
         font.pointSize: 10
         font.family: "Arial"
         font.bold: true

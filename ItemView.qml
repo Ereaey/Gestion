@@ -54,41 +54,6 @@ Row{
             width: 5
             color: "transparent"
         }
-/*
-        Button
-        {
-            x:2
-            text: "Ajouter"
-            width: 100
-            height:15
-            id:control
-            background: Rectangle {
-                implicitWidth: 100
-                implicitHeight: 15
-                radius:3
-                opacity: enabled ? 1 : 0.3
-                color: control.pressed ? (control.highlighted ? "#585a5c" : "#e4e4e4") : (control.highlighted ? "#353637" : "#f6f6f6")
-                border.color: control.pressed ? "#26282a" : "#353637"
-            }
-            label: Text {
-                x: control.leftPadding
-                y: control.topPadding
-                width: control.availableWidth
-                height: control.availableHeight
-                text: control.text
-                font: control.font
-                opacity: enabled || highlighted ? 1 : 0.3
-                color: control.highlighted ? "#ffffff" : (control.pressed ? "#26282a" : "#353637")
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                elide: Text.ElideRight
-            }
-            onClicked:
-            {
-                console.log(modelData.content)
-                listDomaine.addDomaine(modelData.content, "000000");
-            }
-        }*/
         }
         Loader{
             source: modelData.isOpen ? "TreeItemsList.qml" : "Empty.qml"

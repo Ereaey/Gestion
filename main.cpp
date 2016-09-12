@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("tree", m);
     engine.rootContext()->setContextProperty("dataT", d);
     engine.rootContext()->setContextProperty("listDomaine", ds);
-
+    engine.rootContext()->setContextProperty("treatment", t);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();

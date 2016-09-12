@@ -3,10 +3,27 @@ import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
 import Qt.labs.controls 1.0
+import QtQuick.Dialogs 1.0
 import "."
 
 Rectangle
 {
+    FileDialog {
+        id: fileSave
+        title: "Please choose a file"
+        folder: shortcuts.home
+        onAccepted: {
+            console.log("You chose: " + fileSave.fileUrls)
+            listDomaine.exportList(fileSave.fileUrls);
+        }
+        onRejected: {
+            console.log("Canceled")
+        }
+        selectExisting: false
+        nameFilters: [ "CSV(*.csv)" ]
+        //Component.onCompleted: visible = true
+    }
+
     //anchors.fill: parent
     width: parent.width
     height: parent.height
@@ -14,6 +31,13 @@ Rectangle
     property string msg: listDomaine.domaines
     onMsgChanged: {
          testD.model = listDomaine.domaines
+    }
+
+    property string loadResult: treatment.finish
+    onLoadResultChanged: {
+        //testD.model = listDomaine.domaines
+        console.log("dqsd")
+        testTree.model = tree.tree
     }
 
     Rectangle
@@ -62,7 +86,9 @@ Rectangle
                  color: control.enabled ? "white" : "#353637"
                  border.color: control.enabled ? "#bdbebf" : "transparent"
              }
-
+            //hovered: true
+            //inputMethodComposing: true
+            selectByMouse: true
         }
 
         Button
@@ -74,7 +100,57 @@ Rectangle
             text: "Rechercher"
             onClicked:
             {
-                dataT.drawTree(control.text)
+                if (modifcheck.checkState == Qt.Checked && lectcheck.checkState == Qt.Checked)
+                    treatment.searchGoal(control.text, true, true)
+                else if (modifcheck.checkState == Qt.Unchecked && lectcheck.checkState == Qt.Checked)
+                    treatment.searchGoal(control.text, false, true)
+                else if (modifcheck.checkState == Qt.Checked && lectcheck.checkState == Qt.Unchecked)
+                    treatment.searchGoal(control.text, true, false)
+                else
+                    treatment.searchGoal(control.text, false, false)
+            }
+        }
+        Row {
+            y:110
+            x:5
+            CheckBox {
+                text: qsTr("Modificateur")
+                checked: true
+                id:modifcheck
+                label: Text {
+
+                    x: 40
+                    y: 10
+                    width: 100
+                    height: 20
+
+                    text: modifcheck.text
+                    font: modifcheck.font
+                    color: "white"
+                    elide: Text.ElideRight
+                    visible: modifcheck.text
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+                 }
+            }
+            CheckBox {
+                text: qsTr("Lecteur")
+                id:lectcheck
+                label: Text {
+
+                    x: 40
+                    y: 10
+                    width: 100
+                    height: 20
+
+                    text: lectcheck.text
+                    font: lectcheck.font
+                    color: "white"
+                    elide: Text.ElideRight
+                    visible: lectcheck.text
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+                 }
             }
         }
     }
@@ -182,6 +258,39 @@ Rectangle
         }
         Button
         {
+            x: parent.width - 220
+            y:5
+            id:control4
+            text: "Vider"
+            height:15
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 15
+                radius:3
+                opacity: enabled ? 1 : 0.3
+                color: control4.pressed ? (control4.highlighted ? "#585a5c" : "#e4e4e4") : (control4.highlighted ? "#353637" : "#f6f6f6")
+                border.color: control4.pressed ? "#26282a" : "#353637"
+            }
+            label: Text {
+                x: control4.leftPadding
+                y: control4.topPadding
+                width: control4.availableWidth
+                height: control4.availableHeight
+                text: control4.text
+                font: control4.font
+                opacity: enabled || highlighted ? 1 : 0.3
+                color: control4.highlighted ? "#ffffff" : (control4.pressed ? "#26282a" : "#353637")
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+            onClicked:
+            {
+                listDomaine.clear();
+            }
+        }
+        Button
+        {
             x: parent.width - 110
             y:5
             id:control3
@@ -207,6 +316,10 @@ Rectangle
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
+            }
+            onClicked:
+            {
+                fileSave.open()
             }
         }
     }
@@ -340,7 +453,8 @@ Rectangle
 
     Component.onCompleted:
     {
-        dataT.drawTree("")
+        //dataT.drawTree("")
+        treatment.searchGoal("", true, true)
     }
 
 }

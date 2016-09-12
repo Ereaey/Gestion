@@ -20,6 +20,7 @@ Rectangle {
         if (loading.finish == true)
         {
             dataT.generateTree()
+            treatment.load()
             pageLoader.source = "softUI.qml"
         }
     }
