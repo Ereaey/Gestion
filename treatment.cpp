@@ -4,7 +4,7 @@
 Treatment::Treatment(Data *d)
 {
     m_data = d;
-    m_finish = true;
+    m_finish = false;
     m_type = SEARCH_GOAL;
     m_goal = "";
 }
@@ -32,6 +32,12 @@ void Treatment::searchGoal(QString goal, bool modificateur, bool lecteur)
         m_goal = "";
     }
 
+    start();
+}
+
+void Treatment::searchGoalsVide()
+{
+    m_type = SEARCH_GOAL_VIDE;
     start();
 }
 
@@ -79,6 +85,19 @@ void Treatment::run()
             if (m_goal.isEmpty())
                 ((DataCommu*)(m_commu[i]))->setResult(0);
         }
+    }
+    else if (m_type == SEARCH_GOAL_VIDE)
+    {
+        m_result.clear();
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->goalsVides.size());
+        }
+        for (int i = 0; i < m_data->getCurrentCommu()->goalsVides.size(); i++)
+        {
+            m_result.append(new DataGoal(m_data->getCurrentCommu()->goalsVides[i]->nom, m_data->getCurrentCommu()->goalsVides[i]->ID));
+        }
+        emit refreshResult();
     }
     m_finish = true;
     emit finishChanged();

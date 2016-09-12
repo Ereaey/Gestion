@@ -254,7 +254,7 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
-                    principalLoader.source = "LayerGoalSearch.qml"
+                    principalLoader.source = "LayerGoalVide.qml"
                 }
             }
         }

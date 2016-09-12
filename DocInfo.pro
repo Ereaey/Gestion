@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     treeitem.cpp \
     datadomaine.cpp \
     datadomaines.cpp \
-    datacommu.cpp
+    datacommu.cpp \
+    datagoal.cpp
 
 RESOURCES += qml.qrc
 
@@ -41,4 +42,5 @@ HEADERS += \
     treeitem.h \
     datadomaine.h \
     datadomaines.h \
-    datacommu.h
+    datacommu.h \
+    datagoal.h

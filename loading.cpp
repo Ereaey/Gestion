@@ -123,7 +123,7 @@ void Loading::loadGoal()
     FileCSV fileGoal(m_pathGoal.absoluteFilePath());
     setMessageLoading("Chargement des goals.. 0 / " + QString::number(fileGoal.getNumberLines()));
     emit currentActionChanged();
-    for (int i = 0; i < fileGoal.getNumberLines(); i++)
+    for (int i = 2; i < fileGoal.getNumberLines(); i++)
     {
         mutex.lock();
         m_sizeAll = fileGoal.getNumberLines();
@@ -311,6 +311,8 @@ void Loading::run()
     emit currentMessageChanged();
     emit currentActionChanged();
     loadDocuments();
+    m_data->generateData();
+    m_data->setCurrentCommu(m_data->getCommus().last()->name);
     m_finish = true;
     emit finishChanged();
 }

@@ -41,6 +41,7 @@ void Data::addGoalMember(QString idGoal, QString idMember)
 void Data::addCommunaute(QString name, QStringList goals)
 {
     communautes[name] = new Communaute;
+    communautes[name]->name = name;
     for (int i = 0; i < goals.size(); i++)
         communautes[name]->goalsMembers.push_back(goalNom[goals[i]]);
 }
@@ -88,23 +89,40 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     for (int i = 0; i < GOALsmodificateurs.size(); i++)
     {
         QString g = GOALsmodificateurs[i].replace(" ", "");
-        communautes[nameCommu]->domainesGoalModificateurs[g].push_back(d);
-        communautes[nameCommu]->domainesGoal[g].push_back(d);
+        if (goalNom.contains(g))
+        {
+            communautes[nameCommu]->domainesGoalModificateurs[g].push_back(d);
+            communautes[nameCommu]->domainesGoal[g].push_back(d);
+            communautes[nameCommu]->goals[g] = goalNom[g];
+        }
     }
 
     for (int i = 0; i < GOALsLecteurs.size(); i++)
     {
         QString g = GOALsLecteurs[i].replace(" ", "");
-        communautes[nameCommu]->domainesGoalLecteurs[g].push_back(d);
-        if (GOALsmodificateurs.contains(g))
+        if (goalNom.contains(g))
         {
-            communautes[nameCommu]->domainesDoublon.push_back(d);
-            //qDebug() << g << GOALsmodificateurs;
+            communautes[nameCommu]->domainesGoalLecteurs[g].push_back(d);
+            communautes[nameCommu]->goals[g] = goalNom[g];
+            if (GOALsmodificateurs.contains(g))
+                communautes[nameCommu]->domainesDoublon.push_back(d);
+            else
+                communautes[nameCommu]->domainesGoal[g].push_back(d);
         }
-        else
-            communautes[nameCommu]->domainesGoal[g].push_back(d);
     }
     domainesV.push_back(d);
+}
+
+void Data::generateData()
+{
+    foreach (QString key, communautes.keys())
+    {
+        foreach(QString name, communautes[key]->goals.keys())
+        {
+            if (communautes[key]->goals[name]->users.size() == 0)
+                communautes[key]->goalsVides.append(communautes[key]->goals[name]);
+        }
+    }
 }
 
 void Data::generateTree()

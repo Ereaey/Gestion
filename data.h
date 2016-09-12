@@ -132,8 +132,11 @@ class Data : public QObject
 
         QMap<QString, Communaute*> getCommus(){ return communautes;}
         void setCurrentCommu(QString name);
+        Communaute* getCurrentCommu(){return c_actu;}
+
     public slots:
         void generateTree();
+        void generateData();
         void drawTree(QString goal, bool modif, bool lecteur);
 
     private:

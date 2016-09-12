@@ -18,5 +18,6 @@
         <file>Empty.qml</file>
         <file>down-arrow.png</file>
         <file>right-arrow.png</file>
+        <file>LayerGoalVide.qml</file>
     </qresource>
 </RCC>
