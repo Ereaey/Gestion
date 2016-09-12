@@ -35,8 +35,6 @@ Rectangle
 
     property string loadResult: treatment.finish
     onLoadResultChanged: {
-        //testD.model = listDomaine.domaines
-        console.log("dqsd")
         testTree.model = tree.tree
     }
 
@@ -58,11 +56,8 @@ Rectangle
             font.bold: true
             horizontalAlignment: Text.AlignLeft
             font.pointSize: 13
-            //y: 10
-            //x:150
             color: "white"
             width:parent.width / 2 - 40 -10
-            //rightPadding:10
         }
         Rectangle
         {
@@ -86,8 +81,6 @@ Rectangle
                  color: control.enabled ? "white" : "#353637"
                  border.color: control.enabled ? "#bdbebf" : "transparent"
              }
-            //hovered: true
-            //inputMethodComposing: true
             selectByMouse: true
         }
 
@@ -443,8 +436,6 @@ Rectangle
                 width: parent.width
                 model: listDomaine.domaines
                 delegate: contactDelegate
-                //highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-                //focus: true
             }
             ScrollBar.vertical: ScrollBar {}
             clip: true
@@ -453,7 +444,6 @@ Rectangle
 
     Component.onCompleted:
     {
-        //dataT.drawTree("")
         treatment.searchGoal("", true, true)
     }
 

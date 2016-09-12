@@ -5,7 +5,6 @@ import QtQuick.Controls.Styles 1.4
 import Qt.labs.controls 1.0
 
 Row{
-    y:3
     id: itemView
     Image
     {
@@ -38,7 +37,7 @@ Row{
             text: modelData.content
             font.pointSize: 10
             font.family: "Helvetica"
-            color: modelData.isSelect ? "green" : "white"
+            color: modelData.isSelect ? "#FFC53C" : "white"
             MouseArea{
                 anchors.fill: parent
                 onClicked:
@@ -56,6 +55,8 @@ Row{
         }
         }
         Loader{
+            x:15
+            y:8
             source: modelData.isOpen ? "TreeItemsList.qml" : "Empty.qml"
         }
     }
