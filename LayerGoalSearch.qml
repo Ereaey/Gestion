@@ -444,7 +444,7 @@ Rectangle
 
     Component.onCompleted:
     {
-        treatment.searchGoal("", true, true)
+        treatment.searchGoal("", false, false)
     }
 
 }

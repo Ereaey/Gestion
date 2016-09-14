@@ -6,6 +6,18 @@ import Qt.labs.controls 1.0
 
 Rectangle
 {
+
+    property string msg: treatment.currentCommu
+    onMsgChanged: {
+        console.log("test1")
+        menuCommu.text = treatment.currentCommu + " > " + treatment.currentAction
+    }
+    property string msg2: treatment.currentAction
+    onMsg2Changed: {
+        console.log("test2")
+        menuCommu.text = treatment.currentCommu + " > " + treatment.currentAction
+    }
+
     y:81
     height:26
     width: parent.width
@@ -45,11 +57,12 @@ Rectangle
 
     Text
     {
-        text: "Commu en cours > recherche en cours"
+        text: treatment.currentCommu + " > recherche en cours"
         font.pointSize: 10
         font.family: "Arial"
         font.bold: true
         color:"white"
+        id: menuCommu
         y: 5
         x: 10
     }

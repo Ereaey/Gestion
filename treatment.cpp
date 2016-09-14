@@ -13,30 +13,44 @@ void Treatment::load()
 {
     foreach (QString key, m_data->getCommus().keys()) {
         m_commu.append(new DataCommu(key, 0));
+        setCommu(key);
     }
 }
 
 void Treatment::searchGoal(QString goal, bool modificateur, bool lecteur)
 {
     m_goal = goal;
-
+    m_currentAction = "Rechercher un goal > " + goal;
     if (modificateur == true && lecteur == false)
+    {
         m_type = SEARCH_GOAL_MODIF;
+        m_currentAction += " (M)";
+    }
     else if (modificateur == false && lecteur == true)
+    {
         m_type == SEARCH_GOAL_LECT;
+        m_currentAction += " (L)";
+    }
     else if (modificateur == true && lecteur == true)
+    {
         m_type = SEARCH_GOAL;
+        m_currentAction += " (M/L)";
+    }
     else
     {
         m_type = SEARCH_GOAL;
+        m_currentAction = "Rechercher un goal";
         m_goal = "";
     }
+    emit currentActionChanged();
 
     start();
 }
 
 void Treatment::searchGoalsVide()
 {
+    m_currentAction = "Rechercher un goal vide";
+    emit currentActionChanged();
     m_type = SEARCH_GOAL_VIDE;
     start();
 }
@@ -48,7 +62,9 @@ bool Treatment::finish() const
 
 void Treatment::setCommu(QString name)
 {
+    m_currentCommu = name;
     m_data->setCurrentCommu(name);
+    emit commuChanged();
     start();
 }
 void Treatment::run()
