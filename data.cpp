@@ -65,6 +65,7 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
         addCommunaute(nameCommu, l);
     }
     communautes[nameCommu]->domaines[d->nom] = d;
+    communautes[nameCommu]->domainesKey[IdDomaine] = d;
     d->commu = communautes[nameCommu];
     if (d->id_parent == 0)
     {
@@ -177,6 +178,23 @@ void Data::drawTree(QString goal, bool modif, bool lecteur)
             if (c_actu->domainesGoalLecteurs[goal][i]->id_parent != 0)
                 recursiveOpen(c_actu->domainesGoalLecteurs[goal][i]->id_parent);
         }
+    }
+}
+
+void Data::drawTree(QString domaine)
+{
+    for (int key = 0; key < domainesV.size(); key++)
+    {
+        domainesV[key]->t->setIsOpen(false);
+        domainesV[key]->t->setIsSelect(false);
+    }
+    if (domaine.isEmpty())
+        return;
+    if (c_actu->domainesKey.contains(domaine))
+    {
+        c_actu->domainesKey[domaine]->t->setIsSelect(true);
+        if (c_actu->domainesKey[domaine]->id_parent != 0)
+            recursiveOpen(c_actu->domainesKey[domaine]->id_parent);
     }
 }
 

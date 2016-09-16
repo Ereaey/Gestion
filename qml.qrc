@@ -19,5 +19,6 @@
         <file>down-arrow.png</file>
         <file>right-arrow.png</file>
         <file>LayerGoalVide.qml</file>
+        <file>LayerDomaineSearch.qml</file>
     </qresource>
 </RCC>

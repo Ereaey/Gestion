@@ -7,6 +7,7 @@ Treatment::Treatment(Data *d)
     m_finish = false;
     m_type = SEARCH_GOAL;
     m_goal = "";
+    m_domaine = "";
 }
 
 void Treatment::load()
@@ -52,6 +53,15 @@ void Treatment::searchGoalsVide()
     m_currentAction = "Rechercher un goal vide";
     emit currentActionChanged();
     m_type = SEARCH_GOAL_VIDE;
+    start();
+}
+
+void Treatment::searchDomaine(QString name)
+{
+    m_currentAction = "Rechercher un domaine > " + name;
+    m_domaine = name;
+    emit currentActionChanged();
+    m_type = SEARCH_DOMAINE;
     start();
 }
 
@@ -112,6 +122,18 @@ void Treatment::run()
         for (int i = 0; i < m_data->getCurrentCommu()->goalsVides.size(); i++)
         {
             m_result.append(new DataGoal(m_data->getCurrentCommu()->goalsVides[i]->nom, m_data->getCurrentCommu()->goalsVides[i]->ID));
+        }
+        emit refreshResult();
+    }
+    else if (m_type == SEARCH_DOMAINE)
+    {
+        m_data->drawTree(m_domaine);
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            if (m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesKey.contains(m_domaine))
+                ((DataCommu*)(m_commu[i]))->setResult(1);
+            else
+                ((DataCommu*)(m_commu[i]))->setResult(0);
         }
         emit refreshResult();
     }

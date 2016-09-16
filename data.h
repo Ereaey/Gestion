@@ -88,6 +88,7 @@ struct Communaute
 
     QMap<QString, UserCommu*> users;
     QMap<QString, Domaine*> domaines;
+    QMap<QString, Domaine*> domainesKey;
     QMap<QString, Goal*> goals;
     QMap<QString, Document*> documents;
 
@@ -138,6 +139,7 @@ class Data : public QObject
         void generateTree();
         void generateData();
         void drawTree(QString goal, bool modif, bool lecteur);
+        void drawTree(QString domaine);
 
     private:
         void recursiveOpen(int id);
