@@ -131,7 +131,11 @@ void Treatment::run()
         for (int i = 0; i < m_commu.size(); i++)
         {
             if (m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesKey.contains(m_domaine))
+            {
                 ((DataCommu*)(m_commu[i]))->setResult(1);
+                setCommu(((DataCommu*)m_commu[i])->nom());
+                m_data->drawTree(m_domaine);
+            }
             else
                 ((DataCommu*)(m_commu[i]))->setResult(0);
         }
