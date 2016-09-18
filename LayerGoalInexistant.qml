@@ -10,14 +10,6 @@ Rectangle
 {
     width: parent.width
     height: parent.height
-/*
-    property string result: treatment.result
-    onResultChanged: {
-        //if (treatment.finish == true)
-
-        //testTree.model = tree.tree
-        console.log("goal vide")
-    }*/
 
     property string loadResult: treatment.finish
     onLoadResultChanged: {
@@ -26,7 +18,6 @@ Rectangle
             testTree.model = treatment.result
         }
     }
-
     Rectangle
     {
         y:10
@@ -68,7 +59,7 @@ Rectangle
                 height: parent.height
                 width: parent.width
                 id:testTree
-                //model: treatment.result
+                model: treatment.result
                 focus: true
                 delegate: contactDelegate
             }
@@ -135,9 +126,11 @@ Rectangle
             }
         }
     }
-    /*Component.onCompleted:
-    {
 
-        //testTree.model = treatment.result
+    /*
+    Component.onCompleted:
+    {
+        treatment.searchGoalsProbleme()
+        testTree.model = treatment.result
     }*/
 }

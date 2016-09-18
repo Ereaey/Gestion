@@ -20,5 +20,6 @@
         <file>right-arrow.png</file>
         <file>LayerGoalVide.qml</file>
         <file>LayerDomaineSearch.qml</file>
+        <file>LayerGoalInexistant.qml</file>
     </qresource>
 </RCC>

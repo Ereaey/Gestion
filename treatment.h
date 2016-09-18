@@ -16,7 +16,7 @@ class Treatment : public QThread
     Q_PROPERTY(QString currentCommu READ currentCommu NOTIFY commuChanged)
     Q_PROPERTY(QString currentAction READ currentAction NOTIFY currentActionChanged)
 
-    enum t{SEARCH_GOAL_MODIF, SEARCH_GOAL_LECT, SEARCH_GOAL, SEARCH_GOAL_VIDE, SEARCH_DOMAINE};
+    enum t{SEARCH_GOAL_MODIF, SEARCH_GOAL_LECT, SEARCH_GOAL, SEARCH_GOAL_VIDE, SEARCH_DOMAINE, SEARCH_GOAL_PROBLEME};
     public:
         Treatment(Data *d);
         Q_INVOKABLE void searchGoal(QString goal, bool modificateur, bool lecteur);
@@ -28,6 +28,7 @@ class Treatment : public QThread
         Q_INVOKABLE void setCommu(QString name);
         Q_INVOKABLE void load();
         Q_INVOKABLE void searchGoalsVide();
+        Q_INVOKABLE void searchGoalsProbleme();
         Q_INVOKABLE void searchDomaine(QString name);
 
 

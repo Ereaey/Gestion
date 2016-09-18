@@ -122,6 +122,8 @@ void Data::generateData()
         {
             if (communautes[key]->goals[name]->users.size() == 0)
                 communautes[key]->goalsVides.append(communautes[key]->goals[name]);
+            if (communautes[key]->goals[name]->etat != "OPERATIONNEL")
+                communautes[key]->goalsInexistants.append(communautes[key]->goals[name]);
         }
     }
 }

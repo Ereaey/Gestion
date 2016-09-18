@@ -254,6 +254,7 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
+                    treatment.searchGoalsVide();
                     principalLoader.source = "LayerGoalVide.qml"
                 }
             }
@@ -262,7 +263,7 @@ Rectangle{
             x: 255
             visible:root.currentItem ==communautesMenu ? true:false
             label: Text {
-                text: "Goals supprimés"
+                text: "Goals problémes"
                 font.family: "Trebuchet MS"
                 font.italic: true
 
@@ -283,36 +284,8 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
-                    principalLoader.source = "LayerGoalSearch.qml"
-                }
-            }
-        }
-        Button {
-            x: 375
-            visible:root.currentItem ==communautesMenu ? true:false
-            label: Text {
-                text: "Tous les goals"
-                font.family: "Trebuchet MS"
-                font.italic: true
-
-                color: accueil27.containsMouse ? "#395B80" : "#505050"
-                font.bold: accueil27.containsMouse ? true : false
-                font.pointSize: 10
-
-                anchors.centerIn: parent
-            }
-            background: Rectangle {
-                opacity: enabled ? 1 : 0.3
-                color:"#F3F3F3"
-            }
-            MouseArea
-            {
-                id: accueil27
-                anchors.fill: parent
-                hoverEnabled: true
-                onClicked:
-                {
-                    principalLoader.source = "LayerGoalSearch.qml"
+                    treatment.searchGoalsProbleme();
+                    principalLoader.source = "LayerGoalInexistant.qml"
                 }
             }
         }

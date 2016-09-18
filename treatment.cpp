@@ -56,6 +56,14 @@ void Treatment::searchGoalsVide()
     start();
 }
 
+void Treatment::searchGoalsProbleme()
+{
+    m_currentAction = "Rechercher un goal inexistants / périmés";
+    emit currentActionChanged();
+    m_type = SEARCH_GOAL_PROBLEME;
+    start();
+}
+
 void Treatment::searchDomaine(QString name)
 {
     m_currentAction = "Rechercher un domaine > " + name;
@@ -138,6 +146,19 @@ void Treatment::run()
             }
             else
                 ((DataCommu*)(m_commu[i]))->setResult(0);
+        }
+        emit refreshResult();
+    }
+    else if (m_type == SEARCH_GOAL_PROBLEME)
+    {
+        m_result.clear();
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->goalsInexistants.size());
+        }
+        for (int i = 0; i < m_data->getCurrentCommu()->goalsInexistants.size(); i++)
+        {
+            m_result.append(new DataGoal(m_data->getCurrentCommu()->goalsInexistants[i]->nom, m_data->getCurrentCommu()->goalsInexistants[i]->ID));
         }
         emit refreshResult();
     }
