@@ -90,6 +90,15 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     for (int i = 0; i < GOALsmodificateurs.size(); i++)
     {
         QString g = GOALsmodificateurs[i].replace(" ", "");
+        if (g != "" && !goalNom.contains(g))
+        {
+            Goal *go = new Goal;
+            go->nom = g;
+            go->etat = "Non trouvé";
+
+            goalNom[g] = go;
+            communautes[nameCommu]->goalsInexistants.append(go);
+        }
         if (goalNom.contains(g))
         {
             communautes[nameCommu]->domainesGoalModificateurs[g].push_back(d);
@@ -101,6 +110,15 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     for (int i = 0; i < GOALsLecteurs.size(); i++)
     {
         QString g = GOALsLecteurs[i].replace(" ", "");
+        if (g != "" && !goalNom.contains(g))
+        {
+            Goal *go = new Goal;
+            go->nom = g;
+            go->etat = "Non trouvé";
+
+            goalNom[g] = go;
+            communautes[nameCommu]->goalsInexistants.append(go);
+        }
         if (goalNom.contains(g))
         {
             communautes[nameCommu]->domainesGoalLecteurs[g].push_back(d);
@@ -120,7 +138,7 @@ void Data::generateData()
     {
         foreach(QString name, communautes[key]->goals.keys())
         {
-            if (communautes[key]->goals[name]->users.size() == 0)
+            if (communautes[key]->goals[name]->users.size() == 0 && !communautes[key]->goals[name]->ID.isEmpty())
                 communautes[key]->goalsVides.append(communautes[key]->goals[name]);
             if (communautes[key]->goals[name]->etat != "OPERATIONNEL")
                 communautes[key]->goalsInexistants.append(communautes[key]->goals[name]);

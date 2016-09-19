@@ -158,7 +158,7 @@ void Treatment::run()
         }
         for (int i = 0; i < m_data->getCurrentCommu()->goalsInexistants.size(); i++)
         {
-            m_result.append(new DataGoal(m_data->getCurrentCommu()->goalsInexistants[i]->nom, m_data->getCurrentCommu()->goalsInexistants[i]->ID));
+            m_result.append(new DataGoal(m_data->getCurrentCommu()->goalsInexistants[i]->nom, m_data->getCurrentCommu()->goalsInexistants[i]->ID, m_data->getCurrentCommu()->goalsInexistants[i]->etat));
         }
         emit refreshResult();
     }

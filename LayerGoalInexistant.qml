@@ -78,7 +78,7 @@ Rectangle
                 Row
                 {
                 Text {
-                    text: '<b>Id:</b> ' + model.modelData.idgoal + '     <b>Nom:</b> ' + model.modelData.nom
+                    text: '<b>Id:</b> ' + model.modelData.idgoal + '     <b>Nom:</b> ' + model.modelData.nom + '     <b>Etat:</b> ' + model.modelData.problem
                     font.family: "Arial"
                     font.pointSize: 10
                     color: "white"
