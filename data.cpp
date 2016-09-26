@@ -77,7 +77,7 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
 
     if (!communautes[nameCommu]->users.contains(r))
     {
-        if (userId.contains(r))
+        if (!userId.contains(r))
         {
             userId[r] = new User;
             userId[r]->nom = "N";
@@ -151,6 +151,22 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
         d->version = version;
         if (domaines[idDomaine.toInt()]->commu->users.contains(proprietaire.split("-")[1].remove(" ")))
             d->proprietaire = domaines[idDomaine.toInt()]->commu->users[proprietaire.split("-")[1].remove(" ")];
+        /*
+        else
+        {
+            if (!userId.contains(r))
+            {
+                userId[r] = new User;
+                userId[r]->nom = "N";
+                userId[r]->prenom = "N";
+                userId[r]->ID = r;
+            }
+            UserCommu *uC = new UserCommu;
+            uC->user = userId[r];
+
+            communautes[nameCommu]->users[r] = uC;
+            communautes[nameCommu]->usersInconnu.push_back(uC);
+        }*/
         d->id = id;
         domaines[idDomaine.toInt()]->documents.append(d);
     }
