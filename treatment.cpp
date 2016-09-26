@@ -121,7 +121,7 @@ void Treatment::exportPlan(QString idDomaine, QString path)
 QString Treatment::generatePlan(QString idDomaine)
 {
     QString d;
-
+    qDebug() << idDomaine;
     d += "[\"" + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->id) + "\", \""
             + m_data->getCurrentCommu()->domainesKey[idDomaine]->nom + "\", \""
             + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->enfants.size()) + "\", \""
@@ -133,7 +133,7 @@ QString Treatment::generatePlan(QString idDomaine)
     {
          d += "," + generatePlan(QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->enfants[i]->id));
     }
-
+    qDebug() << "Documents";
     for (int i = 0; i < m_data->getCurrentCommu()->domainesKey[idDomaine]->documents.size(); i++)
     {
          m_dataDocument += ", [\"" + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->id + "\", \""
@@ -264,6 +264,7 @@ void Treatment::run()
         QFile file(":/index.html");
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
             return;
+        qDebug() << "Open";
         QTextStream in(&file);
         QString de = in.readAll();
         de.replace("datadomaines", data);
@@ -276,7 +277,7 @@ void Treatment::run()
         QFile file2(m_path);
         if (!file2.open(QIODevice::WriteOnly | QIODevice::Text))
             return;
-
+        qDebug() << "Enregistrement";
         QTextStream out(&file2);
         out << de;
 
