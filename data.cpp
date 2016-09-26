@@ -77,6 +77,13 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
 
     if (!communautes[nameCommu]->users.contains(r))
     {
+        if (userId.contains(r))
+        {
+            userId[r] = new User;
+            userId[r]->nom = "N";
+            userId[r]->prenom = "N";
+            userId[r]->ID = r;
+        }
         UserCommu *uC = new UserCommu;
         uC->user = userId[r];
 
