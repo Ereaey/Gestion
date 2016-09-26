@@ -139,7 +139,8 @@ QString Treatment::generatePlan(QString idDomaine)
          m_dataDocument += ", [\"" + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->id + "\", \""
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nom + "\", \""
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->version + "\", \""
-                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->domaine->nom
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->domaine->nom + "\", \""
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->nom + " " + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->prenom
                  + "\"]";
     }
     return d;
