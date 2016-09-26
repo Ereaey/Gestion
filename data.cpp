@@ -145,12 +145,14 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
     {
         if (id.isEmpty())
             return;
+        /*
         if (version.isEmpty())
             return;
         if (name.isEmpty())
             return;
         if (proprietaire.isEmpty())
             return;
+        */
         Document *d = new Document;
         d->nom = name;
         d->domaine = domaines[idDomaine.toInt()];
@@ -164,7 +166,7 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
             {
                 userId[pro] = new User;
                 userId[pro]->nom = "N";
-                userId[pro]->prenom = "N";
+                userId[pro]->prenom = "C";
                 userId[pro]->ID = pro;
             }
             UserCommu *uC = new UserCommu;
