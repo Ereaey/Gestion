@@ -132,13 +132,19 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     domainesV.push_back(d);
 }
 
-void Data::addDocument(QString name, QString idDomaine)
+void Data::addDocument(QString name, QString idDomaine, QString version, QString proprietaire, QString id)
 {
     if (domaines.contains(idDomaine.toInt()))
     {
+        if (id.isEmpty())
+            return;
         Document *d = new Document;
         d->nom = name;
         d->domaine = domaines[idDomaine.toInt()];
+        d->version = version;
+        if (domaines[idDomaine.toInt()]->commu->users.contains(proprietaire.split("-")[1].remove(" ")))
+            d->proprietaire = domaines[idDomaine.toInt()]->commu->users[proprietaire.split("-")[1].remove(" ")];
+        d->id = id;
         domaines[idDomaine.toInt()]->documents.append(d);
     }
 }

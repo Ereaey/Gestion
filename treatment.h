@@ -7,6 +7,7 @@
 #include <QVariant>
 #include "datagoal.h"
 #include "datadomaine.h"
+#include "qfile.h"
 
 class Treatment : public QThread
 {
@@ -18,7 +19,8 @@ class Treatment : public QThread
     Q_PROPERTY(QString currentCommu READ currentCommu NOTIFY commuChanged)
     Q_PROPERTY(QString currentAction READ currentAction NOTIFY currentActionChanged)
 
-    enum t{SEARCH_GOAL_MODIF, SEARCH_GOAL_LECT, SEARCH_GOAL, SEARCH_GOAL_VIDE, SEARCH_DOMAINE, SEARCH_GOAL_PROBLEME, SEARCH_DOMAINE_VIDE, SEARCH_DOMAINE_FULL};
+    enum t{SEARCH_GOAL_MODIF, SEARCH_GOAL_LECT, SEARCH_GOAL, SEARCH_GOAL_VIDE, SEARCH_DOMAINE, SEARCH_GOAL_PROBLEME, SEARCH_DOMAINE_VIDE, SEARCH_DOMAINE_FULL,
+          EXPORT_PLAN};
     public:
         Treatment(Data *d);
         Q_INVOKABLE void searchGoal(QString goal, bool modificateur, bool lecteur);
@@ -36,6 +38,8 @@ class Treatment : public QThread
         Q_INVOKABLE void searchDomaineVide();
         Q_INVOKABLE void searchDomaineFull();
 
+        Q_INVOKABLE void exportPlan(QString idDomaine, QString path);
+
 
     private:
         Data *m_data;
@@ -48,6 +52,10 @@ class Treatment : public QThread
         QList<QObject*> m_commu;
         QList<QObject*> m_result;
         QObject* m_descriptionResult;
+        QString m_path;
+        QString m_dataDocument;
+
+        QString generatePlan(QString idDomaine);
 
     Q_SIGNALS:
         void finishChanged();

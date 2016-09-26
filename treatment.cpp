@@ -104,6 +104,46 @@ void Treatment::setCommu(QString name)
     emit commuChanged();
     start();
 }
+
+void Treatment::exportPlan(QString idDomaine, QString path)
+{
+    path.remove("file:///");
+    path.remove("file:\\\/");
+
+    m_currentAction = "Exportation du plan";
+    m_domaine = idDomaine;
+    m_path = path;
+    emit currentActionChanged();
+    m_type = EXPORT_PLAN;
+    start();
+}
+
+QString Treatment::generatePlan(QString idDomaine)
+{
+    QString d;
+    d += "[\"" + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->id) + "\", \""
+            + m_data->getCurrentCommu()->domainesKey[idDomaine]->nom + "\", \""
+            + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->enfants.size()) + "\", \""
+            + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->documents.size()) + "\", \""
+            + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->id_parent) + "\", \""
+            + m_data->getCurrentCommu()->domainesKey[idDomaine]->responsable->user->nom + " " + m_data->getCurrentCommu()->domainesKey[idDomaine]->responsable->user->prenom
+            + "\"]";
+    for (int i = 0; i < m_data->getCurrentCommu()->domainesKey[idDomaine]->enfants.size(); i++)
+    {
+         d += "," + generatePlan(QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->enfants[i]->id));
+    }
+    for (int i = 0; i < m_data->getCurrentCommu()->domainesKey[idDomaine]->documents.size(); i++)
+    {
+         m_dataDocument += ", [\"" + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->id + "\", \""
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nom + "\", \""
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->version + "\", \""
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->domaine->nom
+                 + "\"]";
+    }
+    return d;
+}
+
+
 void Treatment::run()
 {
     m_finish = false;
@@ -210,6 +250,32 @@ void Treatment::run()
             m_result.append(new DataGoal(m_data->getCurrentCommu()->goalsInexistants[i]->nom, m_data->getCurrentCommu()->goalsInexistants[i]->ID, m_data->getCurrentCommu()->goalsInexistants[i]->etat));
         }
         emit refreshResult();
+    }
+    else if (m_type == EXPORT_PLAN)
+    {
+        QString data;
+        m_dataDocument = "var documents = [A";
+        data = "var domaines = [" + generatePlan(m_domaine) + "];";
+        data.replace(QString::number(m_data->getCurrentCommu()->domainesKey[m_domaine]->id_parent), "");
+        //qDebug() << data;
+        QFile file(":/index.html");
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            return;
+        QTextStream in(&file);
+        QString de = in.readAll();
+        de.replace("datadomaines", data);
+        m_dataDocument += "];";
+        m_dataDocument.remove("A,");
+        de.replace("datadocuments", m_dataDocument);
+        de.replace("xxxxxx", m_domaine);
+
+        //qDebug() << de;
+        QFile file2(m_path);
+        if (!file2.open(QIODevice::WriteOnly | QIODevice::Text))
+            return;
+
+        QTextStream out(&file2);
+        out << de;
     }
     m_finish = true;
     emit finishChanged();

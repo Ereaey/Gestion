@@ -11,6 +11,23 @@ Rectangle
     width: parent.width
     height: parent.height
 
+    FileDialog {
+        id: fileSave
+        title: "Please choose a file"
+        folder: shortcuts.home
+        onAccepted: {
+            console.log("You chose: " + fileSave.fileUrls)
+            //listDomaine.exportList();
+            treatment.exportPlan(treatment.descriptionResult.iddomaine, fileSave.fileUrls);
+        }
+        onRejected: {
+            console.log("Canceled")
+        }
+        selectExisting: false
+        nameFilters: [ "html(*.html)" ]
+        //Component.onCompleted: visible = true
+    }
+
     property string loadResult: treatment.finish
     onLoadResultChanged: {
         testTree.model = tree.tree
@@ -196,7 +213,8 @@ Rectangle
             }
             onClicked:
             {
-                //fileSave.open()
+
+                fileSave.open()
             }
         }
     }

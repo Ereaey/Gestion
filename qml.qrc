@@ -23,5 +23,6 @@
         <file>LayerGoalInexistant.qml</file>
         <file>LayerDomaineVide.qml</file>
         <file>LayerDomaineFull.qml</file>
+        <file>index.html</file>
     </qresource>
 </RCC>
