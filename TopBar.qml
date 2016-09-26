@@ -546,7 +546,8 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
-                    principalLoader.source = "LayerGoalSearch.qml"
+                    treatment.searchDomaineVide();
+                    principalLoader.source = "LayerDomaineVide.qml"
                 }
             }
         }
@@ -554,7 +555,7 @@ Rectangle{
             x: 305
             visible:root.currentItem ==domainesMenu ? true:false
             label: Text {
-                text: "Domaines avec plus de x documents"
+                text: "Domaines avec plus de 10 documents"
                 font.family: "Trebuchet MS"
                 font.italic: true
 
@@ -575,7 +576,8 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
-                    principalLoader.source = "LayerGoalSearch.qml"
+                    treatment.searchDomaineFull();
+                    principalLoader.source = "LayerDomaineFull.qml"
                 }
             }
         }

@@ -220,7 +220,7 @@ void Loading::loadDocuments()
     qDebug() << m_pathDocuments.absoluteFilePath();
     setMessageLoading("Chargement des documents.. 0 / " + QString::number(fileDocuments.getNumberLines()));
     //emit currentActionChanged();
-    for (int i = 0; i < fileDocuments.getNumberLines(); i++)
+    for (int i = 1; i < fileDocuments.getNumberLines(); i++)
     {
         mutex.lock();
         m_sizeAll = fileDocuments.getNumberLines();
@@ -232,6 +232,7 @@ void Loading::loadDocuments()
 /*
         m_data->addGoalMember(id, nom);
 */
+        m_data->addDocument(fileDocuments.getData(i, "D"), fileDocuments.getData(i, "T"));
         setMessageLoading("Chargement des documents.. " + QString::number(i) + " / " + QString::number(fileDocuments.getNumberLines()));
     }
 }

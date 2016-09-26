@@ -132,6 +132,17 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     domainesV.push_back(d);
 }
 
+void Data::addDocument(QString name, QString idDomaine)
+{
+    if (domaines.contains(idDomaine.toInt()))
+    {
+        Document *d = new Document;
+        d->nom = name;
+        d->domaine = domaines[idDomaine.toInt()];
+        domaines[idDomaine.toInt()]->documents.append(d);
+    }
+}
+
 void Data::generateData()
 {
     foreach (QString key, communautes.keys())
@@ -142,6 +153,13 @@ void Data::generateData()
                 communautes[key]->goalsVides.append(communautes[key]->goals[name]);
             if (communautes[key]->goals[name]->etat != "OPERATIONNEL")
                 communautes[key]->goalsInexistants.append(communautes[key]->goals[name]);
+        }
+        foreach(QString name, communautes[key]->domaines.keys())
+        {
+            if (communautes[key]->domaines[name]->documents.size() == 0)
+                communautes[key]->domainesVides.append(communautes[key]->domaines[name]);
+            if (communautes[key]->domaines[name]->documents.size() > 10)
+                communautes[key]->domainesPlein.append(communautes[key]->domaines[name]);
         }
     }
 }

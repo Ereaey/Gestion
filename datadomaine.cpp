@@ -1,9 +1,10 @@
 #include "datadomaine.h"
 
-DataDomaine::DataDomaine(QString nom, QString iddomaine, QObject *parent) : QObject(parent)
+DataDomaine::DataDomaine(QString nom, QString iddomaine, QString responsable, QObject *parent) : QObject(parent)
 {
     m_nom = nom;
     m_iddomaine = iddomaine;
+    m_responsable = responsable;
 }
 
 QString DataDomaine::nom() const
@@ -24,4 +25,13 @@ QString DataDomaine::iddomaine() const
 void DataDomaine::setIddomaine(QString iddomaine)
 {
     m_iddomaine = iddomaine;
+}
+
+QString DataDomaine::responsable() const
+{
+    return m_responsable;
+}
+void DataDomaine::setResponsable(QString responsable)
+{
+    m_responsable = responsable;
 }

@@ -8,6 +8,7 @@ Treatment::Treatment(Data *d)
     m_type = SEARCH_GOAL;
     m_goal = "";
     m_domaine = "";
+    m_descriptionResult = new DataDomaine("", "");
 }
 
 void Treatment::load()
@@ -70,6 +71,24 @@ void Treatment::searchDomaine(QString name)
     m_domaine = name;
     emit currentActionChanged();
     m_type = SEARCH_DOMAINE;
+    start();
+}
+
+void Treatment::searchDomaineVide()
+{
+    m_currentAction = "Rechercher des domaines vides";
+    //m_domaine = name;
+    emit currentActionChanged();
+    m_type = SEARCH_DOMAINE_VIDE;
+    start();
+}
+
+void Treatment::searchDomaineFull()
+{
+    m_currentAction = "Rechercher des domaines surchargés";
+    //m_domaine = name;
+    emit currentActionChanged();
+    m_type = SEARCH_DOMAINE_FULL;
     start();
 }
 
@@ -143,9 +162,39 @@ void Treatment::run()
                 ((DataCommu*)(m_commu[i]))->setResult(1);
                 setCommu(((DataCommu*)m_commu[i])->nom());
                 m_data->drawTree(m_domaine);
+                Domaine *g = m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesKey[m_domaine];
+                DataDomaine *d = new DataDomaine(g->nom, QString::number(g->id), "A A");
+                m_descriptionResult = d;
             }
             else
                 ((DataCommu*)(m_commu[i]))->setResult(0);
+        }
+        emit refreshDescriptionResult();
+        emit refreshResult();
+    }
+    else if (m_type == SEARCH_DOMAINE_VIDE)
+    {
+        m_result.clear();
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesVides.size());
+        }
+        for (int i = 0; i < m_data->getCurrentCommu()->domainesVides.size(); i++)
+        {
+            m_result.append(new DataDomaine(m_data->getCurrentCommu()->domainesVides[i]->nom, QString::number(m_data->getCurrentCommu()->domainesVides[i]->id)));
+        }
+        emit refreshResult();
+    }
+    else if (m_type == SEARCH_DOMAINE_FULL)
+    {
+        m_result.clear();
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesPlein.size());
+        }
+        for (int i = 0; i < m_data->getCurrentCommu()->domainesPlein.size(); i++)
+        {
+            m_result.append(new DataDomaine(m_data->getCurrentCommu()->domainesPlein[i]->nom, QString::number(m_data->getCurrentCommu()->domainesPlein[i]->id)));
         }
         emit refreshResult();
     }

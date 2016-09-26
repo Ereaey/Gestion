@@ -14,7 +14,16 @@ Rectangle
     property string loadResult: treatment.finish
     onLoadResultChanged: {
         testTree.model = tree.tree
+        //nomDomaine.text = treatment.descriptionResult.nom
     }
+
+    property string description: treatment.descriptionResult
+    onDescriptionChanged: {
+        nomDomaine.text = "Nom : " + treatment.descriptionResult.nom
+        idDomaine.text = "Id : " + treatment.descriptionResult.iddomaine
+        responsableDomaine.text = "Responsable : " + treatment.descriptionResult.responsable
+    }
+
 
     Rectangle
     {
@@ -52,7 +61,7 @@ Rectangle
             y:40
             x:10
             id:control
-            placeholderText: qsTr("Entrer domaine")
+            placeholderText: qsTr("Entrer domaine identifiant")
             background: Rectangle {
                  implicitWidth: 200
                  implicitHeight: 30
@@ -88,7 +97,7 @@ Rectangle
             anchors.fill: parent
             anchors.leftMargin: 5;
             anchors.topMargin: 5
-            text: "Autocomplétion domaine"
+            text: "Information Domaine"
             font.family: "Arial"
             font.bold: true
             horizontalAlignment: Text.AlignLeft
@@ -105,6 +114,90 @@ Rectangle
             width:parent.width
             height:parent.height - 30
             y:30
+            Text
+            {
+                id:nomDomaine
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 5
+                text: treatment.descriptionResult.nom
+                font.family: "Arial"
+                //font.bold: true
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                //y: 10
+                //x:150
+                color: "white"
+                width:parent.width / 2 - 40 -10
+                //rightPadding:10
+            }
+            Text
+            {
+                id:idDomaine
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 20
+                text: treatment.descriptionResult.iddomaine
+                font.family: "Arial"
+                //font.bold: true
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                //y: 10
+                //x:150
+                color: "white"
+                width:parent.width / 2 - 40 -10
+                //rightPadding:10
+            }
+            Text
+            {
+                id:responsableDomaine
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 40
+                text: treatment.descriptionResult.responsable
+                font.family: "Arial"
+                //font.bold: true
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                //y:30
+                //x:150
+                color: "white"
+                width:parent.width / 2 - 40 -10
+                //rightPadding:10
+            }
+        }
+        Button
+        {
+            x: parent.width - 110
+            y:5
+            id:control3
+            text: "Exporter plan"
+            height:20
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 15
+                radius:3
+                opacity: enabled ? 1 : 0.3
+                color: control3.pressed ? (control3.highlighted ? "#585a5c" : "#e4e4e4") : (control3.highlighted ? "#353637" : "#f6f6f6")
+                border.color: control3.pressed ? "#26282a" : "#353637"
+            }
+            label: Text {
+                x: control3.leftPadding
+                y: control3.topPadding
+                width: control3.availableWidth
+                height: control3.availableHeight
+                text: control3.text
+                font: control3.font
+                opacity: enabled || highlighted ? 1 : 0.3
+                color: control3.highlighted ? "#ffffff" : (control3.pressed ? "#26282a" : "#353637")
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+            onClicked:
+            {
+                //fileSave.open()
+            }
         }
     }
 
@@ -157,10 +250,10 @@ Rectangle
             clip: true
        }
     }
-
+/*
     Component.onCompleted:
     {
         treatment.searchDomaine("");
     }
-
+*/
 }

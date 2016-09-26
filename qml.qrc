@@ -21,5 +21,7 @@
         <file>LayerGoalVide.qml</file>
         <file>LayerDomaineSearch.qml</file>
         <file>LayerGoalInexistant.qml</file>
+        <file>LayerDomaineVide.qml</file>
+        <file>LayerDomaineFull.qml</file>
     </qresource>
 </RCC>

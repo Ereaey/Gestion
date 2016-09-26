@@ -25,7 +25,7 @@ int DataCommu::result() const
 
 void DataCommu::setResult(int result)
 {
-    qDebug() << QString::number(result);
+    //qDebug() << QString::number(result);
     m_result = result;
     emit resultM();
 }

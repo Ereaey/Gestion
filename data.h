@@ -130,7 +130,7 @@ class Data : public QObject
         void addCommunaute(QString name, QStringList goals);
         void addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent,
                         QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable);
-
+        void addDocument(QString name, QString idDomaine);
         QMap<QString, Communaute*> getCommus(){ return communautes;}
         void setCurrentCommu(QString name);
         Communaute* getCurrentCommu(){return c_actu;}

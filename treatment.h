@@ -6,6 +6,7 @@
 #include "datacommu.h"
 #include <QVariant>
 #include "datagoal.h"
+#include "datadomaine.h"
 
 class Treatment : public QThread
 {
@@ -13,15 +14,17 @@ class Treatment : public QThread
     Q_PROPERTY(bool finish READ finish NOTIFY finishChanged)
     Q_PROPERTY(QVariant commu READ commu NOTIFY refreshCommu)
     Q_PROPERTY(QVariant result READ result NOTIFY refreshResult)
+    Q_PROPERTY(QVariant descriptionResult READ descriptionResult NOTIFY refreshDescriptionResult)
     Q_PROPERTY(QString currentCommu READ currentCommu NOTIFY commuChanged)
     Q_PROPERTY(QString currentAction READ currentAction NOTIFY currentActionChanged)
 
-    enum t{SEARCH_GOAL_MODIF, SEARCH_GOAL_LECT, SEARCH_GOAL, SEARCH_GOAL_VIDE, SEARCH_DOMAINE, SEARCH_GOAL_PROBLEME};
+    enum t{SEARCH_GOAL_MODIF, SEARCH_GOAL_LECT, SEARCH_GOAL, SEARCH_GOAL_VIDE, SEARCH_DOMAINE, SEARCH_GOAL_PROBLEME, SEARCH_DOMAINE_VIDE, SEARCH_DOMAINE_FULL};
     public:
         Treatment(Data *d);
         Q_INVOKABLE void searchGoal(QString goal, bool modificateur, bool lecteur);
         bool finish() const;
         QVariant result() const{return QVariant::fromValue(m_result);}
+        QVariant descriptionResult() const{return QVariant::fromValue(m_descriptionResult);}
         QVariant commu() const{return QVariant::fromValue(m_commu);}
         QString currentCommu() const{return m_currentCommu;}
         QString currentAction() const{return m_currentAction;}
@@ -30,6 +33,8 @@ class Treatment : public QThread
         Q_INVOKABLE void searchGoalsVide();
         Q_INVOKABLE void searchGoalsProbleme();
         Q_INVOKABLE void searchDomaine(QString name);
+        Q_INVOKABLE void searchDomaineVide();
+        Q_INVOKABLE void searchDomaineFull();
 
 
     private:
@@ -42,6 +47,7 @@ class Treatment : public QThread
         QString m_domaine;
         QList<QObject*> m_commu;
         QList<QObject*> m_result;
+        QObject* m_descriptionResult;
 
     Q_SIGNALS:
         void finishChanged();
@@ -49,6 +55,7 @@ class Treatment : public QThread
         void refreshResult();
         void commuChanged();
         void currentActionChanged();
+        void refreshDescriptionResult();
 
     public slots:
 
