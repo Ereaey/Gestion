@@ -138,7 +138,7 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     domainesV.push_back(d);
 }
 
-void Data::addDocument(QString name, QString idDomaine, QString version, QString proprietaire, QString id)
+void Data::addDocument(QString name, QString idDomaine, QString version, QString proprietaire, QString id, QString dateCreation, QString dateModif, QString nbPj)
 {
     if (domaines.contains(idDomaine.toInt()))
     {
@@ -155,6 +155,9 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
         d->nom = name;
         d->domaine = domaines[idDomaine.toInt()];
         d->version = version;
+        d->dateCreation = QDate::fromString(dateCreation, "dd/MM/yyyy");
+        d->dateModif = QDate::fromString(dateModif, "dd/MM/yyyy");
+        d->nombresPJ = nbPj.toInt() + 1;
         if (domaines[idDomaine.toInt()]->commu->users.contains(proprietaire.split("-")[1].remove(" ")))
             d->proprietaire = domaines[idDomaine.toInt()]->commu->users[proprietaire.split("-")[1].remove(" ")];
         else

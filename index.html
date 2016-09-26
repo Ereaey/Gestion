@@ -96,10 +96,52 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 			addDomaine(domaines[i]);
 		}
 	}
+	function tousDomaines()
+	{
+		tableau = document.getElementById("tabledomaines");
+		tableau.innerHTML = "";
+		for (i = 0; i < domaines.length; i++) {
+			var ligne = tableau.insertRow(-1);
+			for (e = 0; e < domaines[i].length; e++) {
+				var colonne1 = ligne.insertCell(e);
+				colonne1.innerHTML += domaines[i][e];
+			}
+		}
+	}
+	function domainesVides()
+	{
+		tableau = document.getElementById("tabledomaines");
+		tableau.innerHTML = "";
+		for (i = 0; i < domaines.length; i++) {
+			if (domaines[i][2] == 0 && domaines[i][3] == 0)
+			{
+				var ligne = tableau.insertRow(-1);
+				for (e = 0; e < domaines[i].length; e++) {
+					var colonne1 = ligne.insertCell(e);
+					colonne1.innerHTML += domaines[i][e];
+				}
+			}
+		}
+	}
+	function domainesFull()
+	{
+		tableau = document.getElementById("tabledomaines");
+		tableau.innerHTML = "";
+		for (i = 0; i < domaines.length; i++) {
+			if (domaines[i][3] > 10)
+			{
+				var ligne = tableau.insertRow(-1);
+				for (e = 0; e < domaines[i].length; e++) {
+					var colonne1 = ligne.insertCell(e);
+					colonne1.innerHTML += domaines[i][e];
+				}
+			}
+		}
+	}
 	function genererTableaux()
 	{
 		var tableau = document.getElementById("tabledocuments");
-		
+
 		for (i = 0; i < documents.length; i++) {
 			var ligne = tableau.insertRow(-1);
 			for (e = 0; e < documents[i].length; e++) {
@@ -148,7 +190,6 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 		   <th>Propriétaire</th>
 		   <th>Crée le</th>
 		   <th>Modifié le</th>
-		   <th>Périmé le</th>
 		   <th>Piéces jointes</th>
 	   </tr>
 	</table>
@@ -156,7 +197,7 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 	<br />
 </p>
 
-<h2>Liste des domaines (<a href="">tous</a>, vides, surchargés)</h2>
+<h2>Liste des domaines (<a href="" onclick="tousDomaines();return false;">tous</a>, <a  href="" onclick="domainesVides();return false;">vides</a>, <a href="" onclick="domainesFull();return false;">surchargés</a>)</h2>
 <p>
 	<table id="tabledomaines" BORDER=1 style='padding:10px; border:solid 1px #dedede; width: 100%;'>
 	   <tr>
@@ -166,9 +207,6 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 		   <th>Nombres Documents</th>
 		   <th>Domaine Parent</th>
 		   <th>Responsable</th>
-		   <th>Gestionnaire</th>
-		   <th>Modificateurs</th>
-		   <th>Lecteurs</th>
 	   </tr>
 	</table>
 	<br />

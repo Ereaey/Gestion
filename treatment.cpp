@@ -140,7 +140,10 @@ QString Treatment::generatePlan(QString idDomaine)
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nom + "\", \""
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->version + "\", \""
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->domaine->nom + "\", \""
-                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->nom + " " + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->prenom
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->nom + " " + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->prenom + "\", \""
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->dateCreation.toString("dd/MM/yyyy") + "\", \""
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->dateModif.toString("dd/MM/yyyy") + "\", \""
+                 + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nombresPJ)
                  + "\"]";
     }
     return d;
