@@ -137,7 +137,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 5
-                text: treatment.descriptionResult.nom
+                text: "Nom : " + treatment.descriptionResult.nom
                 font.family: "Arial"
                 //font.bold: true
                 horizontalAlignment: Text.AlignLeft
@@ -153,8 +153,8 @@ Rectangle
                 id:idDomaine
                 anchors.fill: parent
                 anchors.leftMargin: 5;
-                anchors.topMargin: 20
-                text: treatment.descriptionResult.iddomaine
+                anchors.topMargin: 22
+                text: "Id : " + treatment.descriptionResult.iddomaine
                 font.family: "Arial"
                 //font.bold: true
                 horizontalAlignment: Text.AlignLeft
@@ -171,7 +171,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 40
-                text: treatment.descriptionResult.responsable
+                text: "Responsable : " + treatment.descriptionResult.responsable
                 font.family: "Arial"
                 //font.bold: true
                 horizontalAlignment: Text.AlignLeft

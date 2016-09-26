@@ -206,7 +206,7 @@ void Treatment::run()
                 setCommu(((DataCommu*)m_commu[i])->nom());
                 m_data->drawTree(m_domaine);
                 Domaine *g = m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesKey[m_domaine];
-                DataDomaine *d = new DataDomaine(g->nom, QString::number(g->id), "A A");
+                DataDomaine *d = new DataDomaine(g->nom, QString::number(g->id), g->responsable->user->nom + " " + g->responsable->user->prenom);
                 m_descriptionResult = d;
             }
             else
