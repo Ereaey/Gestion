@@ -279,6 +279,8 @@ void Treatment::run()
 
         QTextStream out(&file2);
         out << de;
+
+        searchDomaine(m_domaine);
     }
     m_finish = true;
     emit finishChanged();
