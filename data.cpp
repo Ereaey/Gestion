@@ -196,7 +196,7 @@ void Data::generateData()
         }
         foreach(QString name, communautes[key]->domaines.keys())
         {
-            if (communautes[key]->domaines[name]->documents.size() == 0)
+            if (communautes[key]->domaines[name]->documents.size() == 0 && communautes[key]->domaines[name]->enfants.size() == 0)
                 communautes[key]->domainesVides.append(communautes[key]->domaines[name]);
             if (communautes[key]->domaines[name]->documents.size() > 10)
                 communautes[key]->domainesPlein.append(communautes[key]->domaines[name]);

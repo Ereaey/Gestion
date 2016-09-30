@@ -54,7 +54,7 @@ class Treatment : public QThread
         QObject* m_descriptionResult;
         QString m_path;
         QString m_dataDocument;
-
+        QString m_file1, m_file2;
         QString generatePlan(QString idDomaine);
 
     Q_SIGNALS:

@@ -129,6 +129,13 @@ QString Treatment::generatePlan(QString idDomaine)
             + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->id_parent) + "\", \""
             + m_data->getCurrentCommu()->domainesKey[idDomaine]->responsable->user->nom + " " + m_data->getCurrentCommu()->domainesKey[idDomaine]->responsable->user->prenom
             + "\"]";
+    m_file1 += QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->id) + ";"
+            + m_data->getCurrentCommu()->domainesKey[idDomaine]->nom + ";"
+            + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->enfants.size()) + ";"
+            + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->documents.size()) + ";"
+            + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->id_parent) + ";"
+            + m_data->getCurrentCommu()->domainesKey[idDomaine]->responsable->user->nom + " " + m_data->getCurrentCommu()->domainesKey[idDomaine]->responsable->user->prenom
+            + QString(QChar('\n'));
     for (int i = 0; i < m_data->getCurrentCommu()->domainesKey[idDomaine]->enfants.size(); i++)
     {
          d += "," + generatePlan(QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->enfants[i]->id));
@@ -143,8 +150,18 @@ QString Treatment::generatePlan(QString idDomaine)
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->nom + " " + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->prenom + "\", \""
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->dateCreation.toString("dd/MM/yyyy") + "\", \""
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->dateModif.toString("dd/MM/yyyy") + "\", \""
-                 + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nombresPJ)
+                 + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nombresPJ) + "\", \""
+                 + idDomaine
                  + "\"]";
+         m_file2 += m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->id + ";"
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nom + ";"
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->version + ";"
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->domaine->nom + ";"
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->nom + " " + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->prenom + ";"
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->dateCreation.toString("dd/MM/yyyy") + ";"
+                 + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->dateModif.toString("dd/MM/yyyy") + ";"
+                 + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nombresPJ)
+                 + QString(QChar('\n'));;
     }
     return d;
 }
@@ -260,6 +277,8 @@ void Treatment::run()
     else if (m_type == EXPORT_PLAN)
     {
         QString data;
+        m_file1 = "Identifiant du domaine;Domaine;Nombre de sous-domaines directs;Nombre de documents directs;Identifiant du domaine parent;Responsable" + QString(QChar('\n'));
+        m_file2 = "Id;Titre;Version;Domaine;Proprietaire;Date de création;Date de dernière modification;Nombre de pièce jointe"+ QString(QChar('\n'));
         m_dataDocument = "var documents = [A";
         data = "var domaines = [" + generatePlan(m_domaine) + "];";
         data.replace(QString::number(m_data->getCurrentCommu()->domainesKey[m_domaine]->id_parent), "");
@@ -283,7 +302,20 @@ void Treatment::run()
         qDebug() << "Enregistrement";
         QTextStream out(&file2);
         out << de;
+        QString m_pattth = m_path;
+        QFile file3(m_path.replace(".html", "2.csv"));
+        if (!file3.open(QIODevice::WriteOnly | QIODevice::Text))
+            return;
+        qDebug() << "Enregistrement";
+        QTextStream out1(&file3);
+        out1 << m_file1;
 
+        QFile file4(m_pattth.replace(".html", "3.csv"));
+        if (!file4.open(QIODevice::WriteOnly | QIODevice::Text))
+            return;
+        qDebug() << "Enregistrement";
+        QTextStream out2(&file4);
+        out2 << m_file2;
         searchDomaine(m_domaine);
     }
     m_finish = true;
