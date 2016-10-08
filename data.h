@@ -109,12 +109,14 @@ struct Communaute
     QVector<UserCommu*> usersDoublon;
 
     QVector<UserCommu*> usersInconnu;//Plus dans les membres de la communauté
+    QVector<UserCommu*> usersNonTrouve;
 
     QVector<UserCommu*> usersPerimee;//Date dépassée
     QVector<Domaine*> domainesPerimee;//Date dépassée user
 
 
     QVector<Document*> documentsVide;//Sans PJ
+    QVector<Document*> documentsSurcharge;//Sans PJ
     QMap<int, Document*> documentsConfidentialitees;
     QMap<int, QVector<Document*>> documentsPJ;
 };
@@ -134,7 +136,7 @@ class Data : public QObject
         void addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent,
                         QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable);
         void addDocument(QString name, QString idDomaine, QString version, QString proprietaire, QString id,
-                         QString dateCreation, QString dateModif, QString nbPj);
+                         QString dateCreation, QString dateModif, QString nbPj, QString namePj);
         QMap<QString, Communaute*> getCommus(){ return communautes;}
         void setCurrentCommu(QString name);
         Communaute* getCurrentCommu(){return c_actu;}

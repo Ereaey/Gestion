@@ -41,9 +41,9 @@ void Data::addGoalMember(QString idGoal, QString idMember)
 void Data::addCommunaute(QString name, QStringList goals)
 {
     communautes[name] = new Communaute;
-    communautes[name]->name = name;
+    communautes[name]->name = name;/*
     for (int i = 0; i < goals.size(); i++)
-        communautes[name]->goalsMembers.push_back(goalNom[goals[i]]);
+        communautes[name]->goalsMembers.push_back(goalNom[goals[i]]);*/
 }
 
 void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent, QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable)
@@ -61,6 +61,7 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     }
     if (!communautes.contains(nameCommu))
     {
+        qDebug() << "bug commu";
         QStringList l;
         addCommunaute(nameCommu, l);
     }
@@ -138,7 +139,7 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     domainesV.push_back(d);
 }
 
-void Data::addDocument(QString name, QString idDomaine, QString version, QString proprietaire, QString id, QString dateCreation, QString dateModif, QString nbPj)
+void Data::addDocument(QString name, QString idDomaine, QString version, QString proprietaire, QString id, QString dateCreation, QString dateModif, QString nbPj, QString namePj)
 {
     if (domaines.contains(idDomaine.toInt()))
     {
@@ -157,7 +158,20 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
         d->version = version;
         d->dateCreation = QDate::fromString(dateCreation, "dd/MM/yyyy");
         d->dateModif = QDate::fromString(dateModif, "dd/MM/yyyy");
-        d->nombresPJ = nbPj.toInt() + 1;
+        d->nombresPJ = nbPj.toInt();
+        if (!namePj.isEmpty())
+            d->nombresPJ++;
+        if (d->nombresPJ == 0)
+        {
+            d->domaine->commu->documentsVide.push_back(d);
+        }
+        if (d->nombresPJ > 50)
+        {
+            d->domaine->commu->documentsSurcharge.push_back(d);
+        }
+
+        d->domaine->commu->documents[id] = d;
+
         if (domaines[idDomaine.toInt()]->commu->users.contains(proprietaire.split("-")[1].remove(" ")))
             d->proprietaire = domaines[idDomaine.toInt()]->commu->users[proprietaire.split("-")[1].remove(" ")];
         else

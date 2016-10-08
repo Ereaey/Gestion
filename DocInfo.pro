@@ -1,6 +1,7 @@
 TEMPLATE = app
 
 QT += qml quick widgets
+QT -= network gui
 
 CONFIG += c++11
 #CONFIG += console
@@ -18,7 +19,8 @@ SOURCES += main.cpp \
     datadomaine.cpp \
     datadomaines.cpp \
     datacommu.cpp \
-    datagoal.cpp
+    datagoal.cpp \
+    datadocument.cpp
 
 RESOURCES += qml.qrc
 
@@ -43,4 +45,5 @@ HEADERS += \
     datadomaine.h \
     datadomaines.h \
     datacommu.h \
-    datagoal.h
+    datagoal.h \
+    datadocument.h

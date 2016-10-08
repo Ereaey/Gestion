@@ -24,5 +24,8 @@
         <file>LayerDomaineVide.qml</file>
         <file>LayerDomaineFull.qml</file>
         <file>index.html</file>
+        <file>LayerDocument.qml</file>
+        <file>LayerDocumentVide.qml</file>
+        <file>LayerDocumentFull.qml</file>
     </qresource>
 </RCC>

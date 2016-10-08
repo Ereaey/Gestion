@@ -19,6 +19,31 @@ void Treatment::load()
     }
 }
 
+void Treatment::searchDocumentVide()
+{
+    m_currentAction = "Rechercher des documents vides";
+    emit currentActionChanged();
+    m_type = SEARCH_DOCUMENT_VIDE;
+    start();
+}
+
+void Treatment::searchDocument(QString name)
+{
+    m_currentAction = "Rechercher des documents > " + name;
+    emit currentActionChanged();
+    m_type = SEARCH_DOCUMENT;
+    m_document = name;
+    start();
+
+}
+
+void Treatment::searchDocumentSurchage()
+{
+    m_currentAction = "Rechercher des documents avec plus de 50 documents";
+    emit currentActionChanged();
+    m_type = SEARCH_DOCUMENT_SURCHARGE;
+    start();
+}
 void Treatment::searchGoal(QString goal, bool modificateur, bool lecteur)
 {
     m_goal = goal;
@@ -272,6 +297,51 @@ void Treatment::run()
         {
             m_result.append(new DataGoal(m_data->getCurrentCommu()->goalsInexistants[i]->nom, m_data->getCurrentCommu()->goalsInexistants[i]->ID, m_data->getCurrentCommu()->goalsInexistants[i]->etat));
         }
+        emit refreshResult();
+    }
+    else if (m_type == SEARCH_DOCUMENT_VIDE)
+    {
+        m_result.clear();
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->documentsVide.size());
+        }
+        for (int i = 0; i < m_data->getCurrentCommu()->documentsVide.size(); i++)
+        {
+            m_result.append(new DataDocument(m_data->getCurrentCommu()->documentsVide[i]->nom, m_data->getCurrentCommu()->documentsVide[i]->id, m_data->getCurrentCommu()->documentsVide[i]->domaine->id));
+        }
+        emit refreshResult();
+    }
+    else if (m_type == SEARCH_DOCUMENT_SURCHARGE)
+    {
+        m_result.clear();
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->documentsSurcharge.size());
+        }
+        for (int i = 0; i < m_data->getCurrentCommu()->documentsSurcharge.size(); i++)
+        {
+            m_result.append(new DataDocument(m_data->getCurrentCommu()->documentsSurcharge[i]->nom, m_data->getCurrentCommu()->documentsSurcharge[i]->id, m_data->getCurrentCommu()->documentsSurcharge[i]->domaine->id));
+        }
+        emit refreshResult();
+    }
+    else if (m_type == SEARCH_DOCUMENT)
+    {
+        m_result.clear();
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            if (m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->documents.contains(m_document))
+            {
+                qDebug() << "salut";
+                ((DataCommu*)(m_commu[i]))->setResult(1);
+                setCommu(((DataCommu*)m_commu[i])->nom());
+                m_result.append(new DataDocument(m_data->getCurrentCommu()->documents[m_document]->nom, m_data->getCurrentCommu()->documents[m_document]->id, m_data->getCurrentCommu()->documents[m_document]->domaine->id));
+
+            }
+            else
+                ((DataCommu*)(m_commu[i]))->setResult(0);
+        }
+
         emit refreshResult();
     }
     else if (m_type == EXPORT_PLAN)

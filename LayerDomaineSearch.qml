@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
-import Qt.labs.controls 1.0
+//import Qt.labs.controls 1.0
 import QtQuick.Dialogs 1.0
 import "."
 
@@ -78,13 +78,14 @@ Rectangle
             y:40
             x:10
             id:control
-            placeholderText: qsTr("Entrer domaine identifiant")
+            placeholderText: qsTr("Entrer l'identifiant du domaine")
+            style:TextFieldStyle{
             background: Rectangle {
                  implicitWidth: 200
                  implicitHeight: 30
                  color: control.enabled ? "white" : "#353637"
                  border.color: control.enabled ? "#bdbebf" : "transparent"
-             }
+             }}
             selectByMouse: true
         }
 
@@ -190,6 +191,7 @@ Rectangle
             id:control3
             text: "Exporter plan"
             height:20
+            style:ButtonStyle{
             background: Rectangle {
                 implicitWidth: 100
                 implicitHeight: 15
@@ -210,7 +212,7 @@ Rectangle
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
-            }
+            }}
             onClicked:
             {
 
@@ -247,10 +249,10 @@ Rectangle
         x:25
         color: "#516277"
 
-        Flickable
+        ScrollView
         {
             anchors.fill: parent
-            contentHeight: 15000
+            //contentHeight: 15000
 
             ListView
             {
@@ -264,8 +266,8 @@ Rectangle
                 focus: true
                 delegate: ItemView{}
             }
-            ScrollBar.vertical: ScrollBar {}
-            clip: true
+            //ScrollBar.vertical: ScrollBar {}
+            //clip: true
        }
     }
 /*

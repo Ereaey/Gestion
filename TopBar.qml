@@ -2,8 +2,6 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
-import Qt.labs.controls 1.0
-import QtQuick.Window 2.0
 
 Rectangle{
     id: root
@@ -17,22 +15,27 @@ Rectangle{
 
 
         Button {
-            y:16
+            y:20
             x: 5
             id:accueilMenu
             checkable: true
-            label: Text {
-                text: "Accueil"
-                color: root.currentItem == parent || accueil.containsMouse ? "#2B3643" : "#F3F3F3"
-                font.pointSize: 10
-                anchors.centerIn: parent
-            }
-            background: Rectangle {
-                implicitWidth: 100
-                implicitHeight: 15
-                opacity: enabled ? 1 : 0.3
-                color: root.currentItem == parent || accueil.containsMouse ? "#F3F3F3" : "#2B3643"
-                radius: root.currentItem == parent || accueil.containsMouse ? 5 : 0
+
+            style: ButtonStyle{
+                background: Rectangle {
+                    implicitWidth: 80
+                    implicitHeight: 15
+                    opacity: enabled ? 1 : 0.3
+                    color: root.currentItem == parent || accueil.containsMouse ? "#F3F3F3" : "#2B3643"
+                    radius: root.currentItem == parent || accueil.containsMouse ? 5 : 0
+                }
+                label: Text {
+                    text: "Accueil"
+                    color: root.currentItem == parent || accueil.containsMouse ? "#2B3643" : "#F3F3F3"
+                    font.pointSize: 10
+                    //anchors.centerIn: parent
+                    x:15
+                }
+
             }
             MouseArea
             {
@@ -47,21 +50,24 @@ Rectangle{
         }
 
         Button {
-            y:16
-            x: 115
+            y:20
+            x: 300
             id:communautesMenu
-            label: Text {
-                text: "Goals"
-                color: root.currentItem == parent || communautes.containsMouse ? "#2B3643" : "#F3F3F3"
-                font.pointSize: 10
-                anchors.centerIn: parent
-            }
+            style: ButtonStyle{
             background: Rectangle {
-                implicitWidth: 100
+                implicitWidth: 80
                 implicitHeight: 15
                 opacity: enabled ? 1 : 0.3
                 color: root.currentItem == parent || communautes.containsMouse ? "#F3F3F3" : "#2B3643"
                 radius: root.currentItem == parent || communautes.containsMouse ? 5 : 0
+            }
+            label: Text {
+                text: "Goals"
+                color: root.currentItem == parent || communautes.containsMouse ? "#2B3643" : "#F3F3F3"
+                font.pointSize: 10
+                //anchors.centerIn: parent
+                x:20
+            }
             }
             MouseArea
             {
@@ -77,21 +83,24 @@ Rectangle{
         }
 
         Button {
-            y:16
-            x: 225
+            y:20
+            x: 400
             id:utilisateursMenu
+            style: ButtonStyle{
             label: Text {
                 text: "Utilisateurs"
                 color: root.currentItem == parent || utilisateurs.containsMouse ? "#2B3643" : "#F3F3F3"
                 font.pointSize: 10
-                anchors.centerIn: parent
+                //anchors.centerIn: parent
+                x:3
             }
             background: Rectangle {
-                implicitWidth: 100
+                implicitWidth: 80
                 implicitHeight: 15
                 opacity: enabled ? 1 : 0.3
                 color: root.currentItem == parent || utilisateurs.containsMouse ? "#F3F3F3" : "#2B3643"
                 radius: root.currentItem == parent || utilisateurs.containsMouse ? 5 : 0
+            }
             }
             MouseArea
             {
@@ -108,21 +117,24 @@ Rectangle{
 
 
         Button {
-            y:16
-            x: 335
+            y:20
+            x: 100
             id:domainesMenu
+            style: ButtonStyle{
             label: Text {
                 text: "Domaines"
                 color: root.currentItem == parent || domaines.containsMouse ? "#2B3643" : "#F3F3F3"
                 font.pointSize: 10
-                anchors.centerIn: parent
+                //anchors.centerIn: parent
+                x:8
             }
             background: Rectangle {
-                implicitWidth: 100
+                implicitWidth: 80
                 implicitHeight: 15
                 opacity: enabled ? 1 : 0.3
                 color: root.currentItem == parent || domaines.containsMouse ? "#F3F3F3" : "#2B3643"
                 radius: root.currentItem == parent || domaines.containsMouse ? 5 : 0
+            }
             }
             MouseArea
             {
@@ -139,21 +151,24 @@ Rectangle{
 
 
         Button {
-            y:16
-            x: 445
+            y:20
+            x: 200
             id:documentsMenu
+            style: ButtonStyle{
             label: Text {
                 text: "Documents"
                 color: root.currentItem == parent || documents.containsMouse ? "#2B3643" : "#F3F3F3"
                 font.pointSize: 10
-                anchors.centerIn: parent
+                //anchors.centerIn: parent
+                x:5
             }
             background: Rectangle {
-                implicitWidth: 100
+                implicitWidth: 80
                 implicitHeight: 15
                 opacity: enabled ? 1 : 0.3
                 color: root.currentItem == parent || documents.containsMouse ? "#F3F3F3" : "#2B3643"
                 radius: root.currentItem == parent || documents.containsMouse ? 5 : 0
+            }
             }
             MouseArea
             {
@@ -203,6 +218,7 @@ Rectangle{
         Button {
             x: 5
             visible:root.currentItem ==communautesMenu ? true:false
+            style: ButtonStyle{
             label: Text {
                 text: "Rechercher un goal"
                 font.family: "Trebuchet MS"
@@ -218,6 +234,7 @@ Rectangle{
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
             }
+            }
             MouseArea
             {
                 id: accueil2
@@ -232,6 +249,7 @@ Rectangle{
         Button {
             x: 155
             visible:root.currentItem ==communautesMenu ? true:false
+            style: ButtonStyle{
             label: Text {
                 text: "Goals vides"
                 font.family: "Trebuchet MS"
@@ -246,6 +264,7 @@ Rectangle{
             background: Rectangle {
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
+            }
             }
             MouseArea
             {
@@ -262,6 +281,7 @@ Rectangle{
         Button {
             x: 255
             visible:root.currentItem ==communautesMenu ? true:false
+            style: ButtonStyle{
             label: Text {
                 text: "Goals problémes"
                 font.family: "Trebuchet MS"
@@ -276,6 +296,7 @@ Rectangle{
             background: Rectangle {
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
+            }
             }
             MouseArea
             {
@@ -292,8 +313,9 @@ Rectangle{
         Button {
             x: 5
             visible:root.currentItem ==accueilMenu ? true:false
+            style: ButtonStyle{
             label: Text {
-                text: "Note global"
+                text: "Note globale"
                 font.family: "Trebuchet MS"
                 font.italic: true
 
@@ -306,6 +328,7 @@ Rectangle{
             background: Rectangle {
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
+            }
             }
             MouseArea
             {
@@ -321,6 +344,7 @@ Rectangle{
         Button {
             x: 5
             visible:root.currentItem ==documentsMenu ? true:false
+            style: ButtonStyle{
             label: Text {
                 text: "Rechercher des documents"
                 font.family: "Trebuchet MS"
@@ -336,6 +360,7 @@ Rectangle{
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
             }
+            }
             MouseArea
             {
                 id: accueil28
@@ -343,13 +368,14 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
-                    principalLoader.source = "LayerGoalSearch.qml"
+                    principalLoader.source = "LayerDocument.qml"
                 }
             }
         }
         Button {
             x: 205
             visible:root.currentItem ==documentsMenu ? true:false
+            style: ButtonStyle{
             label: Text {
                 text: "Documents sans piéces jointes"
                 font.family: "Trebuchet MS"
@@ -365,6 +391,7 @@ Rectangle{
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
             }
+            }
             MouseArea
             {
                 id: accueil29
@@ -372,15 +399,17 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
-                    principalLoader.source = "LayerGoalSearch.qml"
+                    treatment.searchDocumentVide();
+                    principalLoader.source = "LayerDocumentVide.qml"
                 }
             }
         }
         Button {
             x: 405
             visible:root.currentItem ==documentsMenu ? true:false
+            style: ButtonStyle{
             label: Text {
-                text: "Documents avec plus de x piéces jointes"
+                text: "Documents avec plus de 50 piéces jointes"
                 font.family: "Trebuchet MS"
                 font.italic: true
 
@@ -394,6 +423,7 @@ Rectangle{
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
             }
+            }
             MouseArea
             {
                 id: accueil30
@@ -401,13 +431,15 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
-                    principalLoader.source = "LayerGoalSearch.qml"
+                    treatment.searchDocumentSurchage();
+                    principalLoader.source = "LayerDocumentFull.qml"
                 }
             }
         }
         Button {
             x: 5
             visible:root.currentItem ==utilisateursMenu ? true:false
+            style: ButtonStyle{
             label: Text {
                 text: "Rechercher un utilisateur"
                 font.family: "Trebuchet MS"
@@ -423,6 +455,7 @@ Rectangle{
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
             }
+            }
             MouseArea
             {
                 id: accueil31
@@ -437,6 +470,7 @@ Rectangle{
         Button {
             x: 175
             visible:root.currentItem ==utilisateursMenu ? true:false
+            style: ButtonStyle{
             label: Text {
                 text: "Utilisateurs absents de la communauté"
                 font.family: "Trebuchet MS"
@@ -452,6 +486,7 @@ Rectangle{
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
             }
+            }
             MouseArea
             {
                 id: accueil32
@@ -466,6 +501,7 @@ Rectangle{
         Button {
             x: 425
             visible:root.currentItem ==utilisateursMenu ? true:false
+            style: ButtonStyle{
             label: Text {
                 text: "Utilisateurs perimés"
                 font.family: "Trebuchet MS"
@@ -481,6 +517,7 @@ Rectangle{
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
             }
+            }
             MouseArea
             {
                 id: accueil33
@@ -495,6 +532,7 @@ Rectangle{
         Button {
             x: 5
             visible:root.currentItem ==domainesMenu ? true:false
+            style: ButtonStyle{
             label: Text {
                 text: "Rechercher un domaine"
                 font.family: "Trebuchet MS"
@@ -510,6 +548,7 @@ Rectangle{
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
             }
+            }
             MouseArea
             {
                 id: accueil34
@@ -524,6 +563,7 @@ Rectangle{
         Button {
             x: 175
             visible:root.currentItem ==domainesMenu ? true:false
+            style: ButtonStyle{
             label: Text {
                 text: "Domaines vides"
                 font.family: "Trebuchet MS"
@@ -538,6 +578,7 @@ Rectangle{
             background: Rectangle {
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
+            }
             }
             MouseArea
             {
@@ -554,6 +595,7 @@ Rectangle{
         Button {
             x: 305
             visible:root.currentItem ==domainesMenu ? true:false
+            style: ButtonStyle{
             label: Text {
                 text: "Domaines avec plus de 10 documents"
                 font.family: "Trebuchet MS"
@@ -568,6 +610,7 @@ Rectangle{
             background: Rectangle {
                 opacity: enabled ? 1 : 0.3
                 color:"#F3F3F3"
+            }
             }
             MouseArea
             {

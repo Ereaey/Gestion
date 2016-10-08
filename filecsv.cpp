@@ -33,14 +33,14 @@ FileCSV::FileCSV(QString path)
         {
             line.replace(" ; ", " | ");
             listeData = line.split(";");
-            DataCSV *d = new DataCSV;
+            QVector<QString> d;
             bool e = true;
             for (int i = 0; i < listeData.size(); i++)
             {
                 QString temp = listeData.at(i);
                 if (temp.count(QChar('"')) == 1)
                     e = false;
-                d->value.push_back(temp.remove(QChar('"'), Qt::CaseInsensitive));
+                d.push_back(temp.remove(QChar('"'), Qt::CaseInsensitive));
             }
             if (e == true)
                 lines.push_back(d);
@@ -66,17 +66,19 @@ FileCSV::FileCSV(QString path)
 
 FileCSV::~FileCSV()
 {
-    qDeleteAll(lines);
+    //for (int i = 0; i < lines.size(); i++)
+    //    qDeleteAll(lines[i]);
+    //qDeleteAll(lines);
 }
 
 QString FileCSV::getData(int line, int value)
 {
-    return lines[line]->value[value];
+    return lines[line][value];
 }
 
 QString FileCSV::getData(int line, QString col)
 {
-    return lines[line]->value[cols[col]];
+    return lines[line][cols[col]];
 }
 
 int FileCSV::getNumberLines()

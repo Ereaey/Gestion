@@ -8,11 +8,6 @@
 #include <QFileInfo>
 #include <QCoreApplication>
 
-struct DataCSV
-{
-    QVector<QString> value;
-};
-
 class FileCSV
 {
     public:
@@ -24,7 +19,7 @@ class FileCSV
         QString getData(int line, QString col);
 
     private:
-        QVector<DataCSV*> lines;
+        QVector<QVector<QString>> lines;
         QMap<QString, int> cols;
         QString m_name;
 };

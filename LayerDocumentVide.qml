@@ -30,7 +30,7 @@ Rectangle
             anchors.fill: parent
             anchors.leftMargin: 5;
             anchors.topMargin: 5
-            text: "Goals problémes"
+            text: "Documents vides"
             font.family: "Arial"
             font.bold: true
             horizontalAlignment: Text.AlignLeft
@@ -64,7 +64,7 @@ Rectangle
                 delegate: contactDelegate
             }
             //ScrollBar.vertical: ScrollBar {}
-           // clip: true
+            //clip: true
        }
     }
 
@@ -78,7 +78,7 @@ Rectangle
                 Row
                 {
                 Text {
-                    text: '<b>Id:</b> ' + model.modelData.idgoal + '     <b>Nom:</b> ' + model.modelData.nom + '     <b>Etat:</b> ' + model.modelData.problem
+                    text: '<b>Id:</b> ' + model.modelData.id + '     <b>Nom:</b> ' + model.modelData.nom
                     font.family: "Arial"
                     font.pointSize: 10
                     color: "white"
@@ -94,7 +94,7 @@ Rectangle
                     id:control
                     text: "Rechercher dans l'arbre"
                     height:15
-                    style: ButtonStyle{
+                    style:ButtonStyle{
                     background: Rectangle {
                         implicitWidth: 100
                         implicitHeight: 15
@@ -119,8 +119,8 @@ Rectangle
                     onClicked:
                     {
                         //listDomaine.deleteDomaine(model.modelData.iddomaine);
-                        principalLoader.source = "LayerGoalSearch.qml"
-                        treatment.searchGoal(model.modelData.nom, true, true)
+                        principalLoader.source = "LayerDomaineSearch.qml"
+                        treatment.searchDomaine(model.modelData.iddomaine);
                     }
                 }
                 }

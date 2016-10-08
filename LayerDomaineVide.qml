@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
-import Qt.labs.controls 1.0
+//import Qt.labs.controls 1.0
 import QtQuick.Dialogs 1.0
 import "."
 
@@ -46,10 +46,10 @@ Rectangle
         x:25
         color: "#516277"
 
-        Flickable
+        ScrollView
         {
             anchors.fill: parent
-            contentHeight: 15000
+            //contentHeight: 15000
 
             ListView
             {
@@ -63,8 +63,8 @@ Rectangle
                 focus: true
                 delegate: contactDelegate
             }
-            ScrollBar.vertical: ScrollBar {}
-            clip: true
+            //ScrollBar.vertical: ScrollBar {}
+            //clip: true
        }
     }
 
@@ -94,6 +94,7 @@ Rectangle
                     id:control
                     text: "Rechercher dans l'arbre"
                     height:15
+                    style:ButtonStyle{
                     background: Rectangle {
                         implicitWidth: 100
                         implicitHeight: 15
@@ -114,7 +115,7 @@ Rectangle
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
-                    }
+                    }}
                     onClicked:
                     {
                         //listDomaine.deleteDomaine(model.modelData.iddomaine);

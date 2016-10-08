@@ -148,16 +148,16 @@ void Loading::loadCommu()
     qDebug() << QString::number(fileCommu.getNumberLines());
     setMessageLoading("Chargement des communautes.. 0 / " + QString::number(fileCommu.getNumberLines()));
     emit currentActionChanged();
-    for (int i = 0; i < fileCommu.getNumberLines(); i++)
+    for (int i = 1; i < fileCommu.getNumberLines(); i++)
     {
         mutex.lock();
         m_sizeAll = fileCommu.getNumberLines();
         m_sizeCurrent = i;
         mutex.unlock();
         QString nom =  fileCommu.getData(i, 1);
-        QStringList goals =  fileCommu.getData(i, "Y").split(",");
+        QStringList goals =  fileCommu.getData(i, "Y").remove(" ").split(",");
 
-        //m_data->addCommunaute(nom, goals);
+        m_data->addCommunaute(nom, goals);
 
 
         setMessageLoading("Chargement des communautes.. "+  QString::number(i) + " / " + QString::number(fileCommu.getNumberLines()));
@@ -171,7 +171,7 @@ void Loading::loadGoalMember()
     FileCSV fileGoalMember(m_pathGoalMembers.absoluteFilePath());
     setMessageLoading("Chargement des membres appartenant au goal.. 0 / " + QString::number(fileGoalMember.getNumberLines()));
     emit currentActionChanged();
-    for (int i = 0; i < fileGoalMember.getNumberLines(); i++)
+    for (int i = 2; i < fileGoalMember.getNumberLines(); i++)
     {
         mutex.lock();
         m_sizeAll = fileGoalMember.getNumberLines();
@@ -232,7 +232,7 @@ void Loading::loadDocuments()
 /*
         m_data->addGoalMember(id, nom);
 */
-        m_data->addDocument(fileDocuments.getData(i, "D"), fileDocuments.getData(i, "T"), fileDocuments.getData(i, "B"), fileDocuments.getData(i, "H"), fileDocuments.getData(i, "A"), fileDocuments.getData(i, "M"), fileDocuments.getData(i, "O"), fileDocuments.getData(i, "AI"));
+        m_data->addDocument(fileDocuments.getData(i, "D"), fileDocuments.getData(i, "T"), fileDocuments.getData(i, "B"), fileDocuments.getData(i, "H"), fileDocuments.getData(i, "A"), fileDocuments.getData(i, "M"), fileDocuments.getData(i, "O"), fileDocuments.getData(i, "AI"), fileDocuments.getData(i, "AD"));
         setMessageLoading("Chargement des documents.. " + QString::number(i) + " / " + QString::number(fileDocuments.getNumberLines()));
     }
 }

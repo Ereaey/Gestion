@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
-import Qt.labs.controls 1.0
+//import Qt.labs.controls 1.0
 
 Rectangle
 {

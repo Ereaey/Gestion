@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
-import Qt.labs.controls 1.0
+//import Qt.labs.controls 1.0
 import QtQuick.Dialogs 1.0
 import "."
 
@@ -75,12 +75,13 @@ Rectangle
             x:10
             id:control
             placeholderText: qsTr("Entrer goal")
+            style: TextFieldStyle{
             background: Rectangle {
                  implicitWidth: 200
                  implicitHeight: 30
                  color: control.enabled ? "white" : "#353637"
                  border.color: control.enabled ? "#bdbebf" : "transparent"
-             }
+             }}
             selectByMouse: true
         }
 
@@ -93,14 +94,15 @@ Rectangle
             text: "Rechercher"
             onClicked:
             {
-                if (modifcheck.checkState == Qt.Checked && lectcheck.checkState == Qt.Checked)
+
+                if (modifcheck.checkState === Qt.Checked && lectcheck.checkState === Qt.Checked)
                     treatment.searchGoal(control.text, true, true)
-                else if (modifcheck.checkState == Qt.Unchecked && lectcheck.checkState == Qt.Checked)
+                else if (modifcheck.checkState === Qt.Unchecked && lectcheck.checkState === Qt.Checked)
                     treatment.searchGoal(control.text, false, true)
-                else if (modifcheck.checkState == Qt.Checked && lectcheck.checkState == Qt.Unchecked)
+                else if (modifcheck.checkState === Qt.Checked && lectcheck.checkState === Qt.Unchecked)
                     treatment.searchGoal(control.text, true, false)
                 else
-                    treatment.searchGoal(control.text, false, false)
+                    treatment.searchGoal(control.text, true, true)
             }
         }
         Row {
@@ -110,6 +112,9 @@ Rectangle
                 text: qsTr("Modificateur")
                 checked: true
                 id:modifcheck
+                /*
+                style:CheckBoxStyle
+                {
                 label: Text {
 
                     x: 40
@@ -125,10 +130,34 @@ Rectangle
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
                  }
+                indicator:Rectangle
+                {
+                implicitWidth: 28
+                implicitHeight: 28
+                Image {
+                    x: (parent.width - width) / 2
+                    y: (parent.height - height) / 2
+                    source: "qrc:/qt-project.org/imports/Qt/labs/controls/images/check.png"
+                    visible: modifcheck.checkState === Qt.Checked
+                }
+
+                Rectangle {
+                    x: (parent.width - width) / 2
+                    y: (parent.height - height) / 2
+                    width: 16
+                    height: 3
+                    color: "#353637"
+                    visible: modifcheck.checkState === Qt.PartiallyChecked
+                }
+                }
+                }*/
             }
             CheckBox {
                 text: qsTr("Lecteur")
                 id:lectcheck
+                /*
+                style:CheckBoxStyle
+                {
                 label: Text {
 
                     x: 40
@@ -144,6 +173,7 @@ Rectangle
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
                  }
+                }*/
             }
         }
     }
@@ -207,11 +237,17 @@ Rectangle
         height: parent.height - 205
         x:25
         color: "#516277"
-
-        Flickable
+        Rectangle
         {
+            width: parent.width - 10
+            x : 10
+            y : 5
+            height: parent.height - 10
+            color: "#516277"
+            ScrollView
+            {
             anchors.fill: parent
-            contentHeight: 15000
+            //contentHeight: 15000
 
             ListView
             {
@@ -225,9 +261,10 @@ Rectangle
                 focus: true
                 delegate: ItemView{}
             }
-            ScrollBar.vertical: ScrollBar {}
-            clip: true
-       }
+            //ScrollBar.vertical: ScrollBar {}
+            //clip: true
+            }
+        }
     }
 
     Rectangle
@@ -256,6 +293,8 @@ Rectangle
             id:control4
             text: "Vider"
             height:15
+        style: ButtonStyle
+        {
             background: Rectangle {
                 implicitWidth: 100
                 implicitHeight: 15
@@ -276,7 +315,7 @@ Rectangle
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
-            }
+            }}
             onClicked:
             {
                 listDomaine.clear();
@@ -289,6 +328,7 @@ Rectangle
             id:control3
             text: "Exporter"
             height:15
+        style:ButtonStyle{
             background: Rectangle {
                 implicitWidth: 100
                 implicitHeight: 15
@@ -309,7 +349,7 @@ Rectangle
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
-            }
+            }}
             onClicked:
             {
                 fileSave.open()
@@ -349,6 +389,7 @@ Rectangle
                         id:control
                         text: "Retirer"
                         height:15
+                        style:ButtonStyle{
                         background: Rectangle {
                             implicitWidth: 100
                             implicitHeight: 15
@@ -369,7 +410,7 @@ Rectangle
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             elide: Text.ElideRight
-                        }
+                        }}
                         onClicked:
                         {
                             listDomaine.deleteDomaine(model.modelData.iddomaine);
@@ -386,6 +427,7 @@ Rectangle
                         id:control2
                         text: "Copier"
                         height:15
+                        style:ButtonStyle{
                         background: Rectangle {
                             implicitWidth: 100
                             implicitHeight: 15
@@ -406,7 +448,7 @@ Rectangle
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             elide: Text.ElideRight
-                        }
+                        }}
                         onClicked:
                         {
                             listDomaine.copy(model.modelData.iddomaine);
@@ -423,10 +465,12 @@ Rectangle
             }
         }
 
-        Flickable
+        ScrollView
         {
             anchors.fill: parent
-            contentHeight: 10000
+            //contentHeight: 10000
+            y:5
+            x:5
             ListView {
                 id:listD
                 y:5
@@ -437,8 +481,8 @@ Rectangle
                 model: listDomaine.domaines
                 delegate: contactDelegate
             }
-            ScrollBar.vertical: ScrollBar {}
-            clip: true
+            //ScrollBar.vertical: ScrollBar {}
+            //clip: true
         }
     }
 

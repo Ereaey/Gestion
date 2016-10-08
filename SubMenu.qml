@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
-import Qt.labs.controls 1.0
+//import Qt.labs.controls 1.0
 
 Rectangle
 {
@@ -23,37 +23,6 @@ Rectangle
     width: parent.width
     x:0
     color: "#516277"
-    Button {
-        y: 3
-        x: parent.width - 160
-
-        label: Text {
-            text: "Changer de communauté"
-            font.family: "Trebuchet MS"
-            color: accueil23.containsMouse ? "white" : "white"
-            font.pointSize: 9
-            x:8
-            y:2
-            clip:true
-        }
-        background: Rectangle {
-            width: 155
-            height: 20
-            opacity: enabled ? 1 : 0.3
-            color: accueil23.containsMouse ? "#3E4B5C" : "#364150"
-            radius: 5
-        }
-        MouseArea
-        {
-            id: accueil23
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onClicked: {
-                commus.visible = !commus.visible
-            }
-        }
-    }
 
     Text
     {
@@ -65,13 +34,46 @@ Rectangle
         id: menuCommu
         y: 5
         x: 10
-    }
+    }/*
     Rectangle
     {
         y:0
         height:1
         color:"#D2D2D2"
-        width:parent.width
+       width:parent.width
+    }*/
+    Button {
+        y: 1
+        x: parent.width - 168
+        style: ButtonStyle{
+
+        label: Text {
+            text: "Changer de communauté"
+            font.family: "Trebuchet MS"
+            color: accueil23.containsMouse ? "white" : "white"
+            font.pointSize: 9
+            x:15
+            //y:3
+            //clip:true
+        }
+        background: Rectangle {
+            implicitWidth: 170
+            implicitHeight: 16
+            opacity: enabled ? 1 : 0.3
+            color: accueil23.containsMouse ? "#3E4B5C" : "#364150"
+            //radius: 5
+        }
+        }
+        MouseArea
+        {
+            id: accueil23
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onClicked: {
+                commus.visible = !commus.visible
+            }
+        }
     }
 }
 

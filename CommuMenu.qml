@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
-import Qt.labs.controls 1.0
+//import Qt.labs.controls 1.0
 
 Rectangle
 {
@@ -14,20 +14,21 @@ Rectangle
 
     property string loadResult: treatment.finish
     onLoadResultChanged: {
-        if (treatment.finish == true)
+        if (treatment.finish === true)
         {
             listD.model = treatment.commu;
             console.log("Modif");
         }
     }
-
     Component {
         id: contactDelegate
         Item {
             width: 180;
             height: 70
             x:10
+
             Column {
+                y:10
                 Row
                 {
                 Text {
@@ -47,6 +48,7 @@ Rectangle
                     id:control
                     text: "Selectionner"
                     height:15
+                    style: ButtonStyle{
                     background: Rectangle {
                         implicitWidth: 100
                         implicitHeight: 15
@@ -56,17 +58,18 @@ Rectangle
                         border.color: control.pressed ? "#26282a" : "#353637"
                     }
                     label: Text {
-                        x: control.leftPadding
-                        y: control.topPadding
+                        //x: control.leftPadding
+                        //y: control.topPadding
                         width: control.availableWidth
                         height: control.availableHeight
                         text: control.text
-                        font: control.font
+                        //font: control.font
                         opacity: enabled || highlighted ? 1 : 0.3
                         color: control.highlighted ? "#ffffff" : (control.pressed ? "#26282a" : "#353637")
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
+                    }
                     }
                     onClicked:
                     {
@@ -87,26 +90,19 @@ Rectangle
     }
 
 
-    Flickable
-    {
-        anchors.fill: parent
-        contentHeight: 1000
-        ListView {
-            id:listD
-            y:15
-            maximumFlickVelocity: 100
-            x:8
-            height: parent.height - 40
-            width: parent.width
-            model: treatment.commu
-            delegate: contactDelegate
-            //highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-            //focus: true
+        ScrollView
+        {
+            anchors.fill: parent
+            ListView {
+                id:listD
+                maximumFlickVelocity: 100
+                x:30
+                height: parent.height - 40
+                width: parent.width
+                model: treatment.commu
+                delegate: contactDelegate
+            }
         }
-
-        ScrollBar.vertical: ScrollBar {}
-        clip: true
-    }
     Component.onCompleted:
     {
         listD.model = treatment.commu;
