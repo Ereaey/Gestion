@@ -58,12 +58,12 @@ Rectangle{
                 implicitWidth: 80
                 implicitHeight: 15
                 opacity: enabled ? 1 : 0.3
-                color: root.currentItem == parent || communautes.containsMouse ? "#F3F3F3" : "#2B3643"
-                radius: root.currentItem == parent || communautes.containsMouse ? 5 : 0
+                color: root.currentItem == communautesMenu|| communautes.containsMouse ? "#F3F3F3" : "#2B3643"
+                radius: root.currentItem == communautesMenu || communautes.containsMouse ? 5 : 0
             }
             label: Text {
                 text: "Goals"
-                color: root.currentItem == parent || communautes.containsMouse ? "#2B3643" : "#F3F3F3"
+                color: root.currentItem == communautesMenu || communautes.containsMouse ? "#2B3643" : "#F3F3F3"
                 font.pointSize: 10
                 //anchors.centerIn: parent
                 x:20
@@ -77,6 +77,8 @@ Rectangle{
                 propagateComposedEvents: true
                 onClicked:
                 {
+                    treatment.searchGoal("", false, false);
+                    principalLoader.source = "LayerGoalSearch.qml"
                     root.currentItem = parent
                 }
             }
@@ -89,7 +91,7 @@ Rectangle{
             style: ButtonStyle{
             label: Text {
                 text: "Utilisateurs"
-                color: root.currentItem == parent || utilisateurs.containsMouse ? "#2B3643" : "#F3F3F3"
+                color: root.currentItem == utilisateursMenu || utilisateurs.containsMouse ? "#2B3643" : "#F3F3F3"
                 font.pointSize: 10
                 //anchors.centerIn: parent
                 x:3
@@ -98,8 +100,8 @@ Rectangle{
                 implicitWidth: 80
                 implicitHeight: 15
                 opacity: enabled ? 1 : 0.3
-                color: root.currentItem == parent || utilisateurs.containsMouse ? "#F3F3F3" : "#2B3643"
-                radius: root.currentItem == parent || utilisateurs.containsMouse ? 5 : 0
+                color: root.currentItem == utilisateursMenu || utilisateurs.containsMouse ? "#F3F3F3" : "#2B3643"
+                radius: root.currentItem == utilisateursMenu || utilisateurs.containsMouse ? 5 : 0
             }
             }
             MouseArea
@@ -123,7 +125,7 @@ Rectangle{
             style: ButtonStyle{
             label: Text {
                 text: "Domaines"
-                color: root.currentItem == parent || domaines.containsMouse ? "#2B3643" : "#F3F3F3"
+                color: root.currentItem == domainesMenu || domaines.containsMouse ? "#2B3643" : "#F3F3F3"
                 font.pointSize: 10
                 //anchors.centerIn: parent
                 x:8
@@ -132,8 +134,8 @@ Rectangle{
                 implicitWidth: 80
                 implicitHeight: 15
                 opacity: enabled ? 1 : 0.3
-                color: root.currentItem == parent || domaines.containsMouse ? "#F3F3F3" : "#2B3643"
-                radius: root.currentItem == parent || domaines.containsMouse ? 5 : 0
+                color: root.currentItem == domainesMenu || domaines.containsMouse ? "#F3F3F3" : "#2B3643"
+                radius: root.currentItem == domainesMenu || domaines.containsMouse ? 5 : 0
             }
             }
             MouseArea
@@ -144,6 +146,8 @@ Rectangle{
                 propagateComposedEvents: true
                 onClicked:
                 {
+                    treatment.searchDomaine("");
+                    principalLoader.source = "LayerDomaineSearch.qml"
                     root.currentItem = parent
                 }
             }
@@ -157,7 +161,7 @@ Rectangle{
             style: ButtonStyle{
             label: Text {
                 text: "Documents"
-                color: root.currentItem == parent || documents.containsMouse ? "#2B3643" : "#F3F3F3"
+                color: (root.currentItem === documentsMenu || documents.containsMouse) ? "#2B3643" : "#F3F3F3"
                 font.pointSize: 10
                 //anchors.centerIn: parent
                 x:5
@@ -166,8 +170,8 @@ Rectangle{
                 implicitWidth: 80
                 implicitHeight: 15
                 opacity: enabled ? 1 : 0.3
-                color: root.currentItem == parent || documents.containsMouse ? "#F3F3F3" : "#2B3643"
-                radius: root.currentItem == parent || documents.containsMouse ? 5 : 0
+                color: (root.currentItem === documentsMenu || documents.containsMouse) ? "#F3F3F3" : "#2B3643"
+                radius: (root.currentItem === documentsMenu || documents.containsMouse) ? 5 : 0
             }
             }
             MouseArea
@@ -178,6 +182,8 @@ Rectangle{
                 propagateComposedEvents: true
                 onClicked:
                 {
+                    treatment.searchDocument("");
+                    principalLoader.source = "LayerDocument.qml"
                     root.currentItem = parent
                 }
             }
@@ -368,6 +374,7 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
+                    treatment.searchDocument("");
                     principalLoader.source = "LayerDocument.qml"
                 }
             }
@@ -525,6 +532,7 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
+
                     principalLoader.source = "LayerGoalSearch.qml"
                 }
             }
@@ -556,6 +564,7 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
+                    treatment.searchDomaine("");
                     principalLoader.source = "LayerDomaineSearch.qml"
                 }
             }

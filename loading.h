@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #include "data.h"
 #include "filecsv.h"
+#include "autocompletgoal.h"
 
 class Loading : public QThread
 {
@@ -19,7 +20,7 @@ class Loading : public QThread
     Q_PROPERTY(bool finish READ finish NOTIFY finishChanged)
 
     public:
-        Loading(Data *d);
+        Loading(Data *d, autoCompletGoal *a);
         void loadFiles();
         //QML - Variables
         QString messageLoading();
@@ -80,6 +81,8 @@ class Loading : public QThread
         QMutex mutex;
 
         bool m_finish;
+
+        autoCompletGoal *m_a;
 };
 
 #endif // LOADING_H

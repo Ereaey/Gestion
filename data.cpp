@@ -14,8 +14,8 @@ void Data::addUser(QString identifiant, QString nom, QString prenom)
     u->prenom = prenom;
 
     userId[u->ID] = u;
-    userNomPrenom[u->nom + " " + u->prenom] = u;
-    userPrenomNom[u->prenom + " " + u->nom] = u;
+    userNomPrenom[u->nom + " " + u->prenom].push_back(u);
+    userPrenomNom[u->prenom + " " + u->nom].push_back(u);
 }
 
 void Data::addGoal(QString nom, QString ID, QString identifiantResponsable, QString etat)
@@ -80,9 +80,11 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
         if (!userId.contains(r))
         {
             userId[r] = new User;
-            userId[r]->nom = "N";
-            userId[r]->prenom = "C";
+            userId[r]->nom = responsable.split('-')[0];
+            userId[r]->prenom = "(Utilisateur inconnu)";
             userId[r]->ID = r;
+
+            //communautes[nameCommu]->usersNonTrouve.push_back(userId[pro]);
         }
         UserCommu *uC = new UserCommu;
         uC->user = userId[r];
@@ -180,9 +182,10 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
             if (!userId.contains(pro))
             {
                 userId[pro] = new User;
-                userId[pro]->nom = "N";
-                userId[pro]->prenom = "C";
+                userId[pro]->nom = proprietaire.split("-")[0];
+                userId[pro]->prenom = "(Utilisateur inconnu)";
                 userId[pro]->ID = pro;
+                //d->domaine->commu->usersNonTrouve.push_back(userId[pro]);
             }
             UserCommu *uC = new UserCommu;
             uC->user = userId[pro];

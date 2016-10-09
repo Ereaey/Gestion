@@ -150,8 +150,8 @@ class Data : public QObject
     private:
         void recursiveOpen(int id);
         QMap<QString, User*> userId;
-        QMap<QString, User*> userPrenomNom;
-        QMap<QString, User*> userNomPrenom;
+        QMap<QString, QVector <User*>> userPrenomNom;
+        QMap<QString, QVector<User*>> userNomPrenom;
 
         QMap<QString, Goal*> goalId;
         QMap<QString, Goal*> goalNom;

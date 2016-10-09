@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <QDirIterator>
 
-Loading::Loading(Data *d)
+Loading::Loading(Data *d, autoCompletGoal *a)
 {
     //m_listDrives = QDir::drives();
     m_listDrives += QFileInfo("C:/fichiersGestion");
@@ -11,6 +11,7 @@ Loading::Loading(Data *d)
     m_sizeCurrent = 0;
     m_sizeAll = 100;
     m_finish = false;
+    m_a = a;
 }
 
 int Loading::currentSize()
@@ -135,7 +136,7 @@ void Loading::loadGoal()
         QString idResp =  fileGoal.getData(i, "K");
 
         m_data->addGoal(nom, id, idResp, etat);
-
+        m_a->addGoal(nom);
 
         setMessageLoading("Chargement des goals.. " + QString::number(i) + " / " + QString::number(fileGoal.getNumberLines()));
 

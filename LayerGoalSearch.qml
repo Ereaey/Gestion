@@ -38,6 +38,32 @@ Rectangle
         testTree.model = tree.tree
     }
 
+    property bool loadResultAuto: autoComplet.finish
+    onLoadResultAutoChanged: {
+        autoCompletList.model = autoComplet.result
+    }
+
+    property string valueGoal: ""
+    Timer
+    {
+        interval: 500;
+        running: true;
+        repeat: true
+        onTriggered:
+        {
+            if (valueGoal != control.text)
+            {
+                valueGoal = control.text
+                autoComplet.search(control.text);
+            }
+        }
+    }
+/*
+    property QStringList loadAuto: autoComplet.result
+    onLoadAutoChanged: {
+        autoCompletList.model = autoComplet.result
+    }*/
+
     Rectangle
     {
         y:10
@@ -94,7 +120,6 @@ Rectangle
             text: "Rechercher"
             onClicked:
             {
-
                 if (modifcheck.checkState === Qt.Checked && lectcheck.checkState === Qt.Checked)
                     treatment.searchGoal(control.text, true, true)
                 else if (modifcheck.checkState === Qt.Unchecked && lectcheck.checkState === Qt.Checked)
@@ -106,74 +131,75 @@ Rectangle
             }
         }
         Row {
-            y:110
-            x:5
+            y:120
+            x:10
             CheckBox {
                 text: qsTr("Modificateur")
                 checked: true
                 id:modifcheck
-                /*
-                style:CheckBoxStyle
-                {
-                label: Text {
 
-                    x: 40
-                    y: 10
-                    width: 100
-                    height: 20
-
-                    text: modifcheck.text
-                    font: modifcheck.font
-                    color: "white"
-                    elide: Text.ElideRight
-                    visible: modifcheck.text
-                    horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignVCenter
-                 }
-                indicator:Rectangle
-                {
-                implicitWidth: 28
-                implicitHeight: 28
-                Image {
-                    x: (parent.width - width) / 2
-                    y: (parent.height - height) / 2
-                    source: "qrc:/qt-project.org/imports/Qt/labs/controls/images/check.png"
-                    visible: modifcheck.checkState === Qt.Checked
-                }
-
-                Rectangle {
-                    x: (parent.width - width) / 2
-                    y: (parent.height - height) / 2
-                    width: 16
-                    height: 3
-                    color: "#353637"
-                    visible: modifcheck.checkState === Qt.PartiallyChecked
-                }
-                }
-                }*/
+                style: CheckBoxStyle {
+                        indicator: Rectangle {
+                                implicitWidth: 20
+                                implicitHeight: 20
+                                radius: 3
+                                border.color: control.activeFocus ? "darkblue" : "gray"
+                                border.width: 1
+                                Rectangle {
+                                    visible: control.checked
+                                    color: "#555"
+                                    border.color: "#333"
+                                    radius: 1
+                                    anchors.margins: 4
+                                    anchors.fill: parent
+                                }
+                        }
+                        label: Text {
+                            x: 0
+                            y: 0
+                            width: 100
+                            height: 20
+                            text: modifcheck.text
+                            color: "white"
+                         }
+                    }
             }
+            Rectangle
+            {
+                width: 20
+                height: parent.height
+                color: "#516277"
+            }
+
             CheckBox {
                 text: qsTr("Lecteur")
                 id:lectcheck
-                /*
-                style:CheckBoxStyle
-                {
-                label: Text {
-
-                    x: 40
-                    y: 10
-                    width: 100
-                    height: 20
-
-                    text: lectcheck.text
-                    font: lectcheck.font
-                    color: "white"
-                    elide: Text.ElideRight
-                    visible: lectcheck.text
-                    horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignVCenter
-                 }
-                }*/
+                x:200
+                style: CheckBoxStyle {
+                        indicator: Rectangle {
+                                implicitWidth: 20
+                                implicitHeight: 20
+                                radius: 3
+                                border.color: control.activeFocus ? "darkblue" : "gray"
+                                border.width: 1
+                                Rectangle {
+                                    visible: control.checked
+                                    color: "#555"
+                                    border.color: "#333"
+                                    radius: 1
+                                    anchors.margins: 4
+                                    anchors.fill: parent
+                                }
+                        }
+                        label: Text {
+                            x: 0
+                            y: 0
+                            width: 100
+                            height: 20
+                            text: lectcheck.text
+                            color: "white"
+                         }
+                    }
             }
         }
     }
@@ -207,6 +233,44 @@ Rectangle
             width:parent.width
             height:parent.height - 30
             y:30
+        }
+        ScrollView
+        {
+            width:parent.width - 5
+            height:parent.height - 35
+            y:35
+            x:5
+            ListView
+            {
+
+                maximumFlickVelocity: 100
+                height: parent.height
+                width: parent.width
+                id:autoCompletList
+                model: autoComplet.result
+                delegate: Rectangle {
+                    height: 17
+                    width: parent.width
+                    Text {
+                        text: modelData;
+                        color: "white";
+                        font.family: "Arial"
+                        font.pointSize: 11
+                    }
+                    MouseArea
+                    {
+                        anchors.fill: parent
+                        onClicked:
+                        {
+                            control.text = modelData;
+                        }
+                    }
+
+                    color:"#516277"
+                }
+            }
+            //ScrollBar.vertical: ScrollBar {}
+            //clip: true
         }
     }
 
