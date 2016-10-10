@@ -42,6 +42,7 @@ void Data::addCommunaute(QString name, QStringList goals)
 {
     communautes[name] = new Communaute;
     communautes[name]->name = name;
+    communautes[name]->note = 50;
     if (!goals.isEmpty())
     {
         for (int i = 0; i < goals.size(); i++)
@@ -49,7 +50,6 @@ void Data::addCommunaute(QString name, QStringList goals)
             goals[i].remove(" ");
             if (goalNom.contains(goals[i]))
             {
-                qDebug() << "trouvé" << name << " " << goals[i];
                 communautes[name]->goalsMembers.push_back(goalNom[goals[i]]);
 
                 for (int e = 0; e < goalNom[goals[i]]->users.size(); e++)

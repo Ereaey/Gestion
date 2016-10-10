@@ -45,6 +45,7 @@ Rectangle{
                 onClicked:
                 {
                     root.currentItem = parent
+                    treatment.noteGlobale();
                     principalLoader.source = "LayerNote.qml"
                 }
             }
@@ -346,6 +347,7 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
+                    treatment.noteGlobale();
                     principalLoader.source = "LayerNote.qml"
                 }
             }

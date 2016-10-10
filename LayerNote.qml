@@ -122,10 +122,10 @@ Rectangle
             anchors.fill: parent
             anchors.rightMargin: 5;
             anchors.topMargin: 5
-            text: "5000 domaines"
+            text: "Domaines"
             font.family: "Arial"
             font.bold: true
-            horizontalAlignment: Text.AlignRight
+            horizontalAlignment: Text.AlignHCenter
             font.pointSize: 13
             //y: 10
             //x:150
@@ -139,6 +139,98 @@ Rectangle
             width:parent.width
             height:parent.height - 30
             y:30
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 5
+                text: "REPARTITION"
+                font.family: "Arial"
+                font.bold: true
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 25
+                text: "Nombre de domaines vides : "
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 45
+                text: "Nombre de domaines surchargés : "
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 85
+                text: "ASSERVISSEMENT"
+                font.family: "Arial"
+                font.bold: true
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 105
+                text: "Nombre de domaines asservisseurs : "
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 125
+                text: "Nombre de domaines libres, documents synchronisés : "
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 145
+                text: "Nombre de domaines libres, documents non synchronisés : "
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
         }
     }
 
@@ -155,10 +247,10 @@ Rectangle
             anchors.fill: parent
             anchors.rightMargin: 5;
             anchors.topMargin: 5
-            text: "5000 documents"
+            text: "Documents"
             font.family: "Arial"
             font.bold: true
-            horizontalAlignment: Text.AlignRight
+            horizontalAlignment: Text.AlignHCenter
             font.pointSize: 13
             //y: 10
             //x:150
@@ -172,6 +264,124 @@ Rectangle
             width:parent.width
             height:parent.height - 30
             y:30
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 5
+                text: "CONFIDENTIALITE"
+                font.family: "Arial"
+                font.bold: true
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 25
+                text: "Nombre de C0 : "
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 45
+                text: "Nombre de C1 : "
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 65
+                text: "Nombre de C2 : "
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 25;
+                anchors.topMargin: 85
+                text: "-> Ayant trop d'utilisateurs :"
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 105
+                text: "Nombre de C3 : "
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 25;
+                anchors.topMargin: 125
+                text: "-> Ayant trop d'utilisateurs :"
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 145
+                text: "Nombre de C4 : "
+                font.family: "Arial"
+
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+            Text
+            {
+                anchors.fill: parent
+                anchors.leftMargin: 5;
+                anchors.topMargin: 185
+                text: "VERSIONNEMENT"
+                font.family: "Arial"
+                font.bold: true
+                horizontalAlignment: Text.AlignLeft
+                font.pointSize: 11
+                color: "white"
+                width:parent.width
+            }
+
         }
     }
 
@@ -188,10 +398,10 @@ Rectangle
             anchors.fill: parent
             anchors.rightMargin: 5;
             anchors.topMargin: 5
-            text: "5000 utilisateurs"
+            text: "Utilisateurs"
             font.family: "Arial"
             font.bold: true
-            horizontalAlignment: Text.AlignRight
+            horizontalAlignment: Text.AlignHCenter
             font.pointSize: 13
             //y: 10
             //x:150

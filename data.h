@@ -56,12 +56,6 @@ struct UserCommu
     QVector<Domaine*> domainesLecteurGOAL;//via goal
 };
 
-
-struct NoteCommu
-{
-
-};
-
 struct Communaute;
 
 struct Domaine
@@ -82,7 +76,7 @@ struct Domaine
 struct Communaute
 {
     QString name;
-    NoteCommu *note;
+    int note;
 
     Domaine *root;
     Model rootTree;
@@ -119,6 +113,8 @@ struct Communaute
     QVector<Document*> documentsSurcharge;//Sans PJ
     QMap<int, Document*> documentsConfidentialitees;
     QMap<int, QVector<Document*>> documentsPJ;
+
+
 };
 
 enum typeDoc{C0, C1, C2, C3, C4};

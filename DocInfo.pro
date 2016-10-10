@@ -12,9 +12,7 @@ SOURCES += main.cpp \
     filecsv.cpp \
     data.cpp \
     treatment.cpp \
-    showresult.cpp \
     exportresult.cpp \
-    datainterface.cpp \
     treemodel.cpp \
     treeitem.cpp \
     datadomaine.cpp \
@@ -24,7 +22,8 @@ SOURCES += main.cpp \
     datadocument.cpp \
     autocompletgoal.cpp \
     autocompletuser.cpp \
-    datauser.cpp
+    datauser.cpp \
+    datanote.cpp
 
 RESOURCES += qml.qrc
 
@@ -41,9 +40,7 @@ HEADERS += \
     filecsv.h \
     data.h \
     treatment.h \
-    showresult.h \
     exportresult.h \
-    datainterface.h \
     treemodel.h \
     treeitem.h \
     datadomaine.h \
@@ -53,4 +50,5 @@ HEADERS += \
     datadocument.h \
     autocompletgoal.h \
     autocompletuser.h \
-    datauser.h
+    datauser.h \
+    datanote.h

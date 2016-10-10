@@ -84,6 +84,14 @@ void Treatment::searchGoal(QString goal, bool modificateur, bool lecteur)
     start();
 }
 
+void Treatment::noteGlobale()
+{
+    m_currentAction = "note globale";
+    emit currentActionChanged();
+    m_type = NOTE_GLOBALE;
+    start();
+}
+
 void Treatment::searchGoalsVide()
 {
     m_currentAction = "Rechercher un goal vide";
@@ -363,6 +371,16 @@ void Treatment::run()
 
         emit refreshResult();
     }
+    else if (m_type == NOTE_GLOBALE)
+    {
+        m_result.clear();
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->note);
+        }
+        m_result.append(new DataNote(m_data));
+        emit refreshResult();
+    }
     else if (m_type == SEARCH_USER_ABSENT)
     {
         m_result.clear();
@@ -373,7 +391,7 @@ void Treatment::run()
 
         for (int i = 0; i < m_data->getCurrentCommu()->usersInconnu.size(); i++)
         {
-            m_result.append(new DataUser(m_data->getCurrentCommu()->usersInconnu[i]->user->nom, m_data->getCurrentCommu()->usersInconnu[i]->user->ID));
+            m_result.append(new DataUser(m_data->getCurrentCommu()->usersInconnu[i]->user->nom + " " + m_data->getCurrentCommu()->usersInconnu[i]->user->prenom, m_data->getCurrentCommu()->usersInconnu[i]->user->ID));
         }
         emit refreshResult();
     }
