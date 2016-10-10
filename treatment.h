@@ -21,6 +21,8 @@ class Treatment : public QThread
 
     enum t{SEARCH_GOAL_MODIF, SEARCH_GOAL_LECT, SEARCH_GOAL, SEARCH_GOAL_VIDE, SEARCH_DOMAINE, SEARCH_GOAL_PROBLEME, SEARCH_DOMAINE_VIDE, SEARCH_DOMAINE_FULL,
           EXPORT_PLAN, SEARCH_DOCUMENT_VIDE, SEARCH_DOCUMENT_SURCHARGE, SEARCH_DOCUMENT, SEARCH_USER};
+
+    enum type{RESPONSABLE = 0, GESTIONNAIRE = 1, MODIFICATEUR = 2, LECTEUR = 3};
     public:
         Treatment(Data *d);
         Q_INVOKABLE void searchGoal(QString goal, bool modificateur, bool lecteur);
@@ -40,7 +42,7 @@ class Treatment : public QThread
         Q_INVOKABLE void searchDocumentVide();
         Q_INVOKABLE void searchDocumentSurchage();
         Q_INVOKABLE void searchDocument(QString name);
-        Q_INVOKABLE void searchUser(QString name);
+        Q_INVOKABLE void searchUser(QString name, int type);
 
         Q_INVOKABLE void exportPlan(QString idDomaine, QString path);
 
@@ -48,7 +50,7 @@ class Treatment : public QThread
     private:
         Data *m_data;
         bool m_finish;
-        int m_type;
+        int m_type, m_typeUser;
         QString m_goal;
         QString m_currentAction;
         QString m_currentCommu;

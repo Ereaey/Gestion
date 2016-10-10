@@ -88,7 +88,7 @@ void Loading::loadMember()
     FileCSV fileInterne(m_pathMembersInternal.absoluteFilePath());
     setMessageLoading("Chargement des membres internes.. 0 / " + QString::number(fileInterne.getNumberLines()));
     emit currentActionChanged();
-    for (int i = 0; i < fileInterne.getNumberLines(); i++)
+    for (int i = 1; i < fileInterne.getNumberLines(); i++)
     {
         mutex.lock();
         m_sizeAll = fileInterne.getNumberLines();
@@ -108,7 +108,7 @@ void Loading::loadMember()
     FileCSV fileExterne(m_pathMembersExternal.absoluteFilePath());
     setMessageLoading("Chargement des membres externes.. 0 / " + QString::number(fileExterne.getNumberLines()));
     emit currentActionChanged();
-    for (int i = 0; i < fileExterne.getNumberLines(); i++)
+    for (int i = 1; i < fileExterne.getNumberLines(); i++)
     {
         mutex.lock();
         m_sizeAll = fileExterne.getNumberLines();
@@ -216,8 +216,9 @@ void Loading::loadDomaines()
         QStringList GoalsModifs =  fileDomaines.getData(i, "Z").split(",");
         QStringList GoalsLecteur =  fileDomaines.getData(i, "AD").split(",");
         QStringList Gestionnaires =  fileDomaines.getData(i, "M").split(",");
-
-        m_data->addDomaine(nomCommu, nomDomaine, idDomaine, idDomaineParent, GoalsModifs, GoalsLecteur, responsable, Gestionnaires);
+        QStringList Modificateurs =  fileDomaines.getData(i, "X").split(",");
+        QStringList Lecteurs =  fileDomaines.getData(i, "AB").split(",");
+        m_data->addDomaine(nomCommu, nomDomaine, idDomaine, idDomaineParent, GoalsModifs, GoalsLecteur, responsable, Gestionnaires, Modificateurs, Lecteurs);
 
         setMessageLoading("Chargement des domaines.. " + QString::number(i) + " / " + QString::number(fileDomaines.getNumberLines()));
     }

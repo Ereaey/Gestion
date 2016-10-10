@@ -114,6 +114,7 @@ Rectangle{
                 onClicked:
                 {
                     root.currentItem = parent
+                    autoCompletUser.searchUser("")
                     principalLoader.source = "LayerUtilisateur.qml"
                 }
             }
@@ -472,6 +473,7 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
+                    autoCompletUser.searchUser("")
                     principalLoader.source = "LayerUtilisateur.qml"
                 }
             }

@@ -19,12 +19,13 @@ void Treatment::load()
     }
 }
 
-void Treatment::searchUser(QString name)
+void Treatment::searchUser(QString name, int type)
 {
     m_currentAction = "Rechercher un utilisateur > " + name;
     emit currentActionChanged();
     m_user = name;
     m_type = SEARCH_USER;
+    m_typeUser = type;
     start();
 }
 
@@ -356,19 +357,76 @@ void Treatment::run()
     else if (m_type == SEARCH_USER)
     {
         m_result.clear();
-        for (int i = 0; i < m_commu.size(); i++)
+        if (m_typeUser == RESPONSABLE)
         {
-            if (m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users.contains(m_user))
-                ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesResponsable.size());
-            else
-                ((DataCommu*)(m_commu[i]))->setResult(0);
-        }
-
-        if (m_data->getCurrentCommu()->users.contains(m_user))
-        {
-            for (int i = 0; i < m_data->getCurrentCommu()->users[m_user]->domainesResponsable.size(); i++)
+            for (int i = 0; i < m_commu.size(); i++)
             {
-                m_result.append(new DataDomaine(m_data->getCurrentCommu()->users[m_user]->domainesResponsable[i]->nom, QString::number(m_data->getCurrentCommu()->users[m_user]->domainesResponsable[i]->id), m_data->getCurrentCommu()->users[m_user]->domainesResponsable[i]->responsable->user->nom));
+                if (m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users.contains(m_user))
+                    ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesResponsable.size());
+                else
+                    ((DataCommu*)(m_commu[i]))->setResult(0);
+            }
+
+            if (m_data->getCurrentCommu()->users.contains(m_user))
+            {
+                for (int i = 0; i < m_data->getCurrentCommu()->users[m_user]->domainesResponsable.size(); i++)
+                {
+                    m_result.append(new DataDomaine(m_data->getCurrentCommu()->users[m_user]->domainesResponsable[i]->nom, QString::number(m_data->getCurrentCommu()->users[m_user]->domainesResponsable[i]->id), m_data->getCurrentCommu()->users[m_user]->domainesResponsable[i]->responsable->user->nom));
+                }
+            }
+        }
+        else if (m_typeUser == GESTIONNAIRE)
+        {
+            for (int i = 0; i < m_commu.size(); i++)
+            {
+                if (m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users.contains(m_user))
+                    ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesGestionnaire.size());
+                else
+                    ((DataCommu*)(m_commu[i]))->setResult(0);
+            }
+
+            if (m_data->getCurrentCommu()->users.contains(m_user))
+            {
+                for (int i = 0; i < m_data->getCurrentCommu()->users[m_user]->domainesGestionnaire.size(); i++)
+                {
+                    m_result.append(new DataDomaine(m_data->getCurrentCommu()->users[m_user]->domainesGestionnaire[i]->nom, QString::number(m_data->getCurrentCommu()->users[m_user]->domainesGestionnaire[i]->id), m_data->getCurrentCommu()->users[m_user]->domainesGestionnaire[i]->responsable->user->nom));
+                }
+            }
+        }
+        else if (m_typeUser == MODIFICATEUR)
+        {
+            for (int i = 0; i < m_commu.size(); i++)
+            {
+                if (m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users.contains(m_user))
+                    ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesModificateur.size());
+                else
+                    ((DataCommu*)(m_commu[i]))->setResult(0);
+            }
+
+            if (m_data->getCurrentCommu()->users.contains(m_user))
+            {
+                for (int i = 0; i < m_data->getCurrentCommu()->users[m_user]->domainesModificateur.size(); i++)
+                {
+                    m_result.append(new DataDomaine(m_data->getCurrentCommu()->users[m_user]->domainesModificateur[i]->nom, QString::number(m_data->getCurrentCommu()->users[m_user]->domainesModificateur[i]->id), m_data->getCurrentCommu()->users[m_user]->domainesModificateur[i]->responsable->user->nom));
+                }
+            }
+        }
+        else if (m_typeUser == LECTEUR)
+        {
+            for (int i = 0; i < m_commu.size(); i++)
+            {
+                if (m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users.contains(m_user))
+                    ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesLecteur.size());
+                else
+                    ((DataCommu*)(m_commu[i]))->setResult(0);
+            }
+
+            if (m_data->getCurrentCommu()->users.contains(m_user))
+            {
+                for (int i = 0; i < m_data->getCurrentCommu()->users[m_user]->domainesLecteur.size(); i++)
+                {
+                    m_result.append(new DataDomaine(m_data->getCurrentCommu()->users[m_user]->domainesLecteur[i]->nom, QString::number(m_data->getCurrentCommu()->users[m_user]->domainesLecteur[i]->id), m_data->getCurrentCommu()->users[m_user]->domainesLecteur[i]->responsable->user->nom));
+                }
             }
         }
         emit refreshResult();

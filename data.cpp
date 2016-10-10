@@ -56,6 +56,8 @@ void Data::addDomaineGoal(Domaine *d, Goal *g, int grade)
 
 void Data::addDomaineUser(Domaine *d, QString user, int grade)
 {
+    if (user.isEmpty())
+        return;
     QString id = user.split("-")[1].remove(" ");
     if (!d->commu->users.contains(id))
     {
@@ -88,7 +90,7 @@ void Data::addDomaineUser(Domaine *d, QString user, int grade)
         d->commu->users[id]->domainesLecteur.push_back(d);
 }
 
-void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent, QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable, QStringList gestionnaires)
+void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent, QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable, QStringList gestionnaires, QStringList modificateurs, QStringList lecteurs)
 {
     Domaine *d = new Domaine;
     d->id = IdDomaine.toInt();
@@ -110,12 +112,9 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     communautes[nameCommu]->domaines[d->nom] = d;
     communautes[nameCommu]->domainesKey[IdDomaine] = d;
     d->commu = communautes[nameCommu];
-    if (d->id_parent == 0)
-    {
-        communautes[nameCommu]->root = d;
-    }
 
-    QString r = responsable.split('-')[1].remove(" ");
+    if (d->id_parent == 0)
+        communautes[nameCommu]->root = d;
 
     addDomaineUser(d, responsable, RESPONSABLE);
 
@@ -163,6 +162,17 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
                 communautes[nameCommu]->domainesGoal[g].push_back(d);
         }
     }
+
+    for (int i = 0; i < gestionnaires.size(); i++)
+        addDomaineUser(d, gestionnaires[i], GESTIONNAIRES);
+
+    for (int i = 0; i < modificateurs.size(); i++)
+        addDomaineUser(d, modificateurs[i], MODIFICATEURS);
+
+    for (int i = 0; i < lecteurs.size(); i++)
+        addDomaineUser(d, lecteurs[i], LECTEURS);
+
+
     domainesV.push_back(d);
 }
 

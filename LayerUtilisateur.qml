@@ -23,6 +23,7 @@ Rectangle
     }
 
     property string valueUser: ""
+    property string idUser: ""
     Timer
     {
         interval: 500;
@@ -30,10 +31,10 @@ Rectangle
         repeat: true
         onTriggered:
         {
-            if (valueUser != control.text)
+            if (valueUser != nameUser.text)
             {
-                valueUser = control.text
-                autoCompletUser.searchUser(control.text);
+                valueUser = nameUser.text
+                autoCompletUser.searchUser(nameUser.text);
                 testTree.model = autoCompletUser.result
             }
         }
@@ -74,14 +75,14 @@ Rectangle
             height:30
             y:40
             x:10
-            id:control
+            id:nameUser
             placeholderText: qsTr("Entrer le nom de l'utilisateur")
             style: TextFieldStyle{
             background: Rectangle {
                  implicitWidth: 200
                  implicitHeight: 30
-                 color: control.enabled ? "white" : "#353637"
-                 border.color: control.enabled ? "#bdbebf" : "transparent"
+                 color: nameUser.enabled ? "white" : "#353637"
+                 border.color: nameUser.enabled ? "#bdbebf" : "transparent"
              }}
             selectByMouse: true
         }
@@ -119,6 +120,20 @@ Rectangle
                             color: "white"
                          }
                     }
+                onClicked:
+                {
+                    lectcheck.checked = false
+                    responsablecheck.checked = false
+                    gestionnairecheck.checked = false
+                    if (responsablecheck.checked === true)
+                        treatment.searchUser(idUser, 0);
+                    else if (gestionnairecheck.checked === true)
+                        treatment.searchUser(idUser, 1);
+                    else if (modifcheck.checked === true)
+                        treatment.searchUser(idUser, 2);
+                    else if (lectcheck.checked === true)
+                        treatment.searchUser(idUser, 3);
+                }
             }
             Rectangle
             {
@@ -156,6 +171,20 @@ Rectangle
                             color: "white"
                          }
                     }
+                onClicked:
+                {
+                    modifcheck.checked = false
+                    responsablecheck.checked = false
+                    gestionnairecheck.checked = false
+                    if (responsablecheck.checked === true)
+                        treatment.searchUser(idUser, 0);
+                    else if (gestionnairecheck.checked === true)
+                        treatment.searchUser(idUser, 1);
+                    else if (modifcheck.checked === true)
+                        treatment.searchUser(idUser, 2);
+                    else if (lectcheck.checked === true)
+                        treatment.searchUser(idUser, 3);
+                }
             }
             Rectangle
             {
@@ -193,6 +222,20 @@ Rectangle
                             color: "white"
                          }
                     }
+                onClicked:
+                {
+                    modifcheck.checked = false
+                    lectcheck.checked = false
+                    gestionnairecheck.checked = false
+                    if (responsablecheck.checked === true)
+                        treatment.searchUser(idUser, 0);
+                    else if (gestionnairecheck.checked === true)
+                        treatment.searchUser(idUser, 1);
+                    else if (modifcheck.checked === true)
+                        treatment.searchUser(idUser, 2);
+                    else if (lectcheck.checked === true)
+                        treatment.searchUser(idUser, 3);
+                }
             }
             Rectangle
             {
@@ -230,6 +273,20 @@ Rectangle
                             color: "white"
                          }
                     }
+                onClicked:
+                {
+                    modifcheck.checked = false
+                    responsablecheck.checked = false
+                    lectcheck.checked = false
+                    if (responsablecheck.checked === true)
+                        treatment.searchUser(idUser, 0);
+                    else if (gestionnairecheck.checked === true)
+                        treatment.searchUser(idUser, 1);
+                    else if (modifcheck.checked === true)
+                        treatment.searchUser(idUser, 2);
+                    else if (lectcheck.checked === true)
+                        treatment.searchUser(idUser, 3);
+                }
             }
         }
     }
@@ -407,7 +464,17 @@ Rectangle
                     {
                         //listDomaine.deleteDomaine(model.modelData.iddomaine);
                         //principalLoader.source = "LayerDomaineSearch.qml"
-                        treatment.searchUser(model.modelData.id);
+                        valueUser = model.modelData.nom;
+                        nameUser.text = model.modelData.nom
+                        idUser = model.modelData.id
+                        if (responsablecheck.checked === true)
+                            treatment.searchUser(model.modelData.id, 0);
+                        else if (gestionnairecheck.checked === true)
+                            treatment.searchUser(model.modelData.id, 1);
+                        else if (modifcheck.checked === true)
+                            treatment.searchUser(model.modelData.id, 2);
+                        else if (lectcheck.checked === true)
+                            treatment.searchUser(model.modelData.id, 3);
                         testTree.visible = false;
                         treeDomaine.visible = true;
                     }

@@ -135,7 +135,7 @@ class Data : public QObject
         void addCommunaute(QString name, QStringList goals);
         void addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent,
                         QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable,
-                        QStringList gestionnaires);
+                        QStringList gestionnaires, QStringList modificateurs, QStringList lecteurs);
         void addDocument(QString name, QString idDomaine, QString version, QString proprietaire, QString id,
                          QString dateCreation, QString dateModif, QString nbPj, QString namePj);
         QMap<QString, Communaute*> getCommus(){ return communautes;}
