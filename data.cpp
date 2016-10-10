@@ -46,7 +46,49 @@ void Data::addCommunaute(QString name, QStringList goals)
         communautes[name]->goalsMembers.push_back(goalNom[goals[i]]);*/
 }
 
-void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent, QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable)
+void Data::addDomaineGoal(Domaine *d, Goal *g, int grade)
+{
+    for (int i = 0; i < g->users.size(); i++)
+    {
+        addDomaineUser(d, "-" + g->users[i]->ID, grade);
+    }
+}
+
+void Data::addDomaineUser(Domaine *d, QString user, int grade)
+{
+    QString id = user.split("-")[1].remove(" ");
+    if (!d->commu->users.contains(id))
+    {
+        if (userId.contains(id))
+        {
+            UserCommu *uc = new UserCommu;
+            uc->user = userId[id];
+            d->commu->users[id] = uc;
+            d->commu->usersInconnu.push_back(uc);
+        }
+        else
+        {
+            return;
+        }
+    }
+    if (grade == RESPONSABLE)
+    {
+        d->commu->users[id]->domainesResponsable.push_back(d);
+        d->responsable = d->commu->users[id];
+    }
+    else if (grade == GESTIONNAIRES)
+        d->commu->users[id]->domainesGestionnaire.push_back(d);
+    else if (grade == MODIFICATEURS_GOAL)
+        d->commu->users[id]->domainesModificateurGOAL.push_back(d);
+    else if (grade == LECTEURS_GOAL)
+        d->commu->users[id]->domainesLecteurGOAL.push_back(d);
+    else if (grade == MODIFICATEURS)
+        d->commu->users[id]->domainesModificateur.push_back(d);
+    else if (grade == LECTEURS)
+        d->commu->users[id]->domainesLecteur.push_back(d);
+}
+
+void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent, QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable, QStringList gestionnaires)
 {
     Domaine *d = new Domaine;
     d->id = IdDomaine.toInt();
@@ -75,26 +117,7 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
 
     QString r = responsable.split('-')[1].remove(" ");
 
-    if (!communautes[nameCommu]->users.contains(r))
-    {
-        if (!userId.contains(r))
-        {
-            userId[r] = new User;
-            userId[r]->nom = responsable.split('-')[0];
-            userId[r]->prenom = "(Utilisateur inconnu)";
-            userId[r]->ID = r;
-
-            //communautes[nameCommu]->usersNonTrouve.push_back(userId[pro]);
-        }
-        UserCommu *uC = new UserCommu;
-        uC->user = userId[r];
-
-        communautes[nameCommu]->users[r] = uC;
-        communautes[nameCommu]->usersInconnu.push_back(uC);
-    }
-
-    d->responsable = communautes[nameCommu]->users[r];
-    communautes[nameCommu]->users[r]->domainesResponsable.push_back(d);
+    addDomaineUser(d, responsable, RESPONSABLE);
 
     for (int i = 0; i < GOALsmodificateurs.size(); i++)
     {
@@ -110,6 +133,7 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
         }
         if (goalNom.contains(g))
         {
+            addDomaineGoal(d, goalNom[g], MODIFICATEURS_GOAL);
             communautes[nameCommu]->domainesGoalModificateurs[g].push_back(d);
             communautes[nameCommu]->domainesGoal[g].push_back(d);
             communautes[nameCommu]->goals[g] = goalNom[g];
@@ -130,6 +154,7 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
         }
         if (goalNom.contains(g))
         {
+            addDomaineGoal(d, goalNom[g], LECTEURS_GOAL);
             communautes[nameCommu]->domainesGoalLecteurs[g].push_back(d);
             communautes[nameCommu]->goals[g] = goalNom[g];
             if (GOALsmodificateurs.contains(g))

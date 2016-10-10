@@ -123,7 +123,7 @@ struct Communaute
 
 enum typeDoc{C0, C1, C2, C3, C4};
 enum statutDoc{Publie, Annule, Travail};
-
+enum grade{RESPONSABLE, GESTIONNAIRES, MODIFICATEURS, LECTEURS, MODIFICATEURS_GOAL, LECTEURS_GOAL};
 class Data : public QObject
 {
     Q_OBJECT
@@ -134,7 +134,8 @@ class Data : public QObject
         void addGoalMember(QString idGoal, QString idMember);
         void addCommunaute(QString name, QStringList goals);
         void addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent,
-                        QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable);
+                        QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable,
+                        QStringList gestionnaires);
         void addDocument(QString name, QString idDomaine, QString version, QString proprietaire, QString id,
                          QString dateCreation, QString dateModif, QString nbPj, QString namePj);
         QMap<QString, Communaute*> getCommus(){ return communautes;}
@@ -148,6 +149,8 @@ class Data : public QObject
         void drawTree(QString domaine);
 
     private:
+        void addDomaineUser(Domaine *d, QString user, int grade);
+        void addDomaineGoal(Domaine *d, Goal *g, int grade);
         void recursiveOpen(int id);
         QMap<QString, User*> userId;
         QMap<QString, QVector <User*>> userPrenomNom;

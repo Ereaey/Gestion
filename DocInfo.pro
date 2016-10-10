@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     datacommu.cpp \
     datagoal.cpp \
     datadocument.cpp \
-    autocompletgoal.cpp
+    autocompletgoal.cpp \
+    autocompletuser.cpp
 
 RESOURCES += qml.qrc
 
@@ -48,4 +49,5 @@ HEADERS += \
     datacommu.h \
     datagoal.h \
     datadocument.h \
-    autocompletgoal.h
+    autocompletgoal.h \
+    autocompletuser.h

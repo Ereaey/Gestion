@@ -9,6 +9,7 @@
 #include "data.h"
 #include "filecsv.h"
 #include "autocompletgoal.h"
+#include "autocompletuser.h"
 
 class Loading : public QThread
 {
@@ -20,7 +21,7 @@ class Loading : public QThread
     Q_PROPERTY(bool finish READ finish NOTIFY finishChanged)
 
     public:
-        Loading(Data *d, autoCompletGoal *a);
+        Loading(Data *d, autoCompletGoal *a, autoCompletUser *u);
         void loadFiles();
         //QML - Variables
         QString messageLoading();
@@ -83,6 +84,7 @@ class Loading : public QThread
         bool m_finish;
 
         autoCompletGoal *m_a;
+        autoCompletUser *m_u;
 };
 
 #endif // LOADING_H

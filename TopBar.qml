@@ -25,12 +25,12 @@ Rectangle{
                     implicitWidth: 80
                     implicitHeight: 15
                     opacity: enabled ? 1 : 0.3
-                    color: root.currentItem == parent || accueil.containsMouse ? "#F3F3F3" : "#2B3643"
-                    radius: root.currentItem == parent || accueil.containsMouse ? 5 : 0
+                    color: root.currentItem == accueilMenu || accueil.containsMouse ? "#F3F3F3" : "#2B3643"
+                    radius: root.currentItem == accueilMenu || accueil.containsMouse ? 5 : 0
                 }
                 label: Text {
                     text: "Accueil"
-                    color: root.currentItem == parent || accueil.containsMouse ? "#2B3643" : "#F3F3F3"
+                    color: root.currentItem == accueilMenu || accueil.containsMouse ? "#2B3643" : "#F3F3F3"
                     font.pointSize: 10
                     //anchors.centerIn: parent
                     x:15
@@ -45,6 +45,7 @@ Rectangle{
                 onClicked:
                 {
                     root.currentItem = parent
+                    principalLoader.source = "LayerNote.qml"
                 }
             }
         }
@@ -113,6 +114,7 @@ Rectangle{
                 onClicked:
                 {
                     root.currentItem = parent
+                    principalLoader.source = "LayerUtilisateur.qml"
                 }
             }
         }
@@ -470,10 +472,10 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
-                    principalLoader.source = "LayerGoalSearch.qml"
+                    principalLoader.source = "LayerUtilisateur.qml"
                 }
             }
-        }
+        }/*
         Button {
             x: 175
             visible:root.currentItem ==utilisateursMenu ? true:false
@@ -536,7 +538,7 @@ Rectangle{
                     principalLoader.source = "LayerGoalSearch.qml"
                 }
             }
-        }
+        }*/
         Button {
             x: 5
             visible:root.currentItem ==domainesMenu ? true:false

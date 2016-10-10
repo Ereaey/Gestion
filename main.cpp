@@ -12,16 +12,18 @@
 #include <QVariant>
 #include "datadomaines.h"
 #include "autocompletgoal.h"
+#include "autocompletuser.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     autoCompletGoal *autoComplet = new autoCompletGoal();
+    autoCompletUser *autoCompletU = new autoCompletUser();
 
     Model *m = new Model;
     Data *d = new Data(m);
-    Loading *l = new Loading(d, autoComplet);
+    Loading *l = new Loading(d, autoComplet, autoCompletU);
     Treatment *t = new Treatment(d);
     ExportResult *e = new ExportResult(t);
     ShowResult *s = new ShowResult(t);
@@ -38,6 +40,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("listDomaine", ds);
     engine.rootContext()->setContextProperty("treatment", t);
     engine.rootContext()->setContextProperty("autoComplet", autoComplet);
+    engine.rootContext()->setContextProperty("autoCompletUser", autoCompletU);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 

@@ -27,5 +27,6 @@
         <file>LayerDocument.qml</file>
         <file>LayerDocumentVide.qml</file>
         <file>LayerDocumentFull.qml</file>
+        <file>LayerUtilisateur.qml</file>
     </qresource>
 </RCC>

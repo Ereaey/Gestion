@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <QDirIterator>
 
-Loading::Loading(Data *d, autoCompletGoal *a)
+Loading::Loading(Data *d, autoCompletGoal *a, autoCompletUser *u)
 {
     //m_listDrives = QDir::drives();
     m_listDrives += QFileInfo("C:/fichiersGestion");
@@ -12,6 +12,7 @@ Loading::Loading(Data *d, autoCompletGoal *a)
     m_sizeAll = 100;
     m_finish = false;
     m_a = a;
+    m_u = u;
 }
 
 int Loading::currentSize()
@@ -98,6 +99,9 @@ void Loading::loadMember()
         QString prenom =  fileInterne.getData(i, 2);
 
         m_data->addUser(id, nom, prenom);
+        m_u->addUser(nom + " " + prenom, id);
+        m_u->addUser(prenom + " " + nom, id);
+
         setMessageLoading("Chargement des membres internes.. " + QString::number(i) + " / " + QString::number(fileInterne.getNumberLines()));
     }
 
@@ -115,6 +119,10 @@ void Loading::loadMember()
         QString prenom =  fileExterne.getData(i, 2);
 
         m_data->addUser(id, nom, prenom);
+
+        m_u->addUser(nom + " " + prenom, id);
+        m_u->addUser(prenom + " " + nom, id);
+
         setMessageLoading("Chargement des membres.. " + QString::number(i) + " / " + QString::number(fileExterne.getNumberLines()));
     }
 }
@@ -207,8 +215,9 @@ void Loading::loadDomaines()
         QString responsable =  fileDomaines.getData(i, "L");
         QStringList GoalsModifs =  fileDomaines.getData(i, "Z").split(",");
         QStringList GoalsLecteur =  fileDomaines.getData(i, "AD").split(",");
+        QStringList Gestionnaires =  fileDomaines.getData(i, "M").split(",");
 
-        m_data->addDomaine(nomCommu, nomDomaine, idDomaine, idDomaineParent, GoalsModifs, GoalsLecteur, responsable);
+        m_data->addDomaine(nomCommu, nomDomaine, idDomaine, idDomaineParent, GoalsModifs, GoalsLecteur, responsable, Gestionnaires);
 
         setMessageLoading("Chargement des domaines.. " + QString::number(i) + " / " + QString::number(fileDomaines.getNumberLines()));
     }
