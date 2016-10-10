@@ -477,7 +477,7 @@ Rectangle{
                     principalLoader.source = "LayerUtilisateur.qml"
                 }
             }
-        }/*
+        }
         Button {
             x: 175
             visible:root.currentItem ==utilisateursMenu ? true:false
@@ -505,10 +505,12 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
-                    principalLoader.source = "LayerGoalSearch.qml"
+                    treatment.searchUserAbsent();
+                    principalLoader.source = "LayerUtilisateurAbsent.qml"
                 }
             }
         }
+        /*
         Button {
             x: 425
             visible:root.currentItem ==utilisateursMenu ? true:false

@@ -118,6 +118,15 @@ void Treatment::searchDomaineVide()
     start();
 }
 
+void Treatment::searchUserAbsent()
+{
+    m_currentAction = "Rechercher des utilisateurs absent";
+    //m_domaine = name;
+    emit currentActionChanged();
+    m_type = SEARCH_USER_ABSENT;
+    start();
+}
+
 void Treatment::searchDomaineFull()
 {
     m_currentAction = "Rechercher des domaines surchargés";
@@ -354,6 +363,20 @@ void Treatment::run()
 
         emit refreshResult();
     }
+    else if (m_type == SEARCH_USER_ABSENT)
+    {
+        m_result.clear();
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->usersInconnu.size());
+        }
+
+        for (int i = 0; i < m_data->getCurrentCommu()->usersInconnu.size(); i++)
+        {
+            m_result.append(new DataUser(m_data->getCurrentCommu()->usersInconnu[i]->user->nom, m_data->getCurrentCommu()->usersInconnu[i]->user->ID));
+        }
+        emit refreshResult();
+    }
     else if (m_type == SEARCH_USER)
     {
         m_result.clear();
@@ -397,8 +420,13 @@ void Treatment::run()
         {
             for (int i = 0; i < m_commu.size(); i++)
             {
+                int g = 0;
                 if (m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users.contains(m_user))
-                    ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesModificateur.size());
+                {
+                    g = m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesModificateur.size();
+                    g += m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesModificateurGOAL.size();
+                    ((DataCommu*)(m_commu[i]))->setResult(g);
+                }
                 else
                     ((DataCommu*)(m_commu[i]))->setResult(0);
             }
@@ -409,14 +437,24 @@ void Treatment::run()
                 {
                     m_result.append(new DataDomaine(m_data->getCurrentCommu()->users[m_user]->domainesModificateur[i]->nom, QString::number(m_data->getCurrentCommu()->users[m_user]->domainesModificateur[i]->id), m_data->getCurrentCommu()->users[m_user]->domainesModificateur[i]->responsable->user->nom));
                 }
+                for (int i = 0; i < m_data->getCurrentCommu()->users[m_user]->domainesModificateurGOAL.size(); i++)
+                {
+                    qDebug() << m_data->getCurrentCommu()->users[m_user]->domainesModificateurGOAL[i]->nom;
+                    m_result.append(new DataDomaine(m_data->getCurrentCommu()->users[m_user]->domainesModificateurGOAL[i]->nom, QString::number(m_data->getCurrentCommu()->users[m_user]->domainesModificateurGOAL[i]->id), m_data->getCurrentCommu()->users[m_user]->domainesModificateurGOAL[i]->responsable->user->nom));
+                }
             }
         }
         else if (m_typeUser == LECTEUR)
         {
             for (int i = 0; i < m_commu.size(); i++)
             {
+                int g = 0;
                 if (m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users.contains(m_user))
-                    ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesLecteur.size());
+                {
+                    g = m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesLecteur.size();
+                    g += m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesLecteurGOAL.size();
+                    ((DataCommu*)(m_commu[i]))->setResult(g);
+                }
                 else
                     ((DataCommu*)(m_commu[i]))->setResult(0);
             }
@@ -426,6 +464,10 @@ void Treatment::run()
                 for (int i = 0; i < m_data->getCurrentCommu()->users[m_user]->domainesLecteur.size(); i++)
                 {
                     m_result.append(new DataDomaine(m_data->getCurrentCommu()->users[m_user]->domainesLecteur[i]->nom, QString::number(m_data->getCurrentCommu()->users[m_user]->domainesLecteur[i]->id), m_data->getCurrentCommu()->users[m_user]->domainesLecteur[i]->responsable->user->nom));
+                }
+                for (int i = 0; i < m_data->getCurrentCommu()->users[m_user]->domainesLecteurGOAL.size(); i++)
+                {
+                    m_result.append(new DataDomaine(m_data->getCurrentCommu()->users[m_user]->domainesLecteurGOAL[i]->nom, QString::number(m_data->getCurrentCommu()->users[m_user]->domainesLecteurGOAL[i]->id), m_data->getCurrentCommu()->users[m_user]->domainesLecteurGOAL[i]->responsable->user->nom));
                 }
             }
         }

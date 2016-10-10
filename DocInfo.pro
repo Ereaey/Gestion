@@ -5,6 +5,7 @@ QT -= network gui
 
 CONFIG += c++11
 #CONFIG += console
+#CONFIG += static
 
 SOURCES += main.cpp \
     loading.cpp \
@@ -22,7 +23,8 @@ SOURCES += main.cpp \
     datagoal.cpp \
     datadocument.cpp \
     autocompletgoal.cpp \
-    autocompletuser.cpp
+    autocompletuser.cpp \
+    datauser.cpp
 
 RESOURCES += qml.qrc
 
@@ -50,4 +52,5 @@ HEADERS += \
     datagoal.h \
     datadocument.h \
     autocompletgoal.h \
-    autocompletuser.h
+    autocompletuser.h \
+    datauser.h

@@ -164,7 +164,7 @@ void Loading::loadCommu()
         m_sizeCurrent = i;
         mutex.unlock();
         QString nom =  fileCommu.getData(i, 1);
-        QStringList goals =  fileCommu.getData(i, "Y").remove(" ").split(",");
+        QStringList goals =  fileCommu.getData(i, "Y").split(",");
 
         m_data->addCommunaute(nom, goals);
 

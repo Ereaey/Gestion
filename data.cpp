@@ -9,7 +9,7 @@ Data::Data(Model* tree)
 void Data::addUser(QString identifiant, QString nom, QString prenom)
 {
     User *u = new User;
-    u->ID = identifiant;
+    u->ID = identifiant.remove(" ");
     u->nom = nom;
     u->prenom = prenom;
 
@@ -41,16 +41,34 @@ void Data::addGoalMember(QString idGoal, QString idMember)
 void Data::addCommunaute(QString name, QStringList goals)
 {
     communautes[name] = new Communaute;
-    communautes[name]->name = name;/*
-    for (int i = 0; i < goals.size(); i++)
-        communautes[name]->goalsMembers.push_back(goalNom[goals[i]]);*/
+    communautes[name]->name = name;
+    if (!goals.isEmpty())
+    {
+        for (int i = 0; i < goals.size(); i++)
+        {
+            goals[i].remove(" ");
+            if (goalNom.contains(goals[i]))
+            {
+                qDebug() << "trouvé" << name << " " << goals[i];
+                communautes[name]->goalsMembers.push_back(goalNom[goals[i]]);
+
+                for (int e = 0; e < goalNom[goals[i]]->users.size(); e++)
+                {
+                    UserCommu *uc = new UserCommu;
+                    uc->user = goalNom[goals[i]]->users[e];
+
+                    communautes[name]->users[goalNom[goals[i]]->users[e]->ID] = uc;
+                }
+            }
+        }
+    }
 }
 
 void Data::addDomaineGoal(Domaine *d, Goal *g, int grade)
 {
     for (int i = 0; i < g->users.size(); i++)
     {
-        addDomaineUser(d, "-" + g->users[i]->ID, grade);
+        addDomaineUser(d, "a - " + g->users[i]->ID, grade);
     }
 }
 
@@ -58,7 +76,9 @@ void Data::addDomaineUser(Domaine *d, QString user, int grade)
 {
     if (user.isEmpty())
         return;
-    QString id = user.split("-")[1].remove(" ");
+    QString id = user.split(" - ")[1];
+    id.remove(" ");
+
     if (!d->commu->users.contains(id))
     {
         if (userId.contains(id))
@@ -66,11 +86,22 @@ void Data::addDomaineUser(Domaine *d, QString user, int grade)
             UserCommu *uc = new UserCommu;
             uc->user = userId[id];
             d->commu->users[id] = uc;
-            d->commu->usersInconnu.push_back(uc);
+
+            //qDebug() << id;
+            if (grade != MODIFICATEURS_GOAL && grade != LECTEURS_GOAL)
+                d->commu->usersInconnu.push_back(uc);
         }
         else
         {
-            return;
+            userId[id] = new User;
+            userId[id]->nom = user.split(" - ")[0];
+            userId[id]->prenom = "(Utilisateur inconnu)";
+            userId[id]->ID = id;
+
+            UserCommu *uc = new UserCommu;
+            uc->user = userId[id];
+            d->commu->users[id] = uc;
+            d->commu->usersNonTrouve.push_back(uc);
         }
     }
     if (grade == RESPONSABLE)
@@ -209,17 +240,20 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
 
         d->domaine->commu->documents[id] = d;
 
-        if (domaines[idDomaine.toInt()]->commu->users.contains(proprietaire.split("-")[1].remove(" ")))
-            d->proprietaire = domaines[idDomaine.toInt()]->commu->users[proprietaire.split("-")[1].remove(" ")];
+        QString pro = proprietaire.split(" - ")[1];
+        pro.remove(" ");
+
+        if (domaines[idDomaine.toInt()]->commu->users.contains(pro))
+            d->proprietaire = domaines[idDomaine.toInt()]->commu->users[pro];
         else
         {
-            QString pro = proprietaire.split("-")[1].remove(" ");
             if (!userId.contains(pro))
             {
                 userId[pro] = new User;
-                userId[pro]->nom = proprietaire.split("-")[0];
+                userId[pro]->nom = proprietaire.split(" - ")[0];
                 userId[pro]->prenom = "(Utilisateur inconnu)";
                 userId[pro]->ID = pro;
+
                 //d->domaine->commu->usersNonTrouve.push_back(userId[pro]);
             }
             UserCommu *uC = new UserCommu;
@@ -228,7 +262,7 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
             domaines[idDomaine.toInt()]->commu->users[pro] = uC;
             domaines[idDomaine.toInt()]->commu->usersInconnu.push_back(uC);
 
-            d->proprietaire = domaines[idDomaine.toInt()]->commu->users[proprietaire.split("-")[1].remove(" ")];
+            d->proprietaire = domaines[idDomaine.toInt()]->commu->users[pro];
         }
         d->id = id;
         domaines[idDomaine.toInt()]->documents.append(d);

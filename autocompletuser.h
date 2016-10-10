@@ -6,28 +6,7 @@
 #include <QVector>
 #include <QList>
 #include <QVariant>
-
-class DataUser : public QObject
-{
-    Q_OBJECT
-    public:
-        DataUser(QString nom, QString id)
-        {
-            m_nom = nom;
-            m_id = id;
-        }
-
-        Q_PROPERTY(QString nom READ nom)
-        QString nom() const{return m_nom;}
-
-        Q_PROPERTY(QString id READ id)
-        QString id() const{return m_id;}
-
-        QString getNom(){return m_nom;}
-    private:
-        QString m_nom;
-        QString m_id;
-};
+#include "datauser.h"
 
 class autoCompletUser : public QThread
 {
