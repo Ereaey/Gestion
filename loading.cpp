@@ -251,7 +251,7 @@ void Loading::loadDocuments()
             nb = 0;
 
         m_data->addDocument(fileDocuments.getData(i, "D"), fileDocuments.getData(i, "T"), fileDocuments.getData(i, "B"), fileDocuments.getData(i, "H"), fileDocuments.getData(i, "A"), fileDocuments.getData(i, "M"), fileDocuments.getData(i, "O"), fileDocuments.getData(i, "AI"), fileDocuments.getData(i, "AD"),
-                            nb);
+                            nb, fileDocuments.getData(i, "AL"), fileDocuments.getData(i, "C"));
 
         setMessageLoading("Chargement des documents.. " + QString::number(i) + " / " + QString::number(fileDocuments.getNumberLines()));
     }

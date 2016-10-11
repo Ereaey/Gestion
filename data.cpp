@@ -47,6 +47,10 @@ void Data::addCommunaute(QString name, QStringList goals)
     communautes[name]->synchronises = 0;
     communautes[name]->lsynchronises = 0;
     communautes[name]->asservisseurs = 0;
+    communautes[name]->t6mois = 0;
+    communautes[name]->c2t = 0;
+    communautes[name]->c3t = 0;
+
     if (!goals.isEmpty())
     {
         for (int i = 0; i < goals.size(); i++)
@@ -99,7 +103,7 @@ void Data::addDomaineUser(Domaine *d, QString user, int grade)
         {
             userId[id] = new User;
             userId[id]->nom = user.split(" - ")[0];
-            userId[id]->prenom = "(Utilisateur inconnu)";
+            userId[id]->prenom = "(Hors Annuaire PSA)";
             userId[id]->ID = id;
 
             UserCommu *uc = new UserCommu;
@@ -112,17 +116,45 @@ void Data::addDomaineUser(Domaine *d, QString user, int grade)
     {
         d->commu->users[id]->domainesResponsable.push_back(d);
         d->responsable = d->commu->users[id];
+        d->commu->usersResponsable[id] = d->commu->users[id];
     }
     else if (grade == GESTIONNAIRES)
+    {
         d->commu->users[id]->domainesGestionnaire.push_back(d);
+        d->commu->usersGestionnaire[id] = d->commu->users[id];
+    }
     else if (grade == MODIFICATEURS_GOAL)
+    {
         d->commu->users[id]->domainesModificateurGOAL.push_back(d);
+    }
     else if (grade == LECTEURS_GOAL)
+    {
         d->commu->users[id]->domainesLecteurGOAL.push_back(d);
+    }
     else if (grade == MODIFICATEURS)
+    {
         d->commu->users[id]->domainesModificateur.push_back(d);
+        d->commu->usersModificateurs[id] = d->commu->users[id];
+        if (user.split(" - ").size() == 3)
+        {
+            if (QDate::fromString(user.split(" - ")[2].remove(" "), "dd/MM/yyyy") > QDate::currentDate())
+            {
+                d->commu->usersPerimee[id] = d->commu->users[id];
+            }
+        }
+    }
     else if (grade == LECTEURS)
+    {
         d->commu->users[id]->domainesLecteur.push_back(d);
+        d->commu->usersLecteurs[id] = d->commu->users[id];
+        if (user.split(" - ").size() == 3)
+        {
+            if (QDate::fromString(user.split(" - ")[2].remove(" "), "dd/MM/yyyy") > QDate::currentDate())
+            {
+                d->commu->usersPerimee[id] = d->commu->users[id];
+            }
+        }
+    }
 }
 
 void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent, QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable, QStringList gestionnaires, QStringList modificateurs, QStringList lecteurs, QString niveau, QString asservisseur, QString synchronises)
@@ -144,7 +176,7 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
         QStringList l;
         addCommunaute(nameCommu, l);
     }
-    communautes[nameCommu]->domaines[d->nom] = d;
+    //communautes[nameCommu]->domaines[d->nom] = d;
     communautes[nameCommu]->domainesKey[IdDomaine] = d;
     d->commu = communautes[nameCommu];
 
@@ -158,9 +190,9 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     if (asservisseur == "Oui")
         communautes[nameCommu]->asservisseurs++;
 
-    if (asservisseur == "Oui" && synchronises == "Non")
+    if (asservisseur == "Non" && synchronises == "Non")
         communautes[nameCommu]->synchronises++;
-    else if (synchronises == "Oui")
+    else if (synchronises == "Oui" && asservisseur == "Non")
         communautes[nameCommu]->lsynchronises++;
 
 
@@ -224,7 +256,7 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     domainesV.push_back(d);
 }
 
-void Data::addDocument(QString name, QString idDomaine, QString version, QString proprietaire, QString id, QString dateCreation, QString dateModif, QString nbPj, QString namePj, int nbConsult)
+void Data::addDocument(QString name, QString idDomaine, QString version, QString proprietaire, QString id, QString dateCreation, QString dateModif, QString nbPj, QString namePj, int nbConsult, QString confidentialite, QString Statut)
 {
     if (domaines.contains(idDomaine.toInt()))
     {
@@ -242,6 +274,7 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
             return;
         }
         Document *d = new Document;
+
         d->nom = name;
         d->nbConsult = nbConsult;
         d->domaine = domaines[idDomaine.toInt()];
@@ -260,10 +293,36 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
             d->domaine->commu->documentsSurcharge.push_back(d);
         }
 
+        if (Statut == "publiée")
+            d->domaine->commu->documentsPublie.append(d);
+        else if (Statut == "de travail")
+        {
+            d->domaine->commu->documentsEnTravail.append(d);
+            if (d->dateModif.addMonths(6) > QDate::currentDate())
+                d->domaine->commu->t6mois++;
+        }
         d->domaine->commu->documents[id] = d;
 
         QString pro = proprietaire.split(" - ")[1];
         pro.remove(" ");
+        if (confidentialite.contains("Aucune confidentialité"))
+            domaines[idDomaine.toInt()]->commu->documentsConfidentialitees[0].push_back(d);
+        else if (confidentialite.contains("C=1"))
+            domaines[idDomaine.toInt()]->commu->documentsConfidentialitees[1].push_back(d);
+        else if (confidentialite.contains("C=2"))
+        {
+            domaines[idDomaine.toInt()]->commu->documentsConfidentialitees[2].push_back(d);
+            if (d->nombresPJ > 50)
+                d->domaine->commu->c2t++;
+        }
+        else if (confidentialite.contains("C=3"))
+        {
+            domaines[idDomaine.toInt()]->commu->documentsConfidentialitees[3].push_back(d);
+            if (d->nombresPJ > 50)
+                d->domaine->commu->c3t++;
+        }
+        else if (confidentialite.contains("C=4"))
+            domaines[idDomaine.toInt()]->commu->documentsConfidentialitees[4].push_back(d);
 
         if (domaines[idDomaine.toInt()]->commu->users.contains(pro))
             d->proprietaire = domaines[idDomaine.toInt()]->commu->users[pro];
@@ -273,7 +332,7 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
             {
                 userId[pro] = new User;
                 userId[pro]->nom = proprietaire.split(" - ")[0];
-                userId[pro]->prenom = "(Utilisateur inconnu)";
+                userId[pro]->prenom = "(Hors annuaire PSA)";
                 userId[pro]->ID = pro;
 
                 //d->domaine->commu->usersNonTrouve.push_back(userId[pro]);
@@ -286,6 +345,7 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
 
             d->proprietaire = domaines[idDomaine.toInt()]->commu->users[pro];
         }
+        d->domaine->commu->usersProprietaire[pro] = d->domaine->commu->users[pro];
         d->id = id;
         domaines[idDomaine.toInt()]->documents.append(d);
     }
@@ -302,12 +362,12 @@ void Data::generateData()
             if (communautes[key]->goals[name]->etat != "OPERATIONNEL")
                 communautes[key]->goalsInexistants.append(communautes[key]->goals[name]);
         }
-        foreach(QString name, communautes[key]->domaines.keys())
+        foreach(QString name, communautes[key]->domainesKey.keys())
         {
-            if (communautes[key]->domaines[name]->documents.size() == 0 && communautes[key]->domaines[name]->enfants.size() == 0)
-                communautes[key]->domainesVides.append(communautes[key]->domaines[name]);
-            if (communautes[key]->domaines[name]->documents.size() > 10)
-                communautes[key]->domainesPlein.append(communautes[key]->domaines[name]);
+            if (communautes[key]->domainesKey[name]->documents.size() == 0 && communautes[key]->domainesKey[name]->enfants.size() == 0)
+                communautes[key]->domainesVides.append(communautes[key]->domainesKey[name]);
+            if (communautes[key]->domainesKey[name]->documents.size() > 10)
+                communautes[key]->domainesPlein.append(communautes[key]->domainesKey[name]);
         }
     }
 }

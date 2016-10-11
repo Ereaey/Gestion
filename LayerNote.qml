@@ -157,7 +157,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 25
-                text: "Nombre de domaines vides : "
+                text: "Nombre de domaines vides : " + note.domaineVide
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -170,7 +170,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 45
-                text: "Nombre de domaines surchargés : "
+                text: "Nombre de domaines surchargés : " + note.domaineFull
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -197,7 +197,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 105
-                text: "Nombre de domaines asservisseurs : "
+                text: "Nombre de domaines asservisseurs : "  + note.domaineAsservisseurs
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -210,7 +210,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 125
-                text: "Nombre de domaines libres, documents synchronisés : "
+                text: "Nombre de domaines libres, documents synchronisés : "  + note.domaineLibreS
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -223,7 +223,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 145
-                text: "Nombre de domaines libres, documents non synchronisés : "
+                text: "Nombre de domaines libres, documents non synchronisés : "  + note.domaineLibre
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -282,7 +282,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 25
-                text: "Nombre de C0 : "
+                text: "Nombre de C0 : " + note.documentsC0
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -295,7 +295,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 45
-                text: "Nombre de C1 : "
+                text: "Nombre de C1 : " + note.documentsC1
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -308,7 +308,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 65
-                text: "Nombre de C2 : "
+                text: "Nombre de C2 : " + note.documentsC2
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -321,7 +321,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 25;
                 anchors.topMargin: 85
-                text: "=> Ayant trop d'utilisateurs :"
+                text: "=> Ayant trop d'utilisateurs : " + note.c2t
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -334,7 +334,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 105
-                text: "Nombre de C3 : "
+                text: "Nombre de C3 : " + note.documentsC3
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -347,7 +347,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 25;
                 anchors.topMargin: 125
-                text: "=> Ayant trop d'utilisateurs :"
+                text: "=> Ayant trop d'utilisateurs : " + note.c3t
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -360,7 +360,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 145
-                text: "Nombre de C4 : "
+                text: "Nombre de C4 : " + note.documentsC4
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -386,7 +386,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 205
-                text: "Nombre de documents publiés : "
+                text: "Nombre de documents publiés : " + note.documentsP
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -399,7 +399,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 225
-                text: "Nombre de documents en version de travail : "
+                text: "Nombre de documents en version de travail : " + note.documentsE
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -412,7 +412,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 25;
                 anchors.topMargin: 245
-                text: "=> Depuis plus de 6 mois : "
+                text: "=> Depuis plus de 6 mois : " + note.doct6mois
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -438,7 +438,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 305
-                text: "Nombres de documents sans PJ : "
+                text: "Nombres de documents sans PJ : " + note.documentsSPJ
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -451,7 +451,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 325
-                text: "Nombres de documents avec + de 50 PJ : "
+                text: "Nombres de documents avec + de 50 PJ : " + note.documentsFull
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -510,7 +510,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 25
-                text: "Nombre de responsables : "
+                text: "Nombre de responsables : " + note.responsable
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -523,7 +523,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 45
-                text: "Nombre de gestionnaires : "
+                text: "Nombre de gestionnaires : " + note.gestionnaires
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -536,7 +536,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 65
-                text: "Nombre de propriétaires : "
+                text: "Nombre de propriétaires : " + note.proprietaires
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -549,7 +549,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 85
-                text: "Nombre de utilisateurs nominatifs : "
+                text: "Nombre de utilisateurs nominatifs : " + note.nominatif
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -562,7 +562,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 25;
                 anchors.topMargin: 105
-                text: "=> Ayant une date dépassée : "
+                text: "=> Ayant une date dépassée : " + note.usersPerimee
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -575,7 +575,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 125
-                text: "Nombre d'utilisateurs n'appartenant pas à la communauté : "
+                text: "Nombre d'utilisateurs n'appartenant pas à la communauté : " + note.usersAbsent
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -601,7 +601,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 185
-                text: "Nombre de goal utilisés :"
+                text: "Nombre de goal utilisés : " + note.goals
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -614,7 +614,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 205
-                text: "Nombre de goal inexistants :"
+                text: "Nombre de goal inexistants : " + note.goalsInexistant
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft
@@ -627,7 +627,7 @@ Rectangle
                 anchors.fill: parent
                 anchors.leftMargin: 5;
                 anchors.topMargin: 225
-                text: "Nombre de goal vides :"
+                text: "Nombre de goal vides : " + note.goalsVide
                 font.family: "Arial"
 
                 horizontalAlignment: Text.AlignLeft

@@ -14,4 +14,12 @@ void DataNote::test()
     emit  nbDocumentChanged();
     emit nbGoalChanged();
     emit niveauChanged();
+
+    emit domaineVideChanged();
+    emit domaineFullChanged();
+    emit domaineAsservisseursChanged();
+    emit domainesLibreSChanged();
+    emit domainesLibreChanged();
+
+    emit documentsC0Changed();
 }
