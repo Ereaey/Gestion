@@ -73,12 +73,18 @@ FileCSV::~FileCSV()
 
 QString FileCSV::getData(int line, int value)
 {
-    return lines[line][value];
+    if (value >= lines[line].size())
+        return "";
+    else
+        return lines[line][value];
 }
 
 QString FileCSV::getData(int line, QString col)
 {
-    return lines[line][cols[col]];
+    if (cols[col] >= lines[line].size())
+        return "";
+    else
+        return lines[line][cols[col]];
 }
 
 int FileCSV::getNumberLines()
