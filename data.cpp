@@ -236,7 +236,11 @@ void Data::addDocument(QString name, QString idDomaine, QString version, QString
             return;
         if (proprietaire.isEmpty())
             return;
-
+        if(domaines[idDomaine.toInt()]->commu->documents.contains(id))
+        {
+            domaines[idDomaine.toInt()]->commu->documents[id]->nbConsult += nbConsult;
+            return;
+        }
         Document *d = new Document;
         d->nom = name;
         d->nbConsult = nbConsult;
