@@ -203,6 +203,7 @@ QString Treatment::generatePlan(QString idDomaine)
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->dateCreation.toString("dd/MM/yyyy") + "\", \""
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->dateModif.toString("dd/MM/yyyy") + "\", \""
                  + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nombresPJ) + "\", \""
+                 + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nbConsult) + "\", \""
                  + idDomaine
                  + "\"]";
          m_file2 += m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->id + ";"
@@ -212,7 +213,8 @@ QString Treatment::generatePlan(QString idDomaine)
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->nom + " " + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->proprietaire->user->prenom + ";"
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->dateCreation.toString("dd/MM/yyyy") + ";"
                  + m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->dateModif.toString("dd/MM/yyyy") + ";"
-                 + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nombresPJ)
+                 + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nombresPJ)+ ";"
+                 + QString::number(m_data->getCurrentCommu()->domainesKey[idDomaine]->documents[i]->nbConsult)
                  + QString(QChar('\n'));;
     }
     return d;

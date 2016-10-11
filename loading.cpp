@@ -242,13 +242,10 @@ void Loading::loadDocuments()
         m_sizeAll = fileDocuments.getNumberLines();
         m_sizeCurrent = i;
         mutex.unlock();
-/*
-        QString id = fileDocuments.getData(i, 0);
-        QString nom =  fileDocuments.getData(i, 2);*/
-/*
-        m_data->addGoalMember(id, nom);
-*/
-        m_data->addDocument(fileDocuments.getData(i, "D"), fileDocuments.getData(i, "T"), fileDocuments.getData(i, "B"), fileDocuments.getData(i, "H"), fileDocuments.getData(i, "A"), fileDocuments.getData(i, "M"), fileDocuments.getData(i, "O"), fileDocuments.getData(i, "AI"), fileDocuments.getData(i, "AD"));
+
+        m_data->addDocument(fileDocuments.getData(i, "D"), fileDocuments.getData(i, "T"), fileDocuments.getData(i, "B"), fileDocuments.getData(i, "H"), fileDocuments.getData(i, "A"), fileDocuments.getData(i, "M"), fileDocuments.getData(i, "O"), fileDocuments.getData(i, "AI"), fileDocuments.getData(i, "AD"),
+                            fileDocuments.getData(i, "AZ").toInt() + fileDocuments.getData(i, "BA").toInt());
+
         setMessageLoading("Chargement des documents.. " + QString::number(i) + " / " + QString::number(fileDocuments.getNumberLines()));
     }
 }

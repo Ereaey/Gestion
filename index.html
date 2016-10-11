@@ -91,7 +91,7 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 	}
 	function addDocument(d)
 	{
-		var e = document.getElementsByClassName(d[8]);
+		var e = document.getElementsByClassName(d[9]);
 		
 		e[0].innerHTML += "<div style=\"color: blue;\" class='" + d[0] + "'>" + d[1] + "</div>";
 	}
@@ -106,10 +106,21 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 			addDocument(documents[i]);
 		}
 	}
+function viderTable(name)
+	{
+		var tableHeaderRowCount = 1;
+		var table = document.getElementById(name);
+		var rowCount = table.rows.length;
+		for (var i = tableHeaderRowCount; i < rowCount; i++) 
+		{
+			table.deleteRow(tableHeaderRowCount);
+		}
+	}
 	function tousDomaines()
 	{
-		tableau = document.getElementById("tabledomaines");
-		tableau.innerHTML = "";
+		viderTable("tabledomaines");
+		var tableau = document.getElementById("tabledomaines");
+	
 		for (i = 0; i < domaines.length; i++) {
 			var ligne = tableau.insertRow(-1);
 			for (e = 0; e < domaines[i].length; e++) {
@@ -120,8 +131,9 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 	}
 	function domainesVides()
 	{
-		tableau = document.getElementById("tabledomaines");
-		tableau.innerHTML = "";
+		viderTable("tabledomaines");
+		var tableau = document.getElementById("tabledomaines");
+	
 		for (i = 0; i < domaines.length; i++) {
 			if (domaines[i][2] == 0 && domaines[i][3] == 0)
 			{
@@ -135,8 +147,9 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 	}
 	function domainesFull()
 	{
-		tableau = document.getElementById("tabledomaines");
-		tableau.innerHTML = "";
+		viderTable("tabledomaines");
+		var tableau = document.getElementById("tabledomaines");
+	
 		for (i = 0; i < domaines.length; i++) {
 			if (domaines[i][3] > 10)
 			{
@@ -150,8 +163,9 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 	}
 	function tousDocuments()
 	{
-		tableau = document.getElementById("tabledocuments");
-		tableau.innerHTML = "";
+		viderTable("tabledocuments");
+		var tableau = document.getElementById("tabledocuments");
+	
 		for (i = 0; i < documents.length; i++) {
 			var ligne = tableau.insertRow(-1);
 			for (e = 0; e < documents[i].length - 1; e++) {
@@ -162,8 +176,9 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 	}
 	function docVides()
 	{
-		tableau = document.getElementById("tabledocuments");
-		tableau.innerHTML = "";
+		viderTable("tabledocuments");
+		var tableau = document.getElementById("tabledocuments");
+	
 		for (i = 0; i < documents.length; i++) {
 			if (documents[i][7] == 0)
 			{
@@ -177,8 +192,9 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 	}
 	function docFull()
 	{
-		tableau = document.getElementById("tabledocuments");
-		tableau.innerHTML = "";
+		viderTable("tabledocuments");
+		var tableau = document.getElementById("tabledocuments");
+	
 		for (i = 0; i < documents.length; i++) {
 			if (documents[i][7] > 10)
 			{
@@ -243,6 +259,7 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 		   <th>Crée le</th>
 		   <th>Modifié le</th>
 		   <th>Piéces jointes</th>
+		   <th>Consultations</th>
 	   </tr>
 	</table>
 	<br />
