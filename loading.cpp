@@ -218,7 +218,12 @@ void Loading::loadDomaines()
         QStringList Gestionnaires =  fileDomaines.getData(i, "M").split(",");
         QStringList Modificateurs =  fileDomaines.getData(i, "X").split(",");
         QStringList Lecteurs =  fileDomaines.getData(i, "AB").split(",");
-        m_data->addDomaine(nomCommu, nomDomaine, idDomaine, idDomaineParent, GoalsModifs, GoalsLecteur, responsable, Gestionnaires, Modificateurs, Lecteurs);
+
+        QString niveau =  fileDomaines.getData(i, "C");
+        QString asser =  fileDomaines.getData(i, "S");
+        QString synchro =  fileDomaines.getData(i, "T");
+
+        m_data->addDomaine(nomCommu, nomDomaine, idDomaine, idDomaineParent, GoalsModifs, GoalsLecteur, responsable, Gestionnaires, Modificateurs, Lecteurs, niveau, asser, synchro);
 
         setMessageLoading("Chargement des domaines.. " + QString::number(i) + " / " + QString::number(fileDomaines.getNumberLines()));
     }

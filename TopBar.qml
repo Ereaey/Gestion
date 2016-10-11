@@ -322,38 +322,6 @@ Rectangle{
         }
         Button {
             x: 5
-            visible:root.currentItem ==accueilMenu ? true:false
-            style: ButtonStyle{
-            label: Text {
-                text: "Note globale"
-                font.family: "Trebuchet MS"
-                font.italic: true
-
-                color: accueil23.containsMouse ? "#395B80" : "#505050"
-                font.bold: accueil23.containsMouse ? true : false
-                font.pointSize: 10
-
-                anchors.centerIn: parent
-            }
-            background: Rectangle {
-                opacity: enabled ? 1 : 0.3
-                color:"#F3F3F3"
-            }
-            }
-            MouseArea
-            {
-                id: accueil23
-                anchors.fill: parent
-                hoverEnabled: true
-                onClicked:
-                {
-                    treatment.noteGlobale();
-                    principalLoader.source = "LayerNote.qml"
-                }
-            }
-        }
-        Button {
-            x: 5
             visible:root.currentItem ==documentsMenu ? true:false
             style: ButtonStyle{
             label: Text {

@@ -76,7 +76,7 @@ struct Domaine
 struct Communaute
 {
     QString name;
-    int note;
+    int note, synchronises, asservisseurs, niveau, lsynchronises;
 
     Domaine *root;
     Model rootTree;
@@ -131,7 +131,9 @@ class Data : public QObject
         void addCommunaute(QString name, QStringList goals);
         void addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent,
                         QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable,
-                        QStringList gestionnaires, QStringList modificateurs, QStringList lecteurs);
+                        QStringList gestionnaires, QStringList modificateurs, QStringList lecteurs, QString niveau,
+                        QString asservisseur, QString synchronises
+                        );
         void addDocument(QString name, QString idDomaine, QString version, QString proprietaire, QString id,
                          QString dateCreation, QString dateModif, QString nbPj, QString namePj);
         QMap<QString, Communaute*> getCommus(){ return communautes;}
@@ -143,7 +145,8 @@ class Data : public QObject
         void generateData();
         void drawTree(QString goal, bool modif, bool lecteur);
         void drawTree(QString domaine);
-
+    signals:
+        void commuChanged();
     private:
         void addDomaineUser(Domaine *d, QString user, int grade);
         void addDomaineGoal(Domaine *d, Goal *g, int grade);

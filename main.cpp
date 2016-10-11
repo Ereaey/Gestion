@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 
     Model *m = new Model;
     Data *d = new Data(m);
+    DataNote *note = new DataNote(d);
     Loading *l = new Loading(d, autoComplet, autoCompletU);
     Treatment *t = new Treatment(d);
     ExportResult *e = new ExportResult(t);
@@ -36,6 +37,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("dataT", d);
     engine.rootContext()->setContextProperty("listDomaine", ds);
     engine.rootContext()->setContextProperty("treatment", t);
+    engine.rootContext()->setContextProperty("note", note);
     engine.rootContext()->setContextProperty("autoComplet", autoComplet);
     engine.rootContext()->setContextProperty("autoCompletUser", autoCompletU);
 

@@ -43,6 +43,10 @@ void Data::addCommunaute(QString name, QStringList goals)
     communautes[name] = new Communaute;
     communautes[name]->name = name;
     communautes[name]->note = 50;
+    communautes[name]->niveau = 0;
+    communautes[name]->synchronises = 0;
+    communautes[name]->lsynchronises = 0;
+    communautes[name]->asservisseurs = 0;
     if (!goals.isEmpty())
     {
         for (int i = 0; i < goals.size(); i++)
@@ -121,7 +125,7 @@ void Data::addDomaineUser(Domaine *d, QString user, int grade)
         d->commu->users[id]->domainesLecteur.push_back(d);
 }
 
-void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent, QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable, QStringList gestionnaires, QStringList modificateurs, QStringList lecteurs)
+void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent, QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable, QStringList gestionnaires, QStringList modificateurs, QStringList lecteurs, QString niveau, QString asservisseur, QString synchronises)
 {
     Domaine *d = new Domaine;
     d->id = IdDomaine.toInt();
@@ -145,7 +149,20 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     d->commu = communautes[nameCommu];
 
     if (d->id_parent == 0)
+    {
         communautes[nameCommu]->root = d;
+    }
+    if (niveau.toInt() > communautes[nameCommu]->niveau)
+        communautes[nameCommu]->niveau = niveau.toInt();
+
+    if (asservisseur == "Oui")
+        communautes[nameCommu]->asservisseurs++;
+
+    if (asservisseur == "Oui" && synchronises == "Non")
+        communautes[nameCommu]->synchronises++;
+    else if (synchronises == "Oui")
+        communautes[nameCommu]->lsynchronises++;
+
 
     addDomaineUser(d, responsable, RESPONSABLE);
 
@@ -372,5 +389,6 @@ void Data::recursiveOpen(int id)
 void Data::setCurrentCommu(QString name)
 {
     c_actu = communautes[name];
+    commuChanged();
     treeMo->setRoot(c_actu->root->t);
 }

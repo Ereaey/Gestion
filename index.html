@@ -148,6 +148,48 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 			}
 		}
 	}
+	function tousDocuments()
+	{
+		tableau = document.getElementById("tabledocuments");
+		tableau.innerHTML = "";
+		for (i = 0; i < documents.length; i++) {
+			var ligne = tableau.insertRow(-1);
+			for (e = 0; e < documents[i].length - 1; e++) {
+				var colonne1 = ligne.insertCell(e);
+				colonne1.innerHTML += documents[i][e];
+			}
+		}
+	}
+	function docVides()
+	{
+		tableau = document.getElementById("tabledocuments");
+		tableau.innerHTML = "";
+		for (i = 0; i < documents.length; i++) {
+			if (documents[i][7] == 0)
+			{
+				var ligne = tableau.insertRow(-1);
+				for (e = 0; e < documents[i].length - 1; e++) {
+					var colonne1 = ligne.insertCell(e);
+					colonne1.innerHTML += documents[i][e];
+				}
+			}
+		}
+	}
+	function docFull()
+	{
+		tableau = document.getElementById("tabledocuments");
+		tableau.innerHTML = "";
+		for (i = 0; i < documents.length; i++) {
+			if (documents[i][7] > 10)
+			{
+				var ligne = tableau.insertRow(-1);
+				for (e = 0; e < documents[i].length - 1; e++) {
+					var colonne1 = ligne.insertCell(e);
+					colonne1.innerHTML += documents[i][e];
+				}
+			}
+		}
+	}
 	function genererTableaux()
 	{
 		var tableau = document.getElementById("tabledocuments");
@@ -189,7 +231,7 @@ e.custom(start,val,"");}});return true;});},queue:function(type,fn){if(jQuery.is
 	<br />
 </p>
 
-<h2>Liste des documents (tous, sans pieces jointes, avec plus de 10 pieces jointes)</h2>
+<h2>Liste des documents (<a href="" onclick="tousDocuments();return false;">tous</a>, <a href="javascript:void(0);" onclick="docVides();return false;">sans pieces jointes</a>, <a href="javascript:void(0);" onclick="docFull();return false;">avec plus de 10 pieces jointes</a>)</h2>
 <p>
 	<table id="tabledocuments" BORDER=1 style='padding:10px; border:solid 1px #dedede; width: 100%;'>
 	   <tr>
