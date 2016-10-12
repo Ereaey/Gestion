@@ -85,6 +85,8 @@ class Loading : public QThread
 
         autoCompletGoal *m_a;
         autoCompletUser *m_u;
+
+        FileCSV *m_file;
 };
 
 #endif // LOADING_H

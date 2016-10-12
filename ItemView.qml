@@ -25,6 +25,7 @@ Row{
     }
     Column{
         x:3
+        y:1
         Row
         {
         Rectangle

@@ -58,12 +58,9 @@ Rectangle
                         border.color: control.pressed ? "#26282a" : "#353637"
                     }
                     label: Text {
-                        //x: control.leftPadding
-                        //y: control.topPadding
                         width: control.availableWidth
                         height: control.availableHeight
                         text: control.text
-                        //font: control.font
                         opacity: enabled || highlighted ? 1 : 0.3
                         color: control.highlighted ? "#ffffff" : (control.pressed ? "#26282a" : "#353637")
                         horizontalAlignment: Text.AlignHCenter
@@ -90,64 +87,21 @@ Rectangle
     }
 
 
-        ScrollView
-        {
-            anchors.fill: parent
-            ListView {
-                id:listD
-                maximumFlickVelocity: 100
-                x:30
-                height: parent.height - 40
-                width: parent.width
-                model: treatment.commu
-                delegate: contactDelegate
-            }
+    ScrollView
+    {
+        anchors.fill: parent
+        ListView {
+            id:listD
+            maximumFlickVelocity: 100
+            x:30
+            height: parent.height - 40
+            width: parent.width
+            model: treatment.commu
+            delegate: contactDelegate
         }
+    }
     Component.onCompleted:
     {
         listD.model = treatment.commu;
-        console.log("dqsd")
     }
-    /*
-    Column
-    {
-        y:35
-
-        Button {
-            //x: 5
-
-            label: Text {
-
-                //color: ""
-                text: "Support Assurance Qualité opérationnelle Sites industriels Valenciennes, Sevelnord et Douvrin-FM"
-                font.family: "Trebuchet MS"
-                //font.italic: true
-                color: accueil2.containsMouse ? "white" : "white"
-                //font.bold: accueil2.containsMouse ? true : false
-                font.pointSize: 9
-                x:12
-                y:7
-                //anchors.centerIn: parent
-                //font.underline: accueil2.containsMouse ? true : false
-                //width:400
-                //clip:true
-                wrapMode:Text.WordWrap
-            }
-
-            background: Rectangle {
-                width: 580
-                height: 100
-                opacity: enabled ? 1 : 0.3
-                //color:"#F3F3F3"
-                color: accueil2.containsMouse ? "#3E4B5C" : "#364150"
-                //radius: accueil2.containsMouse ? 5 : 0
-            }
-            MouseArea
-            {
-                id: accueil2
-                anchors.fill: parent
-                hoverEnabled: true
-            }
-        }
-    }*/
 }

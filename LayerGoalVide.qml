@@ -29,10 +29,10 @@ Rectangle
 
     Rectangle
     {
-        y:10
-        width: parent.width - 50
+        //y:10
+        width: parent.width
         height: 25
-        x:25
+        //x:25
         color: "#364150"
         Text
         {
@@ -49,10 +49,10 @@ Rectangle
     }
     Rectangle
     {
-        y:35
-        width: parent.width - 50
-        height: parent.height - 45
-        x:25
+        y:25
+        width: parent.width
+        height: parent.height - 25
+        //x:25
         color: "#516277"
 
         ScrollView
@@ -129,7 +129,7 @@ Rectangle
                     onClicked:
                     {
                         //listDomaine.deleteDomaine(model.modelData.iddomaine);
-                        principalLoader.source = "LayerGoalSearch.qml"
+                        //principalLoader.source = "LayerGoalSearch.qml"
                         treatment.searchGoal(model.modelData.nom, true, true)
                     }
                 }

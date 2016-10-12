@@ -55,23 +55,25 @@ Rectangle
             {
                 valueGoal = control.text
                 autoComplet.search(control.text);
+                if (modifcheck.checkState === Qt.Checked && lectcheck.checkState === Qt.Checked)
+                    treatment.searchGoal(control.text, true, true)
+                else if (modifcheck.checkState === Qt.Unchecked && lectcheck.checkState === Qt.Checked)
+                    treatment.searchGoal(control.text, false, true)
+                else if (modifcheck.checkState === Qt.Checked && lectcheck.checkState === Qt.Unchecked)
+                    treatment.searchGoal(control.text, true, false)
+                else
+                    treatment.searchGoal(control.text, true, true)
             }
         }
     }
-/*
-    property QStringList loadAuto: autoComplet.result
-    onLoadAutoChanged: {
-        autoCompletList.model = autoComplet.result
-    }*/
 
     Rectangle
     {
-        y:10
+        y:0
         height: 150
-        width: parent.width / 2 - 50
-        x:25
+        width: parent.width
+        x:0
         color: "#364150"
-        radius:2
         Text
         {
             anchors.fill: parent
@@ -205,12 +207,12 @@ Rectangle
     }
     Rectangle
     {
-        y:10
+        y: 150
         height: 150
-        width: parent.width / 2 - 50
-        x: parent.width / 2 + 25
+        width: parent.width
+        x: 0
         color: "#364150"
-        radius:2
+        //radius:2
         Text
         {
             anchors.fill: parent
@@ -276,67 +278,10 @@ Rectangle
 
     Rectangle
     {
-        y:170
-        width: parent.width / 2 - 50
+        y:300
+        width: parent.width
         height: 25
-        x:25
-        color: "#364150"
-        Text
-        {
-            anchors.fill: parent
-            anchors.leftMargin: 5;
-            anchors.topMargin: 5
-            text: "Arbre de communauté"
-            font.family: "Arial"
-            font.bold: true
-            horizontalAlignment: Text.AlignLeft
-            font.pointSize: 11
-            color: "white"
-        }
-    }
-    Rectangle
-    {
-        y:195
-        width: parent.width / 2 - 50
-        height: parent.height - 205
-        x:25
-        color: "#516277"
-        Rectangle
-        {
-            width: parent.width - 10
-            x : 10
-            y : 5
-            height: parent.height - 10
-            color: "#516277"
-            ScrollView
-            {
-            anchors.fill: parent
-            //contentHeight: 15000
-
-            ListView
-            {
-                y:5
-                maximumFlickVelocity: 100
-                x:8
-                height: parent.height
-                width: parent.width
-                id:testTree
-                model: tree.tree
-                focus: true
-                delegate: ItemView{}
-            }
-            //ScrollBar.vertical: ScrollBar {}
-            //clip: true
-            }
-        }
-    }
-
-    Rectangle
-    {
-        y:170
-        width: parent.width / 2 - 50
-        height: 25
-        x: parent.width / 2 + 25
+        x: 0
         color: "#364150"
         Text
         {
@@ -422,10 +367,10 @@ Rectangle
     }
     Rectangle
     {
-        y:195
-        width: parent.width / 2 - 50
-        height: parent.height - 205
-        x: parent.width / 2 + 25
+        y:325
+        width: parent.width
+        height: parent.height - 325
+        x: 0
         color: "#516277"
         Component {
             id: contactDelegate

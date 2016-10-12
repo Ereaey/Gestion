@@ -223,7 +223,7 @@ Rectangle
                     onClicked:
                     {
                         //listDomaine.deleteDomaine(model.modelData.iddomaine);
-                        principalLoader.source = "LayerDomaineSearch.qml"
+                        //principalLoader.source = "LayerDomaineSearch.qml"
                         treatment.searchDomaine(model.modelData.iddomaine);
                     }
                 }

@@ -95,7 +95,7 @@ void Treatment::searchGoal(QString goal, bool modificateur, bool lecteur)
 
 void Treatment::noteGlobale()
 {
-    m_currentAction = "note globale";
+    m_currentAction = "Note Globale";
     emit currentActionChanged();
     m_type = NOTE_GLOBALE;
     start();
