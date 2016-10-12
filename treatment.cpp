@@ -117,6 +117,24 @@ void Treatment::searchGoalDoublon()
     start();
 }
 
+void Treatment::searchUserDoublon(bool resp)
+{
+    m_currentAction = "Rechercher les utilisateurs doublons";
+    emit currentActionChanged();
+    m_type = SEARCH_USER_DOUBLON;
+    m_typeUser = resp;
+    start();
+}
+
+void Treatment::searchUserPerime(bool resp)
+{
+    m_currentAction = "Rechercher les utilisateurs perimés";
+    emit currentActionChanged();
+    m_type = SEARCH_USER_PERIME;
+    m_typeUser = resp;
+    start();
+}
+
 void Treatment::searchGoalsProbleme()
 {
     m_currentAction = "Rechercher un goal inexistants / périmés";
@@ -424,6 +442,60 @@ void Treatment::run()
         for (int i = 0; i < m_data->getCurrentCommu()->usersInconnu.size(); i++)
         {
             m_result.append(new DataUser(m_data->getCurrentCommu()->usersInconnu[i]->user->nom + " " + m_data->getCurrentCommu()->usersInconnu[i]->user->prenom, m_data->getCurrentCommu()->usersInconnu[i]->user->ID));
+        }
+        emit refreshResult();
+    }
+    else if (m_type == SEARCH_USER_DOUBLON)
+    {
+        m_result.clear();
+        if (m_typeUser == true)
+        {
+            for (int i = 0; i < m_commu.size(); i++)
+            {
+                ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesDoublonRG.size());
+            }
+            for (int i = 0; i < m_data->getCurrentCommu()->domainesDoublonRG.size(); i++)
+            {
+                m_result.append(new DataDomaine(m_data->getCurrentCommu()->domainesDoublonRG[i]->nom, QString::number(m_data->getCurrentCommu()->domainesDoublonRG[i]->id)));
+            }
+        }
+        else
+        {
+            for (int i = 0; i < m_commu.size(); i++)
+            {
+                ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesDoublonML.size());
+            }
+            for (int i = 0; i < m_data->getCurrentCommu()->domainesDoublonML.size(); i++)
+            {
+                m_result.append(new DataDomaine(m_data->getCurrentCommu()->domainesDoublonML[i]->nom, QString::number(m_data->getCurrentCommu()->domainesDoublonML[i]->id)));
+            }
+        }
+        emit refreshResult();
+    }
+    else if (m_type == SEARCH_USER_PERIME)
+    {
+        m_result.clear();
+        if (m_typeUser == true)
+        {
+            for (int i = 0; i < m_commu.size(); i++)
+            {
+                ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesPerimeM.size());
+            }
+            for (int i = 0; i < m_data->getCurrentCommu()->domainesPerimeM.size(); i++)
+            {
+                m_result.append(new DataDomaine(m_data->getCurrentCommu()->domainesPerimeM[i]->user->user->nom + " " + m_data->getCurrentCommu()->domainesPerimeM[i]->user->user->prenom, QString::number(m_data->getCurrentCommu()->domainesPerimeM[i]->d->id)));
+            }
+        }
+        else
+        {
+            for (int i = 0; i < m_commu.size(); i++)
+            {
+                ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesPerimeL.size());
+            }
+            for (int i = 0; i < m_data->getCurrentCommu()->domainesPerimeL.size(); i++)
+            {
+                m_result.append(new DataDomaine(m_data->getCurrentCommu()->domainesPerimeL[i]->user->user->nom + " " + m_data->getCurrentCommu()->domainesPerimeL[i]->user->user->prenom, QString::number(m_data->getCurrentCommu()->domainesPerimeL[i]->d->id)));
+            }
         }
         emit refreshResult();
     }

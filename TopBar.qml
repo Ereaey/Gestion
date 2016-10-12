@@ -572,7 +572,7 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
-                    treatment.searchUserAbsent();
+                    treatment.searchUserDoublon(true);
                     principalLoader.source = "LayerUtilisateurDoublon.qml"
                 }
             }
@@ -605,7 +605,7 @@ Rectangle{
                 hoverEnabled: true
                 onClicked:
                 {
-                    treatment.searchUserAbsent();
+                    treatment.searchUserPerime(true);
                     principalLoader.source = "LayerUtilisateurPerime.qml"
                 }
             }

@@ -12,34 +12,6 @@ Rectangle
     width: parent.width
     height: parent.height
 
-    property string loadResult: autoCompletUser.finish
-    onLoadResultChanged: {
-        if (autoCompletUser.finish == true)
-        {
-            testTree.model = autoCompletUser.result
-            testTree.visible = true;
-            treeDomaine.visible = false;
-        }
-    }
-
-    property string valueUser: ""
-    property string idUser: ""
-    Timer
-    {
-        interval: 500;
-        running: true;
-        repeat: true
-        onTriggered:
-        {
-            if (valueUser != nameUser.text)
-            {
-                valueUser = nameUser.text
-                autoCompletUser.searchUser(nameUser.text);
-                testTree.model = autoCompletUser.result
-            }
-        }
-    }
-
     Rectangle
     {
         y:10
@@ -73,7 +45,7 @@ Rectangle
             y:40
             x:10
             CheckBox {
-                text: qsTr("Responsable")
+                text: qsTr("Modificateur")
                 checked: true
                 id:modifcheck
 
@@ -105,17 +77,7 @@ Rectangle
                 onClicked:
                 {
                     lectcheck.checked = false
-                    responsablecheck.checked = false
-                    gestionnairecheck.checked = false
-                    propriocheck.checked = false
-                    if (responsablecheck.checked === true)
-                        treatment.searchUser(idUser, 0);
-                    else if (gestionnairecheck.checked === true)
-                        treatment.searchUser(idUser, 1);
-                    else if (modifcheck.checked === true)
-                        treatment.searchUser(idUser, 2);
-                    else if (lectcheck.checked === true)
-                        treatment.searchUser(idUser, 3);
+                    treatment.searchUserPerime(true);
                 }
             }
             Rectangle
@@ -126,7 +88,7 @@ Rectangle
             }
 
             CheckBox {
-                text: qsTr("Gestionnaire")
+                text: qsTr("Lecteur")
                 id:lectcheck
                 x:200
                 style: CheckBoxStyle {
@@ -157,17 +119,7 @@ Rectangle
                 onClicked:
                 {
                     modifcheck.checked = false
-                    responsablecheck.checked = false
-                    gestionnairecheck.checked = false
-                    propriocheck.checked = false
-                    if (responsablecheck.checked === true)
-                        treatment.searchUser(idUser, 0);
-                    else if (gestionnairecheck.checked === true)
-                        treatment.searchUser(idUser, 1);
-                    else if (modifcheck.checked === true)
-                        treatment.searchUser(idUser, 2);
-                    else if (lectcheck.checked === true)
-                        treatment.searchUser(idUser, 3);
+                    treatment.searchUserPerime(false);
                 }
             }
         }
@@ -225,10 +177,9 @@ Rectangle
                 height: parent.height
                 width: parent.width
                 id:treeDomaine
-                visible:false
                 model: treatment.result
                 focus: true
-                delegate: contactDelegateResult
+                delegate: contactDelegate
             }
             //ScrollBar.vertical: ScrollBar {}
             //clip: true
@@ -304,7 +255,7 @@ Rectangle
                 Row
                 {
                 Text {
-                    text: '<b>Id:</b> ' + model.modelData.id + '     <b>Nom:</b> ' + model.modelData.nom
+                    text: '<b>Id:</b> ' + model.modelData.iddomaine + '     <b>Nom:</b> ' + model.modelData.nom
                     font.family: "Arial"
                     font.pointSize: 10
                     color: "white"
@@ -318,7 +269,7 @@ Rectangle
                 Button
                 {
                     id:control
-                    text: "Selectionner"
+                    text: "Rechercher dans l'arbre"
                     height:15
                     style:ButtonStyle{
                     background: Rectangle {
@@ -345,20 +296,8 @@ Rectangle
                     onClicked:
                     {
                         //listDomaine.deleteDomaine(model.modelData.iddomaine);
-                        //principalLoader.source = "LayerDomaineSearch.qml"
-                        valueUser = model.modelData.nom;
-                        nameUser.text = model.modelData.nom
-                        idUser = model.modelData.id
-                        if (responsablecheck.checked === true)
-                            treatment.searchUser(model.modelData.id, 0);
-                        else if (gestionnairecheck.checked === true)
-                            treatment.searchUser(model.modelData.id, 1);
-                        else if (modifcheck.checked === true)
-                            treatment.searchUser(model.modelData.id, 2);
-                        else if (lectcheck.checked === true)
-                            treatment.searchUser(model.modelData.id, 3);
-                        testTree.visible = false;
-                        treeDomaine.visible = true;
+                        principalLoader.source = "LayerDomaineSearch.qml"
+                        treatment.searchDomaine(model.modelData.iddomaine);
                     }
                 }
                 }

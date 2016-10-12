@@ -122,6 +122,8 @@ void Data::addDomaineUser(Domaine *d, QString user, int grade)
     {
         d->commu->users[id]->domainesGestionnaire.push_back(d);
         d->commu->usersGestionnaire[id] = d->commu->users[id];
+        if (d->responsable == d->commu->users[id])
+            d->commu->domainesDoublonRG.append(d);
     }
     else if (grade == MODIFICATEURS_GOAL)
     {
@@ -140,8 +142,13 @@ void Data::addDomaineUser(Domaine *d, QString user, int grade)
             if (QDate::fromString(user.split(" - ")[2].remove(" "), "dd/MM/yyyy") > QDate::currentDate())
             {
                 d->commu->usersPerimee[id] = d->commu->users[id];
+                UPerime *up = new UPerime;
+                up->d = d;
+                up->user = d->commu->users[id];
+                d->commu->domainesPerimeM.append(up);
             }
         }
+        d->users[id] = d->commu->users[id];
     }
     else if (grade == LECTEURS)
     {
@@ -152,8 +159,17 @@ void Data::addDomaineUser(Domaine *d, QString user, int grade)
             if (QDate::fromString(user.split(" - ")[2].remove(" "), "dd/MM/yyyy") > QDate::currentDate())
             {
                 d->commu->usersPerimee[id] = d->commu->users[id];
+                UPerime *up = new UPerime;
+                up->d = d;
+                up->user = d->commu->users[id];
+                d->commu->domainesPerimeL.append(up);
             }
         }
+        if (d->users.contains(id))
+        {
+            d->commu->domainesDoublonML.append(d);
+        }
+        d->users[id] = d->commu->users[id];
     }
 }
 

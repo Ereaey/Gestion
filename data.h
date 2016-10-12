@@ -55,6 +55,7 @@ struct UserCommu
 
     QVector<Domaine*> domainesModificateurGOAL;//via goal
     QVector<Domaine*> domainesLecteurGOAL;//via goal
+
 };
 
 struct Communaute;
@@ -70,8 +71,15 @@ struct Domaine
 
     Domaine *parent;
     QVector<Domaine*> enfants;
+    QMap<QString, UserCommu*> users;
     TreeItem *t;
     Communaute *commu;
+};
+
+struct UPerime
+{
+    UserCommu *user;
+    Domaine *d;
 };
 
 struct Communaute
@@ -100,6 +108,8 @@ struct Communaute
     QVector<Domaine*> domainesVides;
     QVector<Domaine*> domainesPlein;//+10 documents
 
+    QVector<Domaine*> domainesDoublonML;
+    QVector<Domaine*> domainesDoublonRG;
     QVector<Domaine*> domainesDoublon;
     QVector<UserCommu*> usersDoublon;
 
@@ -114,7 +124,8 @@ struct Communaute
     QMap<QString, UserCommu*> usersProprietaire;
 
     QMap<QString, UserCommu*> usersPerimee;//Date dépassée
-    QVector<Domaine*> domainesPerimee;//Date dépassée user
+    QVector<UPerime*> domainesPerimeM;//Date dépassée user
+    QVector<UPerime*> domainesPerimeL;//Date dépassée user
 
 
     QVector<Document*> documentsVide;//Sans PJ

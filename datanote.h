@@ -54,7 +54,7 @@ class DataNote : public QObject
         }
         QString domaineFull()
         {
-            return QString::number(m_d->getCurrentCommu()->domainesPlein.size());
+            return "<font color=\"green\">" + QString::number(m_d->getCurrentCommu()->domainesPlein.size()) + "</font>";
         }
         QString domaineAsservisseurs()
         {

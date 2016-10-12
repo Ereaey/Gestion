@@ -24,7 +24,7 @@ class Treatment : public QThread
 
     enum t{SEARCH_GOAL_MODIF, SEARCH_GOAL_LECT, SEARCH_GOAL, SEARCH_GOAL_VIDE, SEARCH_DOMAINE, SEARCH_GOAL_PROBLEME, SEARCH_DOMAINE_VIDE, SEARCH_DOMAINE_FULL,
           EXPORT_PLAN, SEARCH_DOCUMENT_VIDE, SEARCH_DOCUMENT_SURCHARGE, SEARCH_DOCUMENT, SEARCH_USER, SEARCH_USER_ABSENT, NOTE_GLOBALE, SEARCH_USER_HORS_PSA,
-          SEARCH_GOAL_DOUBLON};
+          SEARCH_GOAL_DOUBLON, SEARCH_USER_DOUBLON, SEARCH_USER_PERIME};
 
     enum type{RESPONSABLE = 0, GESTIONNAIRE = 1, MODIFICATEUR = 2, LECTEUR = 3};
     public:
@@ -51,7 +51,8 @@ class Treatment : public QThread
         Q_INVOKABLE void searchUserHorsPSA();
         Q_INVOKABLE void noteGlobale();
         Q_INVOKABLE void searchGoalDoublon();
-
+        Q_INVOKABLE void searchUserDoublon(bool resp);
+        Q_INVOKABLE void searchUserPerime(bool resp);
         Q_INVOKABLE void exportPlan(QString idDomaine, QString path);
 
 
