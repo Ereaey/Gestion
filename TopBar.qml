@@ -257,7 +257,7 @@ Rectangle{
             }
         }
         Button {
-            x: 155
+            x: 135
             visible:root.currentItem ==communautesMenu ? true:false
             style: ButtonStyle{
             label: Text {
@@ -289,7 +289,7 @@ Rectangle{
             }
         }
         Button {
-            x: 255
+            x: 225
             visible:root.currentItem ==communautesMenu ? true:false
             style: ButtonStyle{
             label: Text {
@@ -317,6 +317,38 @@ Rectangle{
                 {
                     treatment.searchGoalsProbleme();
                     principalLoader.source = "LayerGoalInexistant.qml"
+                }
+            }
+        }
+        Button {
+            x: 345
+            visible:root.currentItem ==communautesMenu ? true:false
+            style: ButtonStyle{
+            label: Text {
+                text: "Goals doublons"
+                font.family: "Trebuchet MS"
+                font.italic: true
+
+                color: accueil82.containsMouse ? "#395B80" : "#505050"
+                font.bold: accueil82.containsMouse ? true : false
+                font.pointSize: 10
+
+                anchors.centerIn: parent
+            }
+            background: Rectangle {
+                opacity: enabled ? 1 : 0.3
+                color:"#F3F3F3"
+            }
+            }
+            MouseArea
+            {
+                id: accueil82
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked:
+                {
+                    treatment.searchGoalDoublon();
+                    principalLoader.source = "LayerGoalDoublon.qml"
                 }
             }
         }
@@ -449,11 +481,11 @@ Rectangle{
             }
         }
         Button {
-            x: 175
+            x: 170
             visible:root.currentItem ==utilisateursMenu ? true:false
             style: ButtonStyle{
             label: Text {
-                text: "Utilisateurs absents de la communauté"
+                text: "Absents de la communauté"
                 font.family: "Trebuchet MS"
                 font.italic: true
 
@@ -480,6 +512,105 @@ Rectangle{
                 }
             }
         }
+        Button {
+            x: 350
+            visible:root.currentItem ==utilisateursMenu ? true:false
+            style: ButtonStyle{
+            label: Text {
+                text: "Hors PSA"
+                font.family: "Trebuchet MS"
+                font.italic: true
+
+                color: accueil36.containsMouse ? "#395B80" : "#505050"
+                font.bold: accueil36.containsMouse ? true : false
+                font.pointSize: 10
+
+                anchors.centerIn: parent
+            }
+            background: Rectangle {
+                opacity: enabled ? 1 : 0.3
+                color:"#F3F3F3"
+            }
+            }
+            MouseArea
+            {
+                id: accueil36
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked:
+                {
+                    treatment.searchUserHorsPSA();
+                    principalLoader.source = "LayerUtilisateurHorsPSA.qml"
+                }
+            }
+        }
+
+        Button {
+            x: 425
+            visible:root.currentItem ==utilisateursMenu ? true:false
+            style: ButtonStyle{
+            label: Text {
+                text: "Doublon"
+                font.family: "Trebuchet MS"
+                font.italic: true
+
+                color: accueil35.containsMouse ? "#395B80" : "#505050"
+                font.bold: accueil35.containsMouse ? true : false
+                font.pointSize: 10
+
+                anchors.centerIn: parent
+            }
+            background: Rectangle {
+                opacity: enabled ? 1 : 0.3
+                color:"#F3F3F3"
+            }
+            }
+            MouseArea
+            {
+                id: accueil35
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked:
+                {
+                    treatment.searchUserAbsent();
+                    principalLoader.source = "LayerUtilisateurDoublon.qml"
+                }
+            }
+        }
+
+        Button {
+            x: 495
+            visible:root.currentItem ==utilisateursMenu ? true:false
+            style: ButtonStyle{
+            label: Text {
+                text: "Date dépasée"
+                font.family: "Trebuchet MS"
+                font.italic: true
+
+                color: accueil81.containsMouse ? "#395B80" : "#505050"
+                font.bold: accueil81.containsMouse ? true : false
+                font.pointSize: 10
+
+                anchors.centerIn: parent
+            }
+            background: Rectangle {
+                opacity: enabled ? 1 : 0.3
+                color:"#F3F3F3"
+            }
+            }
+            MouseArea
+            {
+                id: accueil81
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked:
+                {
+                    treatment.searchUserAbsent();
+                    principalLoader.source = "LayerUtilisateurPerime.qml"
+                }
+            }
+        }
+
         /*
         Button {
             x: 425
@@ -554,8 +685,8 @@ Rectangle{
                 font.family: "Trebuchet MS"
                 font.italic: true
 
-                color: accueil35.containsMouse ? "#395B80" : "#505050"
-                font.bold: accueil35.containsMouse ? true : false
+                color: accueil38.containsMouse ? "#395B80" : "#505050"
+                font.bold: accueil38.containsMouse ? true : false
                 font.pointSize: 10
 
                 anchors.centerIn: parent
@@ -567,7 +698,7 @@ Rectangle{
             }
             MouseArea
             {
-                id: accueil35
+                id: accueil38
                 anchors.fill: parent
                 hoverEnabled: true
                 onClicked:
@@ -586,8 +717,8 @@ Rectangle{
                 font.family: "Trebuchet MS"
                 font.italic: true
 
-                color: accueil36.containsMouse ? "#395B80" : "#505050"
-                font.bold: accueil36.containsMouse ? true : false
+                color: accueil80.containsMouse ? "#395B80" : "#505050"
+                font.bold: accueil80.containsMouse ? true : false
                 font.pointSize: 10
 
                 anchors.centerIn: parent
@@ -599,7 +730,7 @@ Rectangle{
             }
             MouseArea
             {
-                id: accueil36
+                id: accueil80
                 anchors.fill: parent
                 hoverEnabled: true
                 onClicked:

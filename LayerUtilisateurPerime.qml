@@ -43,7 +43,7 @@ Rectangle
     Rectangle
     {
         y:10
-        height: 120
+        height: 70
         width: parent.width - 50
         x:25
         color: "#364150"
@@ -53,7 +53,7 @@ Rectangle
             anchors.fill: parent
             anchors.leftMargin: 5;
             anchors.topMargin: 5
-            text: "Rechercher un utilisateur"
+            text: "Selectionner la catégorie des utilisateurs périmés"
             font.family: "Arial"
             font.bold: true
             horizontalAlignment: Text.AlignLeft
@@ -69,29 +69,11 @@ Rectangle
             y:30
         }
 
-        TextField
-        {
-            width:parent.width - 20
-            height:30
+        Row {
             y:40
             x:10
-            id:nameUser
-            placeholderText: qsTr("Entrer le nom de l'utilisateur")
-            style: TextFieldStyle{
-            background: Rectangle {
-                 implicitWidth: 200
-                 implicitHeight: 30
-                 color: nameUser.enabled ? "white" : "#353637"
-                 border.color: nameUser.enabled ? "#bdbebf" : "transparent"
-             }}
-            selectByMouse: true
-        }
-
-        Row {
-            y:80
-            x:10
             CheckBox {
-                text: qsTr("Modificateur")
+                text: qsTr("Responsable")
                 checked: true
                 id:modifcheck
 
@@ -144,7 +126,7 @@ Rectangle
             }
 
             CheckBox {
-                text: qsTr("Lecteur")
+                text: qsTr("Gestionnaire")
                 id:lectcheck
                 x:200
                 style: CheckBoxStyle {
@@ -188,155 +170,6 @@ Rectangle
                         treatment.searchUser(idUser, 3);
                 }
             }
-            Rectangle
-            {
-                width: 20
-                height: parent.height
-                color: "#516277"
-            }
-
-            CheckBox {
-                text: qsTr("Responsable")
-                id:responsablecheck
-                x:200
-                style: CheckBoxStyle {
-                        indicator: Rectangle {
-                                implicitWidth: 20
-                                implicitHeight: 20
-                                radius: 3
-                                border.color: control.activeFocus ? "darkblue" : "gray"
-                                border.width: 1
-                                Rectangle {
-                                    visible: control.checked
-                                    color: "#555"
-                                    border.color: "#333"
-                                    radius: 1
-                                    anchors.margins: 4
-                                    anchors.fill: parent
-                                }
-                        }
-                        label: Text {
-                            x: 0
-                            y: 0
-                            width: 100
-                            height: 20
-                            text: responsablecheck.text
-                            color: "white"
-                         }
-                    }
-                onClicked:
-                {
-                    modifcheck.checked = false
-                    lectcheck.checked = false
-                    gestionnairecheck.checked = false
-                    propriocheck.checked = false
-                    if (responsablecheck.checked === true)
-                        treatment.searchUser(idUser, 0);
-                    else if (gestionnairecheck.checked === true)
-                        treatment.searchUser(idUser, 1);
-                    else if (modifcheck.checked === true)
-                        treatment.searchUser(idUser, 2);
-                    else if (lectcheck.checked === true)
-                        treatment.searchUser(idUser, 3);
-                }
-            }
-            Rectangle
-            {
-                width: 20
-                height: parent.height
-                color: "#516277"
-            }
-
-            CheckBox {
-                text: qsTr("Gestionnaire")
-                id:gestionnairecheck
-                x:200
-                style: CheckBoxStyle {
-                        indicator: Rectangle {
-                                implicitWidth: 20
-                                implicitHeight: 20
-                                radius: 3
-                                border.color: control.activeFocus ? "darkblue" : "gray"
-                                border.width: 1
-                                Rectangle {
-                                    visible: control.checked
-                                    color: "#555"
-                                    border.color: "#333"
-                                    radius: 1
-                                    anchors.margins: 4
-                                    anchors.fill: parent
-                                }
-                        }
-                        label: Text {
-                            x: 0
-                            y: 0
-                            width: 100
-                            height: 20
-                            text: gestionnairecheck.text
-                            color: "white"
-                         }
-                    }
-                onClicked:
-                {
-                    modifcheck.checked = false
-                    responsablecheck.checked = false
-                    lectcheck.checked = false
-                    propriocheck.checked = false
-                    if (responsablecheck.checked === true)
-                        treatment.searchUser(idUser, 0);
-                    else if (gestionnairecheck.checked === true)
-                        treatment.searchUser(idUser, 1);
-                    else if (modifcheck.checked === true)
-                        treatment.searchUser(idUser, 2);
-                    else if (lectcheck.checked === true)
-                        treatment.searchUser(idUser, 3);
-                }
-            }
-            Rectangle
-            {
-                width: 20
-                height: parent.height
-                color: "#516277"
-            }
-
-            CheckBox {
-                text: qsTr("Proprietaires")
-                id:propriocheck
-                x:200
-                style: CheckBoxStyle {
-                        indicator: Rectangle {
-                                implicitWidth: 20
-                                implicitHeight: 20
-                                radius: 3
-                                border.color: control.activeFocus ? "darkblue" : "gray"
-                                border.width: 1
-                                Rectangle {
-                                    visible: control.checked
-                                    color: "#555"
-                                    border.color: "#333"
-                                    radius: 1
-                                    anchors.margins: 4
-                                    anchors.fill: parent
-                                }
-                        }
-                        label: Text {
-                            x: 0
-                            y: 0
-                            width: 100
-                            height: 20
-                            text: gestionnairecheck.text
-                            color: "white"
-                         }
-                    }
-                onClicked:
-                {
-                    modifcheck.checked = false
-                    responsablecheck.checked = false
-                    lectcheck.checked = false
-                    gestionnairecheck.checked = false
-
-                }
-            }
         }
     }
     Rectangle
@@ -351,7 +184,7 @@ Rectangle
             anchors.fill: parent
             anchors.leftMargin: 5;
             anchors.topMargin: 5
-            text: "Utilisateur recherché"
+            text: "Utilisateur doublons"
             font.family: "Arial"
             font.bold: true
             horizontalAlignment: Text.AlignLeft
@@ -361,9 +194,9 @@ Rectangle
     }
     Rectangle
     {
-        y:165
+        y:90
         width: parent.width - 50
-        height: parent.height - 185
+        height: parent.height - 100
         x:25
         color: "#516277"
 
@@ -532,10 +365,4 @@ Rectangle
             }
         }
     }
-    /*
-    Component.onCompleted:
-    {
-        treatment.searchDocument("");
-    }*/
-
 }

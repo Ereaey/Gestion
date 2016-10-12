@@ -29,5 +29,9 @@
         <file>LayerDocumentFull.qml</file>
         <file>LayerUtilisateur.qml</file>
         <file>LayerUtilisateurAbsent.qml</file>
+        <file>LayerUtilisateurHorsPSA.qml</file>
+        <file>LayerGoalDoublon.qml</file>
+        <file>LayerUtilisateurDoublon.qml</file>
+        <file>LayerUtilisateurPerime.qml</file>
     </qresource>
 </RCC>

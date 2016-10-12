@@ -54,6 +54,15 @@ void Treatment::searchDocumentSurchage()
     m_type = SEARCH_DOCUMENT_SURCHARGE;
     start();
 }
+
+void Treatment::searchUserHorsPSA()
+{
+    m_currentAction = "Rechercher des utilisateurs absent de l'annuaire PSA";
+    emit currentActionChanged();
+    m_type = SEARCH_USER_HORS_PSA;
+    start();
+}
+
 void Treatment::searchGoal(QString goal, bool modificateur, bool lecteur)
 {
     m_goal = goal;
@@ -97,6 +106,14 @@ void Treatment::searchGoalsVide()
     m_currentAction = "Rechercher un goal vide";
     emit currentActionChanged();
     m_type = SEARCH_GOAL_VIDE;
+    start();
+}
+
+void Treatment::searchGoalDoublon()
+{
+    m_currentAction = "Rechercher les goals doublons";
+    emit currentActionChanged();
+    m_type = SEARCH_GOAL_DOUBLON;
     start();
 }
 
@@ -302,6 +319,19 @@ void Treatment::run()
         }
         emit refreshResult();
     }
+    else if (m_type == SEARCH_GOAL_DOUBLON)
+    {
+        m_result.clear();
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesDoublon.size());
+        }
+        for (int i = 0; i < m_data->getCurrentCommu()->domainesDoublon.size(); i++)
+        {
+            m_result.append(new DataDomaine(m_data->getCurrentCommu()->domainesDoublon[i]->nom, QString::number(m_data->getCurrentCommu()->domainesDoublon[i]->id)));
+        }
+        emit refreshResult();
+    }
     else if (m_type == SEARCH_DOMAINE_FULL)
     {
         m_result.clear();
@@ -394,6 +424,20 @@ void Treatment::run()
         for (int i = 0; i < m_data->getCurrentCommu()->usersInconnu.size(); i++)
         {
             m_result.append(new DataUser(m_data->getCurrentCommu()->usersInconnu[i]->user->nom + " " + m_data->getCurrentCommu()->usersInconnu[i]->user->prenom, m_data->getCurrentCommu()->usersInconnu[i]->user->ID));
+        }
+        emit refreshResult();
+    }
+    else if (m_type == SEARCH_USER_HORS_PSA)
+    {
+        m_result.clear();
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->usersNonTrouve.size());
+        }
+
+        for (int i = 0; i < m_data->getCurrentCommu()->usersNonTrouve.size(); i++)
+        {
+            m_result.append(new DataUser(m_data->getCurrentCommu()->usersNonTrouve[i]->user->nom + " " + m_data->getCurrentCommu()->usersNonTrouve[i]->user->prenom, m_data->getCurrentCommu()->usersNonTrouve[i]->user->ID));
         }
         emit refreshResult();
     }
