@@ -583,7 +583,7 @@ Rectangle{
             visible:root.currentItem ==utilisateursMenu ? true:false
             style: ButtonStyle{
             label: Text {
-                text: "Date dépasée"
+                text: "Date dépassée"
                 font.family: "Trebuchet MS"
                 font.italic: true
 

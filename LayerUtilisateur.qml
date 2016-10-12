@@ -324,7 +324,7 @@ Rectangle
                             y: 0
                             width: 100
                             height: 20
-                            text: gestionnairecheck.text
+                            text: propriocheck.text
                             color: "white"
                          }
                     }

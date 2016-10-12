@@ -50,11 +50,11 @@ class DataNote : public QObject
 
         QString domaineVide()
         {
-            return "<font color=\"red\">" + QString::number(m_d->getCurrentCommu()->domainesVides.size()) + " - " + QString::number((float)m_d->getCurrentCommu()->domainesVides.size() * 100.0 / (float)m_d->getCurrentCommu()->domainesKey.size()) + "% </font>";
+            return "<font color=\"#EB0000\">" + QString::number(m_d->getCurrentCommu()->domainesVides.size()) + "</font> - <i><b>" + QString::number((float)m_d->getCurrentCommu()->domainesVides.size() * 100.0 / (float)m_d->getCurrentCommu()->domainesKey.size()) + "% </b></i>";
         }
         QString domaineFull()
         {
-            return "<font color=\"green\">" + QString::number(m_d->getCurrentCommu()->domainesPlein.size()) + "</font>";
+            return "<font color=\"#D49C0B\">" + QString::number(m_d->getCurrentCommu()->domainesPlein.size()) + "</font>";
         }
         QString domaineAsservisseurs()
         {
