@@ -29,6 +29,16 @@ void Treatment::searchUser(QString name, int type)
     start();
 }
 
+void Treatment::searchUserId(QString name, int type)
+{
+    m_currentAction = "Rechercher un utilisateur > " + name;
+    emit currentActionChanged();
+    m_user = name;
+    m_type = SEARCH_USER_ID;
+    m_typeUser = type;
+    start();
+}
+
 void Treatment::searchDocumentVide()
 {
     m_currentAction = "Rechercher des documents vides";
@@ -74,7 +84,7 @@ void Treatment::searchGoal(QString goal, bool modificateur, bool lecteur)
     }
     else if (modificateur == false && lecteur == true)
     {
-        m_type == SEARCH_GOAL_LECT;
+        m_type = SEARCH_GOAL_LECT;
         m_currentAction += " (L)";
     }
     else if (modificateur == true && lecteur == true)
@@ -271,6 +281,46 @@ void Treatment::run()
             qDebug() << QString::number(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesGoal[m_goal].size());
         }
     }
+    else if (m_type == SEARCH_USER_ID)
+    {
+        /*
+        m_data->drawTree(m_goal, true, true);
+        */
+        m_data->drawTreeUserId(m_user, m_typeUser);
+
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+
+            if (m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users.contains(m_user))
+            {
+                if (m_typeUser == 0)
+                {
+                    ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesResponsable.size());
+                }
+                else if (m_typeUser == 1)
+                {
+                    ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesModificateur.size());
+                }
+                else if (m_typeUser == 2)
+                {
+                    ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesGestionnaire.size());
+                }
+                else if (m_typeUser == 3)
+                {
+                    ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->users[m_user]->domainesLecteur.size());
+                }
+            }
+            else
+                ((DataCommu*)(m_commu[i]))->setResult(0);
+            if (m_user.isEmpty())
+                ((DataCommu*)(m_commu[i]))->setResult(0);
+
+            //qDebug() << QString::number(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesGoal[m_goal].size());
+        }
+
+
+
+    }
     else if (m_type == SEARCH_GOAL_MODIF)
     {
         m_data->drawTree(m_goal, true, false);
@@ -372,7 +422,21 @@ void Treatment::run()
         }
         for (int i = 0; i < m_data->getCurrentCommu()->goalsInexistants.size(); i++)
         {
-            m_result.append(new DataGoal(m_data->getCurrentCommu()->goalsInexistants[i]->nom, m_data->getCurrentCommu()->goalsInexistants[i]->ID, m_data->getCurrentCommu()->goalsInexistants[i]->etat));
+            QString d;
+            QVector<int> data = m_data->getDomaineGoalInexistant(m_data->getCurrentCommu()->goalsInexistants[i]->nom);
+
+            /*if (m_data->getParentInexistant(m_data->getCurrentCommu()->domainesGoal[m_data->getCurrentCommu()->goalsInexistants[i]->nom][e], m_data->getCurrentCommu()->goalsInexistants[i]->nom) == false)
+            {
+                qDebug() << "A" << QString::number(m_data->getCurrentCommu()->domainesGoal[m_data->getCurrentCommu()->goalsInexistants[i]->nom][e]->id);
+                d.append(" - " + QString::number(m_data->getCurrentCommu()->domainesGoal[m_data->getCurrentCommu()->goalsInexistants[i]->nom][e]->id));
+            }*/
+            for (int g = 0; g < data.size(); g++)
+            {
+                d.append(" - " + QString::number(data[g]));
+            }
+            qDebug() << "Nb Do" <<  QString::number(m_data->getCurrentCommu()->domainesGoal[m_data->getCurrentCommu()->goalsInexistants[i]->nom].size());
+            m_result.append(new DataGoal(m_data->getCurrentCommu()->goalsInexistants[i]->nom, m_data->getCurrentCommu()->goalsInexistants[i]->ID + d, m_data->getCurrentCommu()->goalsInexistants[i]->etat));
+
         }
         emit refreshResult();
     }

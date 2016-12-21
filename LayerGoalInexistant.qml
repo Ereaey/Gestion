@@ -57,13 +57,14 @@ Rectangle
                 maximumFlickVelocity: 100
                 x:8
                 height: parent.height
-                width: parent.width
+                width: 2000
                 id:testTree
                 model: treatment.result
                 focus: true
                 delegate: contactDelegate
             }
-            //ScrollBar.vertical: ScrollBar {}
+            horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOn
+            //ScrollBar.vertical: ScrollBar { }
            // clip: true
        }
     }

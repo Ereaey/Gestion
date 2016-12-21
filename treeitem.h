@@ -7,7 +7,7 @@ class TreeItem : public QObject
 {
     Q_OBJECT
 public:
-    explicit TreeItem(QString content, int id, QObject *parent = 0);
+    explicit TreeItem(QString content, int id, bool problem, QObject *parent = 0);
 
     Q_PROPERTY(QString content READ content NOTIFY contentChanged)
     const QString & content() const;
@@ -15,6 +15,9 @@ public:
 
     Q_PROPERTY(int id READ id)
     const int id(){return m_id;}
+
+    Q_PROPERTY(bool problem READ problem)
+    const bool problem(){return m_problem;}
 
     Q_PROPERTY(QList<QObject*> childItems READ childItemsAsQObject NOTIFY childItemsChanged)
     const QList<TreeItem *> &childItems() const;
@@ -44,6 +47,7 @@ private:
     bool m_isOpen;
     bool m_isSelect;
     int m_id;
+    bool m_problem;
 };
 
 #endif // TREEITEM_H

@@ -353,6 +353,38 @@ Rectangle{
             }
         }
         Button {
+            x: 445
+            visible:root.currentItem ==communautesMenu ? true:false
+            style: ButtonStyle{
+            label: Text {
+                text: "User search"
+                font.family: "Trebuchet MS"
+                font.italic: true
+
+                color: accueil83.containsMouse ? "#395B80" : "#505050"
+                font.bold: accueil83.containsMouse ? true : false
+                font.pointSize: 10
+
+                anchors.centerIn: parent
+            }
+            background: Rectangle {
+                opacity: enabled ? 1 : 0.3
+                color:"#F3F3F3"
+            }
+            }
+            MouseArea
+            {
+                id: accueil83
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked:
+                {
+                    treatment.searchUserId("", 0);
+                    principalLoader.source = "LayerUserSearch.qml"
+                }
+            }
+        }
+        Button {
             x: 5
             visible:root.currentItem ==documentsMenu ? true:false
             style: ButtonStyle{

@@ -80,10 +80,11 @@ void Data::addDomaineGoal(Domaine *d, Goal *g, int grade)
     }
 }
 
-void Data::addDomaineUser(Domaine *d, QString user, int grade)
+int Data::addDomaineUser(Domaine *d, QString user, int grade)
 {
+    int etat = 0;
     if (user.isEmpty())
-        return;
+        return 1;
     QString id = user.split(" - ")[1];
     id.remove(" ");
 
@@ -110,6 +111,7 @@ void Data::addDomaineUser(Domaine *d, QString user, int grade)
             uc->user = userId[id];
             d->commu->users[id] = uc;
             d->commu->usersNonTrouve.push_back(uc);
+            etat = 2;
         }
     }
     if (grade == RESPONSABLE)
@@ -171,6 +173,8 @@ void Data::addDomaineUser(Domaine *d, QString user, int grade)
         }
         d->users[id] = d->commu->users[id];
     }
+
+    return etat;
 }
 
 void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent, QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable, QStringList gestionnaires, QStringList modificateurs, QStringList lecteurs, QString niveau, QString asservisseur, QString synchronises)
@@ -179,6 +183,7 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
     d->id = IdDomaine.toInt();
     d->nom = nameDomaine;
     d->id_parent = IdDomaineParent.toInt();
+    d->problem = false;
 
     domaines[d->id] = d;
     if (domaines.contains(d->id_parent))
@@ -212,7 +217,10 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
         communautes[nameCommu]->lsynchronises++;
 
 
-    addDomaineUser(d, responsable, RESPONSABLE);
+    if (addDomaineUser(d, responsable, RESPONSABLE) == 2)
+        d->problem = true;
+
+    int goalsP = 0;
 
     for (int i = 0; i < GOALsmodificateurs.size(); i++)
     {
@@ -225,6 +233,11 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
 
             goalNom[g] = go;
             communautes[nameCommu]->goalsInexistants.append(go);
+            communautes[nameCommu]->goalsInexistantsMap[g] = go;
+        }
+        if (communautes[nameCommu]->goalsInexistantsMap.contains(g))
+        {
+            goalsP++;
         }
         if (goalNom.contains(g))
         {
@@ -246,6 +259,11 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
 
             goalNom[g] = go;
             communautes[nameCommu]->goalsInexistants.append(go);
+            communautes[nameCommu]->goalsInexistantsMap[g] = go;
+        }
+        if (communautes[nameCommu]->goalsInexistantsMap.contains(g))
+        {
+            goalsP++;
         }
         if (goalNom.contains(g))
         {
@@ -259,8 +277,12 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
         }
     }
 
+    if (goalsP > 2)
+        d->problem = true;
+
     for (int i = 0; i < gestionnaires.size(); i++)
-        addDomaineUser(d, gestionnaires[i], GESTIONNAIRES);
+        if (addDomaineUser(d, gestionnaires[i], GESTIONNAIRES) == 2)
+            d->problem = true;
 
     for (int i = 0; i < modificateurs.size(); i++)
         addDomaineUser(d, modificateurs[i], MODIFICATEURS);
@@ -376,12 +398,18 @@ void Data::generateData()
             if (communautes[key]->goals[name]->users.size() == 0 && !communautes[key]->goals[name]->ID.isEmpty())
                 communautes[key]->goalsVides.append(communautes[key]->goals[name]);
             if (communautes[key]->goals[name]->etat != "OPERATIONNEL")
+            {
                 communautes[key]->goalsInexistants.append(communautes[key]->goals[name]);
+                for (int i = 0; i < communautes[key]->domainesGoal[name].size(); i++)
+                    communautes[key]->domainesInexistantMap[name][communautes[key]->domainesGoal[name][i]->id] = communautes[key]->domainesGoal[name][i];
+            }
         }
         foreach(QString name, communautes[key]->domainesKey.keys())
         {
             if (communautes[key]->domainesKey[name]->documents.size() == 0 && communautes[key]->domainesKey[name]->enfants.size() == 0)
+            {
                 communautes[key]->domainesVides.append(communautes[key]->domainesKey[name]);
+            }
             if (communautes[key]->domainesKey[name]->documents.size() > 10)
                 communautes[key]->domainesPlein.append(communautes[key]->domainesKey[name]);
         }
@@ -392,7 +420,7 @@ void Data::generateTree()
 {
     for (int key = 0; key < domainesV.size(); key++)
     {
-        TreeItem *t = new TreeItem(domainesV[key]->nom, domainesV[key]->id);
+        TreeItem *t = new TreeItem(domainesV[key]->nom, domainesV[key]->id, domainesV[key]->problem);
         domainesV[key]->t = t;
         //t->setIsOpen(true);
         if (domainesV[key]->id_parent != 0)
@@ -460,11 +488,121 @@ void Data::drawTree(QString domaine)
     }
 }
 
+
+void Data::drawTreeUserId(QString user, int type)
+{
+    for (int key = 0; key < domainesV.size(); key++)
+    {
+        domainesV[key]->t->setIsOpen(false);
+        domainesV[key]->t->setIsSelect(false);
+    }
+    if (user.isEmpty())
+        return;
+    if (!c_actu->users.contains(user))
+        return;
+    if (type == 0)
+    {
+        for (int i = 0; i < c_actu->users[user]->domainesResponsable.size(); i++)
+        {
+            c_actu->users[user]->domainesResponsable[i]->t->setIsSelect(true);
+            if (c_actu->users[user]->domainesResponsable[i]->id_parent != 0)
+                recursiveOpen(c_actu->users[user]->domainesResponsable[i]->id_parent);
+        }
+    }
+    else if (type == 1)
+    {
+        for (int i = 0; i < c_actu->users[user]->domainesModificateur.size(); i++)
+        {
+            c_actu->users[user]->domainesModificateur[i]->t->setIsSelect(true);
+            if (c_actu->users[user]->domainesModificateur[i]->id_parent != 0)
+                recursiveOpen(c_actu->users[user]->domainesModificateur[i]->id_parent);
+        }
+    }
+    else if (type == 2)
+    {
+        for (int i = 0; i < c_actu->users[user]->domainesGestionnaire.size(); i++)
+        {
+            c_actu->users[user]->domainesGestionnaire[i]->t->setIsSelect(true);
+            if (c_actu->users[user]->domainesGestionnaire[i]->id_parent != 0)
+                recursiveOpen(c_actu->users[user]->domainesGestionnaire[i]->id_parent);
+        }
+    }
+    else if (type == 3)
+    {
+        for (int i = 0; i < c_actu->users[user]->domainesLecteur.size(); i++)
+        {
+            c_actu->users[user]->domainesLecteur[i]->t->setIsSelect(true);
+            if (c_actu->users[user]->domainesLecteur[i]->id_parent != 0)
+                recursiveOpen(c_actu->users[user]->domainesLecteur[i]->id_parent);
+        }
+    }
+}
+
 void Data::recursiveOpen(int id)
 {
     domaines[id]->t->setIsOpen(true);
     if (domaines[id]->id_parent != 0)
         recursiveOpen(domaines[id]->id_parent);
+}
+
+
+bool Data::getParentInexistant(Domaine *d, QString goal)
+{
+    if (c_actu->domainesInexistantMap[goal].contains(d->id_parent))
+        return true;
+    else if (d->parent == c_actu->root)
+        return false;
+    else
+        return getParentInexistant(d->parent, goal);
+}
+
+QVector<int> Data::getDomaineGoalInexistant(QString goal)
+{
+    QVector<int> data;
+    QVector<int> data2;
+    QVector<int> data3;
+    QVector<int> data4;
+
+    foreach (int id, c_actu->domainesInexistantMap[goal].keys()) {
+        data.append(id);
+    }
+
+    for (int i = 0; i < data.size(); i++)
+    {
+        bool t = false;
+        if (data2.contains(c_actu->domainesKey[QString::number(data[i])]->id_parent))
+        {
+            t = true;
+        }
+        else
+        {
+            for (int e = 0; e < data.size(); e++)
+            {
+                if (i != e)
+                {
+                    if (c_actu->domainesKey[QString::number(data[i])]->id_parent == c_actu->domainesKey[QString::number(data[e])]->id_parent)
+                    {
+                        data2.append(c_actu->domainesKey[QString::number(data[i])]->id_parent);
+                        t = true;
+                    }
+                }
+            }
+        }
+        if (t == false)
+            data2.append(data[i]);
+    }
+
+
+    for (int i = 0; i < data2.size(); i++)
+    {
+        if (getParentInexistant(c_actu->domainesKey[QString::number(data2[i])], goal) == false)
+        {
+            if (!data3.contains(data2[i]))
+                data3.push_back(data2[i]);
+        }
+    }
+
+    return data3;
 }
 
 void Data::setCurrentCommu(QString name)

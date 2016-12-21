@@ -1,12 +1,13 @@
 #include "treeitem.h"
 
-TreeItem::TreeItem(QString content, int id, QObject *parent) :
+TreeItem::TreeItem(QString content, int id, bool problem, QObject *parent) :
     QObject(parent),
     m_content(content),
     m_childItems(QList<TreeItem*>()),
     m_isOpen(false),
     m_id(id)
 {
+    m_problem = problem;
 }
 
 const QString &TreeItem::content() const{

@@ -74,6 +74,7 @@ struct Domaine
     QMap<QString, UserCommu*> users;
     TreeItem *t;
     Communaute *commu;
+    bool problem;
 };
 
 struct UPerime
@@ -98,8 +99,10 @@ struct Communaute
     QMap<QString, Goal*> goals;
     QMap<QString, Document*> documents;
 
+    QMap<QString, Goal*> goalsInexistantsMap;
     QVector<Goal*> goalsVides;
     QVector<Goal*> goalsInexistants;
+    QMap<QString, QMap<int, Domaine*>> domainesInexistantMap;
 
     QMap<QString, QVector<Domaine*>> domainesGoalModificateurs;
     QMap<QString, QVector<Domaine*>> domainesGoalLecteurs;
@@ -161,16 +164,19 @@ class Data : public QObject
         QMap<QString, Communaute*> getCommus(){ return communautes;}
         void setCurrentCommu(QString name);
         Communaute* getCurrentCommu(){return c_actu;}
+        bool getParentInexistant(Domaine *d, QString goal);
+        QVector<int> getDomaineGoalInexistant(QString goal);
 
     public slots:
         void generateTree();
         void generateData();
         void drawTree(QString goal, bool modif, bool lecteur);
         void drawTree(QString domaine);
+        void drawTreeUserId(QString user, int type);
     signals:
         void commuChanged();
     private:
-        void addDomaineUser(Domaine *d, QString user, int grade);
+        int addDomaineUser(Domaine *d, QString user, int grade);
         void addDomaineGoal(Domaine *d, Goal *g, int grade);
         void recursiveOpen(int id);
         QMap<QString, User*> userId;

@@ -33,5 +33,6 @@
         <file>LayerGoalDoublon.qml</file>
         <file>LayerUtilisateurDoublon.qml</file>
         <file>LayerUtilisateurPerime.qml</file>
+        <file>LayerUserSearch.qml</file>
     </qresource>
 </RCC>

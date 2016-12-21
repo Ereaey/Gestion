@@ -29,7 +29,9 @@ Rectangle
     height: parent.height
 
     property bool modifC : true
-    property bool lectC : true
+    property bool lectC : false
+    property bool respC : false
+    property bool gestC : false
 
     property string msg: listDomaine.domaines
     onMsgChanged: {
@@ -41,11 +43,6 @@ Rectangle
         testTree.model = tree.tree
     }
 
-    property bool loadResultAuto: autoComplet.finish
-    onLoadResultAutoChanged: {
-        autoCompletList.model = autoComplet.result
-    }
-
     property string valueGoal: ""
     Timer
     {
@@ -54,28 +51,36 @@ Rectangle
         repeat: true
         onTriggered:
         {
-            if (valueGoal != control.text)
+            if (valueGoal != nameUser.text)
             {
-                valueGoal = control.text
-                autoComplet.search(control.text);
-                treatment.searchGoal(control.text, modifC, lectC)
+                valueGoal = nameUser.text
+                console.log(nameUser.text)
+                if (respC === true)
+                    treatment.searchUserId(nameUser.text, 0);
+                else if (modifC === true)
+                    treatment.searchUserId(nameUser.text, 1);
+                else if (gestC === true)
+                    treatment.searchUserId(nameUser.text, 2);
+                else if (lectC === true)
+                    treatment.searchUserId(nameUser.text, 3);
             }
         }
     }
 
     Rectangle
     {
-        y:0
-        height: 150
-        width: parent.width
-        x:0
+        y:10
+        height: 120
+        width: parent.width - 50
+        x:25
         color: "#364150"
+        radius:2
         Text
         {
             anchors.fill: parent
             anchors.leftMargin: 5;
             anchors.topMargin: 5
-            text: "Rechercher un goal"
+            text: "Rechercher un utilisateur"
             font.family: "Arial"
             font.bold: true
             horizontalAlignment: Text.AlignLeft
@@ -97,40 +102,26 @@ Rectangle
             height:30
             y:40
             x:10
-            id:control
-            placeholderText: qsTr("Entrer goal")
+            id:nameUser
+            placeholderText: qsTr("Entrer le nom de l'utilisateur")
             style: TextFieldStyle{
             background: Rectangle {
                  implicitWidth: 200
                  implicitHeight: 30
-                 color: control.enabled ? "white" : "#353637"
-                 border.color: control.enabled ? "#bdbebf" : "transparent"
+                 color: nameUser.enabled ? "white" : "#353637"
+                 border.color: nameUser.enabled ? "#bdbebf" : "transparent"
              }}
             selectByMouse: true
         }
 
-        Button
-        {
-            width:parent.width - 20
-            height:30
-            y:80
-            x:10
-            text: "Rechercher"
-            onClicked:
-            {
-                treatment.searchGoal(control.text, modifC, lectC)
-            }
-        }
         Row {
-            y:120
+            y:80
             x:10
             CheckBox {
                 text: qsTr("Modificateur")
                 checked: true
                 id:modifcheck
-                onCheckedChanged: {
-                    modifC = checked;
-                }
+
                 style: CheckBoxStyle {
                         indicator: Rectangle {
                                 implicitWidth: 20
@@ -156,7 +147,19 @@ Rectangle
                             color: "white"
                          }
                     }
+                onClicked:
+                {
+                    lectcheck.checked = false
+                    responsablecheck.checked = false
+                    gestionnairecheck.checked = false
 
+                    modifC = true
+                    lectC = false
+                    respC = false
+                    gestC = false
+
+                    valueGoal = ""
+                }
             }
             Rectangle
             {
@@ -169,9 +172,6 @@ Rectangle
                 text: qsTr("Lecteur")
                 id:lectcheck
                 x:200
-                onCheckedChanged: {
-                    lectC = checked;
-                }
                 style: CheckBoxStyle {
                         indicator: Rectangle {
                                 implicitWidth: 20
@@ -197,77 +197,128 @@ Rectangle
                             color: "white"
                          }
                     }
-            }
-        }
-    }
-    Rectangle
-    {
-        y: 150
-        height: 150
-        width: parent.width
-        x: 0
-        color: "#364150"
-        //radius:2
-        Text
-        {
-            anchors.fill: parent
-            anchors.leftMargin: 5;
-            anchors.topMargin: 5
-            text: "Autocomplétion goal"
-            font.family: "Arial"
-            font.bold: true
-            horizontalAlignment: Text.AlignLeft
-            font.pointSize: 13
-            //y: 10
-            //x:150
-            color: "white"
-            width:parent.width / 2 - 40 -10
-            //rightPadding:10
-        }
-        Rectangle
-        {
-            color:"#516277"
-            width:parent.width
-            height:parent.height - 30
-            y:30
-        }
-        ScrollView
-        {
-            width:parent.width - 5
-            height:parent.height - 35
-            y:35
-            x:5
-            ListView
-            {
+                onClicked:
+                {
+                    modifcheck.checked = false
+                    responsablecheck.checked = false
+                    gestionnairecheck.checked = false
 
-                maximumFlickVelocity: 100
-                height: parent.height
-                width: parent.width
-                id:autoCompletList
-                model: autoComplet.result
-                delegate: Rectangle {
-                    height: 17
-                    width: parent.width
-                    Text {
-                        text: modelData;
-                        color: "white";
-                        font.family: "Arial"
-                        font.pointSize: 11
-                    }
-                    MouseArea
-                    {
-                        anchors.fill: parent
-                        onClicked:
-                        {
-                            control.text = modelData;
-                        }
-                    }
+                    modifC = false
+                    lectC = true
+                    respC = false
+                    gestC = false
 
-                    color:"#516277"
+                    valueGoal = ""
                 }
             }
-            //ScrollBar.vertical: ScrollBar {}
-            //clip: true
+            Rectangle
+            {
+                width: 20
+                height: parent.height
+                color: "#516277"
+            }
+
+            CheckBox {
+                text: qsTr("Responsable")
+                id:responsablecheck
+                x:200
+                style: CheckBoxStyle {
+                        indicator: Rectangle {
+                                implicitWidth: 20
+                                implicitHeight: 20
+                                radius: 3
+                                border.color: control.activeFocus ? "darkblue" : "gray"
+                                border.width: 1
+                                Rectangle {
+                                    visible: control.checked
+                                    color: "#555"
+                                    border.color: "#333"
+                                    radius: 1
+                                    anchors.margins: 4
+                                    anchors.fill: parent
+                                }
+                        }
+                        label: Text {
+                            x: 0
+                            y: 0
+                            width: 100
+                            height: 20
+                            text: responsablecheck.text
+                            color: "white"
+                         }
+                    }
+                onClicked:
+                {
+                    modifcheck.checked = false
+                    lectcheck.checked = false
+                    gestionnairecheck.checked = false
+
+                    modifC = false
+                    lectC = false
+                    respC = true
+                    gestC = false
+
+                    valueGoal = ""
+
+                }
+            }
+            Rectangle
+            {
+                width: 20
+                height: parent.height
+                color: "#516277"
+            }
+
+            CheckBox {
+                text: qsTr("Gestionnaire")
+                id:gestionnairecheck
+                x:200
+                style: CheckBoxStyle {
+                        indicator: Rectangle {
+                                implicitWidth: 20
+                                implicitHeight: 20
+                                radius: 3
+                                border.color: control.activeFocus ? "darkblue" : "gray"
+                                border.width: 1
+                                Rectangle {
+                                    visible: control.checked
+                                    color: "#555"
+                                    border.color: "#333"
+                                    radius: 1
+                                    anchors.margins: 4
+                                    anchors.fill: parent
+                                }
+                        }
+                        label: Text {
+                            x: 0
+                            y: 0
+                            width: 100
+                            height: 20
+                            text: gestionnairecheck.text
+                            color: "white"
+                         }
+                    }
+                onClicked:
+                {
+                    modifcheck.checked = false
+                    responsablecheck.checked = false
+                    lectcheck.checked = false
+
+                    modifC = false
+                    lectC = false
+                    respC = false
+                    gestC = true
+
+                    valueGoal = ""
+
+                }
+            }
+            Rectangle
+            {
+                width: 20
+                height: parent.height
+                color: "#516277"
+            }
         }
     }
 
