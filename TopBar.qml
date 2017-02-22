@@ -79,7 +79,7 @@ Rectangle{
                 propagateComposedEvents: true
                 onClicked:
                 {
-                    treatment.searchGoal("", false, false);
+                    treatment.searchGoal("", false, false, false);
                     principalLoader.source = "LayerGoalSearch.qml"
                     root.currentItem = parent
                 }

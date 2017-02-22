@@ -106,6 +106,7 @@ struct Communaute
 
     QMap<QString, QVector<Domaine*>> domainesGoalModificateurs;
     QMap<QString, QVector<Domaine*>> domainesGoalLecteurs;
+    QMap<QString, QVector<Domaine*>> domainesGoalGestionnaires;
     QMap<QString, QVector<Domaine*>> domainesGoal;
 
     QVector<Domaine*> domainesVides;
@@ -143,7 +144,7 @@ struct Communaute
 
 enum typeDoc{C0, C1, C2, C3, C4};
 enum statutDoc{Publie, Annule, Travail};
-enum grade{RESPONSABLE, GESTIONNAIRES, MODIFICATEURS, LECTEURS, MODIFICATEURS_GOAL, LECTEURS_GOAL};
+enum grade{RESPONSABLE, GESTIONNAIRES, MODIFICATEURS, LECTEURS, MODIFICATEURS_GOAL, LECTEURS_GOAL, GESTIONNAIRES_GOAL};
 class Data : public QObject
 {
     Q_OBJECT
@@ -154,7 +155,7 @@ class Data : public QObject
         void addGoalMember(QString idGoal, QString idMember);
         void addCommunaute(QString name, QStringList goals);
         void addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent,
-                        QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable,
+                        QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QStringList GOALsGestionnaires,QString responsable,
                         QStringList gestionnaires, QStringList modificateurs, QStringList lecteurs, QString niveau,
                         QString asservisseur, QString synchronises
                         );
@@ -170,7 +171,7 @@ class Data : public QObject
     public slots:
         void generateTree();
         void generateData();
-        void drawTree(QString goal, bool modif, bool lecteur);
+        void drawTree(QString goal, bool modif, bool lecteur, bool gestionnaire);
         void drawTree(QString domaine);
         void drawTreeUserId(QString user, int type);
     signals:

@@ -215,6 +215,7 @@ void Loading::loadDomaines()
         QString responsable =  fileDomaines.getData(i, "L");
         QStringList GoalsModifs =  fileDomaines.getData(i, "Z").split(",");
         QStringList GoalsLecteur =  fileDomaines.getData(i, "AD").split(",");
+        QStringList GoalsGest =  fileDomaines.getData(i, "O").split(",");
         QStringList Gestionnaires =  fileDomaines.getData(i, "M").split(",");
         QStringList Modificateurs =  fileDomaines.getData(i, "X").split(",");
         QStringList Lecteurs =  fileDomaines.getData(i, "AB").split(",");
@@ -223,7 +224,7 @@ void Loading::loadDomaines()
         QString asser =  fileDomaines.getData(i, "S");
         QString synchro =  fileDomaines.getData(i, "T");
 
-        m_data->addDomaine(nomCommu, nomDomaine, idDomaine, idDomaineParent, GoalsModifs, GoalsLecteur, responsable, Gestionnaires, Modificateurs, Lecteurs, niveau, asser, synchro);
+        m_data->addDomaine(nomCommu, nomDomaine, idDomaine, idDomaineParent, GoalsModifs, GoalsLecteur, GoalsGest, responsable, Gestionnaires, Modificateurs, Lecteurs, niveau, asser, synchro);
 
         setMessageLoading("Chargement des domaines.. " + QString::number(i) + " / " + QString::number(fileDomaines.getNumberLines()));
     }
@@ -251,7 +252,15 @@ void Loading::loadDocuments()
         if (a == false && b == false)
             nb = 0;
 
-        m_data->addDocument(fileDocuments->getData(i, "D"), fileDocuments->getData(i, "T"), fileDocuments->getData(i, "B"), fileDocuments->getData(i, "H"), fileDocuments->getData(i, "A"), fileDocuments->getData(i, "M"), fileDocuments->getData(i, "O"), fileDocuments->getData(i, "AI"), fileDocuments->getData(i, "AD"),
+        m_data->addDocument(fileDocuments->getData(i, "D"),
+                            fileDocuments->getData(i, "T"),
+                            fileDocuments->getData(i, "B"),
+                            fileDocuments->getData(i, "H"),
+                            fileDocuments->getData(i, "A"),
+                            fileDocuments->getData(i, "M"),
+                            fileDocuments->getData(i, "O"),
+                            fileDocuments->getData(i, "AI"),
+                            fileDocuments->getData(i, "AD"),
                             nb, fileDocuments->getData(i, "AL"), fileDocuments->getData(i, "C"));
 
         setMessageLoading("Chargement des documents.. " + QString::number(i) + " / " + QString::number(fileDocuments->getNumberLines()));

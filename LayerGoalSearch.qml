@@ -30,7 +30,7 @@ Rectangle
 
     property bool modifC : true
     property bool lectC : true
-
+    property bool gestC : false
     property string msg: listDomaine.domaines
     onMsgChanged: {
          testD.model = listDomaine.domaines
@@ -58,7 +58,7 @@ Rectangle
             {
                 valueGoal = control.text
                 autoComplet.search(control.text);
-                treatment.searchGoal(control.text, modifC, lectC)
+                treatment.searchGoal(control.text, modifC, lectC, gestC)
             }
         }
     }
@@ -194,6 +194,50 @@ Rectangle
                             width: 100
                             height: 20
                             text: lectcheck.text
+                            color: "white"
+                         }
+                    }
+            }
+            Rectangle
+            {
+                width: 20
+                height: parent.height
+                color: "#516277"
+            }
+
+            CheckBox {
+                text: qsTr("Gestionnaire")
+                id:gestcheck
+                x:200
+                onCheckedChanged: {
+                    gestC = checked;
+                    lectcheck.checked = false;
+                    modifcheck.checked = false;
+                    lectC = lectcheck.checked;
+                    modifC = modifcheck.checked
+                }
+                style: CheckBoxStyle {
+                        indicator: Rectangle {
+                                implicitWidth: 20
+                                implicitHeight: 20
+                                radius: 3
+                                border.color: control.activeFocus ? "darkblue" : "gray"
+                                border.width: 1
+                                Rectangle {
+                                    visible: control.checked
+                                    color: "#555"
+                                    border.color: "#333"
+                                    radius: 1
+                                    anchors.margins: 4
+                                    anchors.fill: parent
+                                }
+                        }
+                        label: Text {
+                            x: 0
+                            y: 0
+                            width: 100
+                            height: 20
+                            text: gestcheck.text
                             color: "white"
                          }
                     }

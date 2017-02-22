@@ -177,7 +177,7 @@ int Data::addDomaineUser(Domaine *d, QString user, int grade)
     return etat;
 }
 
-void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent, QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QString responsable, QStringList gestionnaires, QStringList modificateurs, QStringList lecteurs, QString niveau, QString asservisseur, QString synchronises)
+void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine, QString IdDomaineParent, QStringList GOALsmodificateurs, QStringList GOALsLecteurs, QStringList GOALsGestionnaires, QString responsable, QStringList gestionnaires, QStringList modificateurs, QStringList lecteurs, QString niveau, QString asservisseur, QString synchronises)
 {
     Domaine *d = new Domaine;
     d->id = IdDomaine.toInt();
@@ -274,6 +274,32 @@ void Data::addDomaine(QString nameCommu, QString nameDomaine, QString IdDomaine,
                 communautes[nameCommu]->domainesDoublon.push_back(d);
             else
                 communautes[nameCommu]->domainesGoal[g].push_back(d);
+        }
+    }
+
+
+    for (int i = 0; i < GOALsGestionnaires.size(); i++)
+    {
+        QString g = GOALsGestionnaires[i].replace(" ", "");
+        if (g != "" && !goalNom.contains(g))
+        {
+            Goal *go = new Goal;
+            go->nom = g;
+            go->etat = "Non trouvé";
+
+            goalNom[g] = go;
+            communautes[nameCommu]->goalsInexistants.append(go);
+            communautes[nameCommu]->goalsInexistantsMap[g] = go;
+        }
+        if (communautes[nameCommu]->goalsInexistantsMap.contains(g))
+        {
+            goalsP++;
+        }
+        if (goalNom.contains(g))
+        {
+            //addDomaineGoal(d, goalNom[g], LECTEURS_GOAL);
+            communautes[nameCommu]->domainesGoalGestionnaires[g].push_back(d);
+            communautes[nameCommu]->goals[g] = goalNom[g];
         }
     }
 
@@ -433,7 +459,7 @@ void Data::generateTree()
     }
 }
 
-void Data::drawTree(QString goal, bool modif, bool lecteur)
+void Data::drawTree(QString goal, bool modif, bool lecteur, bool gestionnaire)
 {
     for (int key = 0; key < domainesV.size(); key++)
     {
@@ -442,6 +468,15 @@ void Data::drawTree(QString goal, bool modif, bool lecteur)
     }
     if (goal.isEmpty())
         return;
+    if (gestionnaire == true)
+    {
+        for(int i = 0; i < c_actu->domainesGoalGestionnaires[goal].size(); i++)
+        {
+            c_actu->domainesGoalGestionnaires[goal][i]->t->setIsSelect(true);
+            if (c_actu->domainesGoalGestionnaires[goal][i]->id_parent != 0)
+                recursiveOpen(c_actu->domainesGoalGestionnaires[goal][i]->id_parent);
+        }
+    }
     if (modif == true && lecteur == true)
     {
         for(int i = 0; i < c_actu->domainesGoal[goal].size(); i++)

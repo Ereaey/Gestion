@@ -73,11 +73,16 @@ void Treatment::searchUserHorsPSA()
     start();
 }
 
-void Treatment::searchGoal(QString goal, bool modificateur, bool lecteur)
+void Treatment::searchGoal(QString goal, bool modificateur, bool lecteur, bool gestionnaire)
 {
     m_goal = goal;
     m_currentAction = "Rechercher un goal > " + goal;
-    if (modificateur == true && lecteur == false)
+    if (gestionnaire == true)
+    {
+        m_type = SEARCH_GOAL_GEST;
+        m_currentAction += " (G)";
+    }
+    else if (modificateur == true && lecteur == false)
     {
         m_type = SEARCH_GOAL_MODIF;
         m_currentAction += " (M)";
@@ -272,7 +277,7 @@ void Treatment::run()
     emit finishChanged();
     if (m_type == SEARCH_GOAL)
     {
-        m_data->drawTree(m_goal, true, true);
+        m_data->drawTree(m_goal, true, true, false);
         for (int i = 0; i < m_commu.size(); i++)
         {
             ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesGoal[m_goal].size());
@@ -323,7 +328,7 @@ void Treatment::run()
     }
     else if (m_type == SEARCH_GOAL_MODIF)
     {
-        m_data->drawTree(m_goal, true, false);
+        m_data->drawTree(m_goal, true, false, false);
         for (int i = 0; i < m_commu.size(); i++)
         {
             ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesGoalModificateurs[m_goal].size());
@@ -331,9 +336,19 @@ void Treatment::run()
                 ((DataCommu*)(m_commu[i]))->setResult(0);
         }
     }
+    else if (m_type == SEARCH_GOAL_GEST)
+    {
+        m_data->drawTree(m_goal, false, false, true);
+        for (int i = 0; i < m_commu.size(); i++)
+        {
+            ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesGoalGestionnaires[m_goal].size());
+            if (m_goal.isEmpty())
+                ((DataCommu*)(m_commu[i]))->setResult(0);
+        }
+    }
     else if (m_type == SEARCH_GOAL_LECT)
     {
-        m_data->drawTree(m_goal, false, true);
+        m_data->drawTree(m_goal, false, true, false);
         for (int i = 0; i < m_commu.size(); i++)
         {
             ((DataCommu*)(m_commu[i]))->setResult(m_data->getCommus()[((DataCommu*)m_commu[i])->nom()]->domainesGoalLecteurs[m_goal].size());

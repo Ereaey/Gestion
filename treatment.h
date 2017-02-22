@@ -24,12 +24,12 @@ class Treatment : public QThread
 
     enum t{SEARCH_GOAL_MODIF, SEARCH_GOAL_LECT, SEARCH_GOAL, SEARCH_GOAL_VIDE, SEARCH_DOMAINE, SEARCH_GOAL_PROBLEME, SEARCH_DOMAINE_VIDE, SEARCH_DOMAINE_FULL,
           EXPORT_PLAN, SEARCH_DOCUMENT_VIDE, SEARCH_DOCUMENT_SURCHARGE, SEARCH_DOCUMENT, SEARCH_USER, SEARCH_USER_ABSENT, NOTE_GLOBALE, SEARCH_USER_HORS_PSA,
-          SEARCH_GOAL_DOUBLON, SEARCH_USER_DOUBLON, SEARCH_USER_PERIME, SEARCH_USER_ID};
+          SEARCH_GOAL_DOUBLON, SEARCH_USER_DOUBLON, SEARCH_USER_PERIME, SEARCH_USER_ID, SEARCH_GOAL_GEST};
 
     enum type{RESPONSABLE = 0, GESTIONNAIRE = 1, MODIFICATEUR = 2, LECTEUR = 3};
     public:
         Treatment(Data *d);
-        Q_INVOKABLE void searchGoal(QString goal, bool modificateur, bool lecteur);
+        Q_INVOKABLE void searchGoal(QString goal, bool modificateur, bool lecteur, bool gestionnaire);
         bool finish() const;
         QVariant result() const{return QVariant::fromValue(m_result);}
         QVariant descriptionResult() const{return QVariant::fromValue(m_descriptionResult);}
