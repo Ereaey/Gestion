@@ -67,9 +67,9 @@ FileCSV::FileCSV(QString path, bool thread, QMutex *mutex)
 
 FileCSV::~FileCSV()
 {
-    //for (int i = 0; i < lines.size(); i++)
-    //    qDeleteAll(lines[i]);
-    //qDeleteAll(lines);
+    for (int i = 0; i < lines.size(); i++)
+        lines[i].clear();
+    lines.clear();
 }
 
 void FileCSV::run()
