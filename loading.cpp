@@ -59,12 +59,10 @@ void Loading::loadFiles()
                    m_pathMembersInternal = QFileInfo(file);
 
             if (file.contains("Plans_de_communautes_"))
-              if (m_pathDomaines.lastModified() < QFileInfo(file).lastModified())
-                  m_pathDomaines = QFileInfo(file);
+              m_pathDomaines.push_back(QFileInfo(file));
 
             if (file.contains("Liste_de_communautés_"))
-              if (m_pathCommu.lastModified() < QFileInfo(file).lastModified())
-                  m_pathCommu = QFileInfo(file);
+              m_pathCommu.push_back(QFileInfo(file));
 
             if (file.contains("ssl_goal_pressi"))
              if (m_pathGoal.lastModified() < QFileInfo(file).lastModified())
@@ -75,8 +73,8 @@ void Loading::loadFiles()
                     m_pathGoalMembers = QFileInfo(file);
 
             if (file.contains("Audits_des_documents_"))
-               if (m_pathDocuments.lastModified() < QFileInfo(file).lastModified())
-                   m_pathDocuments = QFileInfo(file);
+               m_pathDocuments.push_back(QFileInfo(file));
+
          }
     }
     if (!m_pathMembersExternal.isReadable())
@@ -153,7 +151,9 @@ void Loading::loadGoal()
 
 void Loading::loadCommu()
 {
-    FileCSV fileCommu(m_pathCommu.absoluteFilePath());
+    for (int i = 0; i < m_pathCommu.size(); i++)
+    {
+    FileCSV fileCommu(m_pathCommu[i].absoluteFilePath());
     qDebug() << QString::number(fileCommu.getNumberLines());
     setMessageLoading("Chargement des communautes.. 0 / " + QString::number(fileCommu.getNumberLines()));
     emit currentActionChanged();
@@ -171,6 +171,7 @@ void Loading::loadCommu()
 
         setMessageLoading("Chargement des communautes.. "+  QString::number(i) + " / " + QString::number(fileCommu.getNumberLines()));
 
+    }
     }
 }
 
@@ -197,8 +198,10 @@ void Loading::loadGoalMember()
 
 void Loading::loadDomaines()
 {
+    for (int i = 0; i < m_pathDomaines.size(); i++)
+    {
     //qDebug() << m_pathGoalMembers.absoluteFilePath();
-    FileCSV fileDomaines(m_pathDomaines.absoluteFilePath());
+    FileCSV fileDomaines(m_pathDomaines[i].absoluteFilePath());
     setMessageLoading("Chargement des domaines.. 0 / " + QString::number(fileDomaines.getNumberLines()));
     emit currentActionChanged();
     for (int i = 1; i < fileDomaines.getNumberLines(); i++)
@@ -228,42 +231,46 @@ void Loading::loadDomaines()
 
         setMessageLoading("Chargement des domaines.. " + QString::number(i) + " / " + QString::number(fileDomaines.getNumberLines()));
     }
+    }
 }
 
 void Loading::loadDocuments()
 {
+    for (int i = 0; i < m_pathDocuments.size(); i++)
+    {
+    FileCSV fileDocuments(m_pathDocuments[i].absoluteFilePath());
     //qDebug() << m_pathGoalMembers.absoluteFilePath();
     //FileCSV fileDocuments(m_pathDocuments.absoluteFilePath());
     //qDebug() << m_pathDocuments.absoluteFilePath();
-    FileCSV *fileDocuments = m_file;
-    setMessageLoading("Chargement des documents.. 0 / " + QString::number(fileDocuments->getNumberLines()));
+    setMessageLoading("Chargement des documents.. 0 / " + QString::number(fileDocuments.getNumberLines()));
     //emit currentActionChanged();
-    for (int i = 1; i < fileDocuments->getNumberLines(); i++)
+    for (int i = 1; i < fileDocuments.getNumberLines(); i++)
     {
         mutex.lock();
-        m_sizeAll = fileDocuments->getNumberLines();
+        m_sizeAll = fileDocuments.getNumberLines();
         m_sizeCurrent = i;
         mutex.unlock();
         int nb = 0;
         bool a = false;
         bool b = false;
 
-        nb = fileDocuments->getData(i, "AZ").toInt(&a) + fileDocuments->getData(i, "BA").toInt(&b);
+        nb = fileDocuments.getData(i, "AZ").toInt(&a) + fileDocuments.getData(i, "BA").toInt(&b);
         if (a == false && b == false)
             nb = 0;
 
-        m_data->addDocument(fileDocuments->getData(i, "D"),
-                            fileDocuments->getData(i, "T"),
-                            fileDocuments->getData(i, "B"),
-                            fileDocuments->getData(i, "H"),
-                            fileDocuments->getData(i, "A"),
-                            fileDocuments->getData(i, "M"),
-                            fileDocuments->getData(i, "O"),
-                            fileDocuments->getData(i, "AI"),
-                            fileDocuments->getData(i, "AD"),
-                            nb, fileDocuments->getData(i, "AL"), fileDocuments->getData(i, "C"));
+        m_data->addDocument(fileDocuments.getData(i, "D"),
+                            fileDocuments.getData(i, "T"),
+                            fileDocuments.getData(i, "B"),
+                            fileDocuments.getData(i, "H"),
+                            fileDocuments.getData(i, "A"),
+                            fileDocuments.getData(i, "M"),
+                            fileDocuments.getData(i, "O"),
+                            fileDocuments.getData(i, "AI"),
+                            fileDocuments.getData(i, "AD"),
+                            nb, fileDocuments.getData(i, "AL"), fileDocuments.getData(i, "C"));
 
-        setMessageLoading("Chargement des documents.. " + QString::number(i) + " / " + QString::number(fileDocuments->getNumberLines()));
+        setMessageLoading("Chargement des documents.. " + QString::number(i) + " / " + QString::number(fileDocuments.getNumberLines()));
+    }
     }
 }
 
@@ -302,7 +309,6 @@ void Loading::run()
     setMessageLoading("Chargement des membres..");
     emit currentMessageChanged();
     emit currentActionChanged();
-    m_file = new FileCSV(m_pathDocuments.absoluteFilePath(), false, &m);
     loadMember();
     mutex.lock();
     m_sizeCurrent = 0;
@@ -343,9 +349,9 @@ void Loading::run()
     setMessageLoading("Chargement des documents..");
     emit currentMessageChanged();
     emit currentActionChanged();
-    m.lock();
+    //m.lock();
     loadDocuments();
-    m.unlock();
+    //m.unlock();
     m_data->generateData();
     m_data->setCurrentCommu(m_data->getCommus().last()->name);
     m_finish = true;

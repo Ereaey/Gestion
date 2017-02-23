@@ -6,6 +6,7 @@
 #include <QFile>
 #include <QDir>
 #include <QFileInfo>
+#include <QVector>
 #include "data.h"
 #include "filecsv.h"
 #include "autocompletgoal.h"
@@ -60,12 +61,12 @@ class Loading : public QThread
 
         QFileInfoList m_listDrives;
 
-        QFileInfo m_pathDomaines;
+        QVector<QFileInfo> m_pathDomaines;
         QFileInfo m_pathMembersInternal;
         QFileInfo m_pathMembersExternal;
         QFileInfo m_pathGoal;
-        QFileInfo m_pathDocuments;
-        QFileInfo m_pathCommu;
+        QVector<QFileInfo> m_pathDocuments;
+        QVector<QFileInfo> m_pathCommu;
         //QFileInfo m_pathFiles;
         QFileInfo m_pathGoalMembers;
 
